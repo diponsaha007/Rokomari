@@ -1,0 +1,11 @@
+1. Project will have multiple application
+
+I am thinking one for login and signup purpose
+Another for home page and book comment etc showing- calling it rokomariapp
+Another for Cart and order and stuff like that
+Another for admin interface
+Others can be decided later
+-------------------------------------------------------
+We will start off by login and signup page
+Make sure user can signup and inserted to database
+-------------------------------------------------------
