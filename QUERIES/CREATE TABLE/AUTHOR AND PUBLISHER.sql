@@ -1,0 +1,16 @@
+-- DROP TABLE AUTHOR;
+-- DROP TABLE PUBLISHER;
+
+CREATE TABLE AUTHOR(
+		author_id INTEGER NOT NULL,
+		author_name VARCHAR2(128) NOT NULL,
+		author_summary VARCHAR2(1000),
+		CONSTRAINT WRITER_PK PRIMARY KEY (author_id)
+);
+
+CREATE TABLE PUBLISHER(
+		publisher_id INTEGER NOT NULL,
+		publisher_name VARCHAR2(128) NOT NULL,
+		publisher_summary VARCHAR2(1000),
+		CONSTRAINT PUBLISHER_PK PRIMARY KEY (publisher_id)
+);
