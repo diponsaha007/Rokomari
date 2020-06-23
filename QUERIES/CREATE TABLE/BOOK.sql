@@ -3,8 +3,8 @@
 CREATE TABLE BOOK(
 		book_id INTEGER NOT NULL,
 		book_name VARCHAR2(512) NOT NULL,
-		book_genre VARCHAR2(128),
-		book_edition VARCHAR2(128),
+		book_genre VARCHAR2(512),
+		book_edition VARCHAR2(512),
 		author_id INTEGER NOT NULL,
 		publisher_id INTEGER NOT NULL,
 		price INTEGER NOT NULL,
