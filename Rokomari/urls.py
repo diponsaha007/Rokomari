@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 
 urlpatterns = [
-    path('rokomariapp', include("rokomariapp.urls", namespace="rokomariapp")),
+    path('', include("rokomariapp.urls", namespace="rokomariapp")),
     path('', include("login_registration.urls", namespace="login_registration")),
     path('admin/', admin.site.urls),
 ]

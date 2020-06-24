@@ -11,13 +11,12 @@
     <title>Buy Book Online | Rokomari.com</title>
 </head>
 
-
 <body>
 
 <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="{% static "images/rokomariapp/rokomari_logo.png" %}" width="110" height="40" alt="">
+        <a class="navbar-brand" href="{% url 'rokomariapp:index' %}">
+            <img src="{% static "backgroundimg/rokomari_logo.png" %}" width="110" height="40" alt="">
         </a>
 
         <div class="mx-auto order-0">
@@ -36,9 +35,20 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <button type="button" class="btn btn-outline-dark">Sign In</button>
-                </a>
+                {% if logged_in %}
+                    <a class="nav-link" href="{% url 'login_registration:logout' %}">
+                        <button type="button" class="btn btn-outline-dark">
+                            Sign Out
+                        </button>
+                    </a>
+                {% else %}
+                    <a class="nav-link" href="{% url 'login_registration:login' %}">
+                        <button type="button" class="btn btn-outline-dark">
+                            Sign In
+                        </button>
+                    </a>
+                {% endif %}
+
             </li>
         </ul>
     </div>

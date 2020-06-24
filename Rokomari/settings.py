@@ -120,3 +120,5 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 
 ]
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
+SESSION_FILE_PATH = 'login_registration\sessions'
