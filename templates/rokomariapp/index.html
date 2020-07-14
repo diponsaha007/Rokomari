@@ -9,9 +9,21 @@
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
     <title>Buy Book Online | Rokomari.com</title>
+
+
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href={% static "homepage/css/style.css" %} type="text/css" media="all" />
+	<script type="text/javascript" src={% static "homepage/js/jquery-1.6.2.min.js" %}></script>
+	<script type="text/javascript" src={% static "homepage/js/jquery.jcarousel.min.js" %}></script>
+	<!--[if IE 6]>
+		<script type="text/javascript" src={% static "homepage/js/png-fix.js" %}></script>
+	<![endif]-->
+	<script type="text/javascript" src={% static "homepage/js/functions.js" %}></script>
 </head>
 
 <body>
+
 
 <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
     <div class="container">
@@ -54,6 +66,282 @@
     </div>
 </nav>
 
+<!-- Slider -->
+	<div id="slider">
+		<div class="shell">
+			<ul>
+				<li>
+					<div class="image">
+						<img src="{% static "homepage/banner1.png" %}" alt="" />
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="{% static "homepage/banner2.png" %}" alt="" />
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="{% static "homepage/banner3.png" %}" alt="" />
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="{% static "homepage/banner4.png" %}" alt="" />
+					</div>
+				</li>
+			</ul>
+			<div class="nav">
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+			</div>
+		</div>
+	</div>
+	<!-- End Slider -->
+
+	<!-- Main -->
+	<div id="main" class="shell">
+		<!-- Sidebar -->
+		<div id="sidebar">
+			<ul class="categories">
+				<li>
+					<h4>Categories</h4>
+					<ul>
+						<li><a href="#">Lorem ipsum dolor</a></li>
+						<li><a href="#">Morbi eget</a></li>
+						<li><a href="#">Nulla egestas</a></li>
+						<li><a href="#">Curabitur venenatis</a></li>
+						<li><a href="#">Ut dictum purus</a></li>
+						<li><a href="#">Curabitur imperdiet</a></li>
+						<li><a href="#">Aliquam elementum</a></li>
+					</ul>
+				</li>
+				<li>
+					<h4>Authors</h4>
+					<ul>
+						<li><a href="#">Lorem ipsum dolor</a></li>
+						<li><a href="#">Morbi eget</a></li>
+						<li><a href="#">Nulla egestas</a></li>
+						<li><a href="#">Curabitur venenatis</a></li>
+						<li><a href="#">Ut dictum purus</a></li>
+						<li><a href="#">Curabitur imperdiet</a></li>
+						<li><a href="#">Lorem ipsum dolor</a></li>
+						<li><a href="#">Morbi eget</a></li>
+						<li><a href="#">Nulla egestas</a></li>
+						<li><a href="#">Curabitur venenatis</a></li>
+						<li><a href="#">Ut dictum purus</a></li>
+						<li><a href="#">Curabitur imperdiet</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- End Sidebar -->
+		<!-- Content -->
+		<div id="content">
+			<!-- Products -->
+			<div class="products">
+				<h3>Featured Products</h3>
+				<ul>
+					<li>
+						<div class="product">
+							<a href="#" class="info">
+								<span class="holder">
+									<img src="{% static "homepage/10095999.jpg" %}" alt="" />
+									<span class="book-name">শেষের কবিতা</span>
+									<span class="author">রবীন্দ্রনাথ ঠাকুর</span>
+									<span class="description">Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>
+                                    <a href="#" class="buy-btn">BUY NOW <span class="price"><span class="low">$</span>22<span class="high">00</span></span></a>
+								</span>
+							</a>
+
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#" class="info">
+								<span class="holder">
+									<img src="{% static "homepage/10004558.jpg" %}" alt="" />
+									<span class="book-name">ক্রাচের কর্নেল</span>
+									<span class="author">শাহাদুজ্জামান</span>
+									<span class="description">Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>
+								</span>
+							</a>
+							<a href="#" class="buy-btn">BUY NOW <span class="price"><span class="low">$</span>22<span class="high">00</span></span></a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#" class="info">
+								<span class="holder">
+									<img src="{% static "homepage/10077988.jpg" %}" alt="" />
+									<span class="book-name">কালবেলা</span>
+									<span class="author">সমরেশ মজুমদার</span>
+									<span class="description">Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>
+								</span>
+							</a>
+							<a href="#" class="buy-btn">BUY NOW <span class="price"><span class="low">$</span>22<span class="high">00</span></span></a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#" class="info">
+								<span class="holder">
+									<img src="{% static "homepage/10060682.png" %}" alt="" />
+									<span class="book-name">পূর্ব পশ্চিম</span>
+									<span class="author">সুনীল গঙ্গোপাধ্যায়</span>
+									<span class="description">Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>
+								</span>
+							</a>
+							<a href="#" class="buy-btn">BUY NOW <span class="price"><span class="low">$</span>22<span class="high">00</span></span></a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#" class="info">
+								<span class="holder">
+									<img src="{% static "homepage/10013887.png" %}" alt="" />
+									<span class="book-name">শ্রীকান্ত</span>
+									<span class="author">শরৎচন্দ্র চট্টোপ্যাধ্যায়</span>
+									<span class="description">Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>
+								</span>
+							</a>
+							<a href="#" class="buy-btn">BUY NOW <span class="price"><span class="low">$</span>22<span class="high">00</span></span></a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#" class="info">
+								<span class="holder">
+									<img src="{% static "homepage/10007127.jpg" %}" alt="" />
+									<span class="book-name">শার্লক হোমস রচনা সমগ্র</span>
+									<span class="author">আর্থার কোনান ডয়েল</span>
+									<span class="description">Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>
+								</span>
+							</a>
+							<a href="#" class="buy-btn">BUY NOW <span class="price"><span class="low">$</span>22<span class="high">00</span></span></a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#" class="info">
+								<span class="holder">
+									<img src="{% static "homepage/10032329.png" %}" alt="" />
+									<span class="book-name">যে জলে আগুন জ্বলে</span>
+									<span class="author">হেলাল হাফিজ</span>
+									<span class="description">Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>
+								</span>
+							</a>
+							<a href="#" class="buy-btn">BUY NOW <span class="price"><span class="low">$</span>22<span class="high">00</span></span></a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#" class="info">
+								<span class="holder">
+									<img src="{% static "homepage/10013534.png" %}" alt="" />
+									<span class="book-name">কমলাকান্তের দপ্তর</span>
+									<span class="author">বঙ্কিমচন্দ্র চট্টোপ্যাধ্যায়</span>
+									<span class="description">Maecenas vehicula ante eu enim pharetra<br />scelerisque dignissim <br />sollicitudin nisi</span>
+								</span>
+							</a>
+							<a href="#" class="buy-btn">BUY NOW <span class="price"><span class="low">$</span>22<span class="high">00</span></span></a>
+						</div>
+					</li>
+				</ul>
+			<!-- End Products -->
+			</div>
+			<div class="cl">&nbsp;</div>
+			<!-- Best-sellers -->
+			<div id="best-sellers">
+				<h3>Best Sellers</h3>
+				<ul>
+					<li>
+						<div class="product">
+							<a href="#">
+								<img src="{% static "homepage/10021176.jpg" %}" alt="" />
+								<span class="book-name">দা ভিঞ্চি কোড </span>
+								<span class="author">ড্যান ব্রাউন</span>
+								<span class="price"><span class="low">$</span>35<span class="high">00</span></span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#">
+								<img src="{% static "homepage/10004303.jpg" %}" alt="" />
+								<span class="book-name">আমি তপু </span>
+								<span class="author">মুহম্মদ জাফর ইকবাল</span>
+								<span class="price"><span class="low">$</span>45<span class="high">00</span></span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#">
+								<img src="{% static "homepage/10001045.png" %}" alt="" />
+								<span class="book-name">বাদশাহ নামদার </span>
+								<span class="author">হুমায়ূন আহমেদ</span>
+								<span class="price"><span class="low">$</span>15<span class="high">00</span></span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div class="product">
+							<a href="#">
+								<img src="{% static "homepage/10008218.jpg" %}" alt="" />
+								<span class="book-name">কম্পিউটার প্রোগ্রামিং </span>
+								<span class="author">তামিম শাহরিয়ার সুবিন</span>
+								<span class="price"><span class="low">$</span>27<span class="high">99</span></span>
+							</a>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+			<!-- End Best-sellers -->
+		</div>
+		<!-- End Content -->
+		<div class="cl">&nbsp;</div>
+	</div>
+	<!-- End Main -->
+	<!-- Footer -->
+	<div id="footer" class="shell">
+		<div class="top">
+			<div class="cnt">
+				<div class="col about">
+					<h4>About BestSellers</h4>
+					<p>Nulla porttitor pretium mattis. Mauris lorem massa, ultricies non mattis bibendum, semper ut erat. Morbi vulputate placerat ligula. Fusce <br />convallis, nisl a pellentesque viverra, ipsum leo sodales sapien, vitae egestas dolor nisl eu tortor. Etiam ut elit vitae nisl tempor tincidunt. Nunc sed elementum est. Phasellus sodales viverra mauris nec dictum. Fusce a leo libero. Cras accumsan enim nec massa semper eu hendrerit nisl faucibus. Sed lectus ligula, consequat eget bibendum eu, consequat nec nisl. In sed consequat elit. Praesent nec iaculis sapien. <br />Curabitur gravida pretium tincidunt.  </p>
+				</div>
+				<div class="col store">
+					<h4>Store</h4>
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Special Offers</a></li>
+						<li><a href="#">Log In</a></li>
+						<li><a href="#">Account</a></li>
+						<li><a href="#">Basket</a></li>
+						<li><a href="#">Checkout</a></li>
+					</ul>
+				</div>
+				<div class="col" id="newsletter">
+					<h4>Newsletter</h4>
+					<p>Lorem ipsum dolor sit amet  consectetur. </p>
+					<form action="" method="post">
+						<input type="text" class="field" value="Your Name" title="Your Name" />
+						<input type="text" class="field" value="Email" title="Email" />
+						<div class="form-buttons"><input type="submit" value="Submit" class="submit-btn" /></div>
+					</form>
+				</div>
+				<div class="cl">&nbsp;</div>
+				<div class="copy">
+					<p>&copy; <a href="#">BestSeller.com</a>. Design by <a href="http://css-free-templates.com/">CSS-FREE-TEMPLATES.COM</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Footer -->
 
 </body>
 
