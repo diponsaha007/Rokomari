@@ -1,3 +1,1 @@
 "USER_ID"	"ADDRESS_1"	"ADDRESS_2"	"CITY"	"COUNTRY"	"PHONE"
-"1"	"Post Office Para"	"Post Office Para"	"Naogaon"	"Bangladesh"	"01776198230"
-"2"	"Rankin Street"	"Rankin Street"	"Dhaka"	"Bangladesh"	"01776198230"
