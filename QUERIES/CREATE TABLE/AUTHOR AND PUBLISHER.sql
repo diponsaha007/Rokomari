@@ -4,13 +4,13 @@
 CREATE TABLE AUTHOR(
 		author_id INTEGER NOT NULL,
 		author_name VARCHAR2(512) NOT NULL,
-		author_summary VARCHAR2(1000),
+		author_summary VARCHAR2(3000),
 		CONSTRAINT WRITER_PK PRIMARY KEY (author_id)
 );
 
 CREATE TABLE PUBLISHER(
 		publisher_id INTEGER NOT NULL,
 		publisher_name VARCHAR2(512) NOT NULL,
-		publisher_summary VARCHAR2(1000),
+		publisher_summary VARCHAR2(3000),
 		CONSTRAINT PUBLISHER_PK PRIMARY KEY (publisher_id)
 );
