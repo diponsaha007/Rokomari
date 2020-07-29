@@ -1,0 +1,51 @@
+{% load static %}
+<nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'rokomariapp:index' %}">
+            <img src="{% static "backgroundimg/rokomari_logo.png" %}" width="110" height="40" alt="">
+        </a>
+
+        <div class="mx-auto order-0">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mx-auto mr-sm-2" type="search"
+                       placeholder="Search by Books, Authors or Publishers" aria-label="Search" style="width: 600px;">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <button type="button" class="btn btn-outline-dark">Cart</button>
+                </a>
+            </li>
+            {% if logged_in %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-outline-dark">
+                            My Contents
+                        </button>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" href="#">My Orders</a>
+                        <a class="dropdown-item" href="#">My Wishlist</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'login_registration:logout' %}">Sign Out</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login_registration:login' %}">
+                        <button type="button" class="btn btn-outline-dark">
+                            Sign In
+                        </button>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

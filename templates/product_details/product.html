@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Buy Book Online | Rokomari.com</title>
+    <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
+    <link rel="stylesheet" href={% static "product_assests/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href={% static "product_assests/assets/fonts/simple-line-icons.min.css" %}>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href={% static "css/product_details/smoothproducts.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animate/animate.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/css-hamburgers/hamburgers.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
+
+</head>
+
+<body>
+{% include  'base/navbar.html' %}
+
+<main class="page product-page">
+    <section class="clean-block clean-product ">
+        <div class="container">
+            <div class="block-heading"></div>
+            <div class="block-content">
+                <div class="product-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="gallery">
+                                {# main product image goes here#}
+                                <div class="sp-wrap"><a
+                                        href="../../static/images/rokomariapp/images/{{ image }}.jpg"><img
+                                        class="img-fluid d-block mx-auto"
+                                        src="../../static/images/rokomariapp/images/{{ image }}.jpg"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info">
+                                <h3>{{ book_name }}</h3>
+                                <p>By {{ author_name }}</p>
+                                <p>Genre : {{ genre }}</p>
+                                <div class="rating">
+                                    {% for j in '01234'|make_list %}
+                                        {% if rating > j|add:"0" and rating < j|add:"1" %}
+                                            <img src={% static "product_assests/assets/img/star-half-empty.svg" %}
+                                                         {% elif rating >= j|add:"1" %}
+                                                         <img src={% static "product_assests/assets/img/star.svg" %}>
+                                        {% else %}
+                                            <img src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <P>(Total {{ rating_num }} ratings)</P>
+                                </div>
+
+                                <div class="price">
+                                    <h3><strike>{{ price }} Tk</strike></h3>
+                                    <h3>{{ discount_price }} Tk</h3>
+                                </div>
+                                <button class="btn btn-primary" type="button"><i class="icon-basket"></i>Add
+                                    to Cart
+                                </button>
+                                <br>
+                                <button class="btn btn-primary" type="button"><i class="icon-list"></i>Add
+                                    to Wishlist
+                                </button>
+                                <div class="summary"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab"
+                                                    id="description-tab" href="#description">Description</a></li>
+                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab"
+                                                    id="specifications-tabs"
+                                                    href="#specifications">Specifications</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" id="reviews-tab"
+                                                    href="#reviews">Reviews</a></li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <!-- Description -->
+                            <div class="tab-pane active fade show description" role="tabpanel" id="description">
+                                <p>{{ summary }}</p>
+                            </div>
+                            <!-- Specifications -->
+                            <div class="tab-pane fade show specifications" role="tabpanel" id="specifications">
+                                <div class="table-responsive table-bordered">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                        <tr>
+                                            <td class="stat">Book Title</td>
+                                            <td>{{ book_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">Book Author</td>
+                                            <td>{{ author_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">Book Genre</td>
+                                            <td>{{ genre }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">Book Price</td>
+                                            <td>{{ discount_price }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">Publisher</td>
+                                            <td>{{ publisher_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">ISBN</td>
+                                            <td>{{ isbn }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">Book Edition</td>
+                                            <td>{{ book_edition }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">Pages</td>
+                                            <td>{{ pages }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">Country</td>
+                                            <td>{{ country }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="stat">Language</td>
+                                            <td>{{ language }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Reviews -->
+                            <div class="tab-pane fade show" role="tabpanel" id="reviews">
+                                <div class="reviews">
+                                    <div class="review-item">
+                                        <div class="rating"><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                        </div>
+                                        <h4>Incredible product</h4><span class="text-muted"><a href="#">John
+                                                    Smith</a>, 20 Jan 2018</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue
+                                            nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum
+                                            dolor sit amet, consectetur adipiscing elit.</p>
+                                    </div>
+                                </div>
+                                <div class="reviews">
+                                    <div class="review-item">
+                                        <div class="rating"><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                        </div>
+                                        <h4>Incredible product</h4><span class="text-muted"><a href="#">John
+                                                    Smith</a>, 20 Jan 2018</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue
+                                            nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum
+                                            dolor sit amet, consectetur adipiscing elit.</p>
+                                    </div>
+                                </div>
+                                <div class="reviews">
+                                    <div class="review-item">
+                                        <div class="rating"><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                        </div>
+                                        <h4>Incredible product</h4><span class="text-muted"><a href="#">John
+                                                    Smith</a>, 20 Jan 2018</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue
+                                            nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum
+                                            dolor sit amet, consectetur adipiscing elit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clean-related-items">
+                    <h3>Related Products</h3>
+                    <div class="items">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="clean-related-item">
+                                    <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
+                                                                        src="{% static "images/rokomariapp/images/10000489.jpg" %}"></a>
+                                    </div>
+                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
+                                        <div class="rating"><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                        </div>
+                                        <h4>$300</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="clean-related-item">
+                                    <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
+                                                                        src="{% static "images/rokomariapp/images/10095999.jpg" %}"></a>
+                                    </div>
+                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
+                                        <div class="rating"><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                        </div>
+                                        <h4>$300</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="clean-related-item">
+                                    <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
+                                                                        src="{% static "images/rokomariapp/images/10021176.jpg" %}"></a>
+                                    </div>
+                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
+                                        <div class="rating"><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
+                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                        </div>
+                                        <h4>$300</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+{#footer#}
+{% include 'base/footer.html' %}
+
+<script src={% static "js/product_details/jquery.min.js" %}></script>
+<script src={% static "product_assests/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src={% static "js/product_details/smoothproducts.min.js" %}></script>
+<script src={% static "js/product_details/theme.js" %}></script>
+
+</body>
+
+</html>

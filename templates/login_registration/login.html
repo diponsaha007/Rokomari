@@ -16,39 +16,12 @@
     <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/login_registration/util.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/login_registration/main.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
 
 </head>
 <body style="background-color: #666666;">
-<nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
 
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'rokomariapp:index' %}">
-            <img src={% static "backgroundimg/rokomari_logo.png" %} width="110" height="40" alt="">
-        </a>
-
-        <div class="mx-auto order-0">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mx-auto mr-sm-2" type="search"
-                       placeholder="Search by Books, Authors or Publishers" aria-label="Search" style="width: 600px;">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-
-
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <button type="button" class="btn btn-outline-dark">Cart</button>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'login_registration:login' %}">
-                    <button type="button" class="btn btn-outline-dark">Sign In</button>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+{% include  'base/navbar.html' %}
 <br>
 <div class="container">
     <div class="limiter">
@@ -96,71 +69,8 @@
     </div>
 </div>
 <br>
-<!-- Site footer -->
-<footer class="site-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-6">
-                <h6>Rokomari</h6>
-                <p class="text-justify">Rokomari.com is now one of the leading e-commerce organizations in Bangladesh.
-                    It is indeed the biggest online bookshop or bookstore in Bangladesh that helps you save time and
-                    money. You can buy books online with a few clicks or a convenient phone call. With breathtaking
-                    discounts and offers you can buy anything from Bangla Upannash or English story books to academic,
-                    research or competitive exam books. Superfast cash on delivery service brings the products at your
-                    doorstep. Our customer support, return and replacement policies will surely add extra confidence in
-                    your online shopping experience. Happy Shopping with Rokomari.com!
-
-                </p>
-            </div>
-
-            <div class="col-xs-6 col-md-3">
-                <h6>Support</h6>
-                <ul class="footer-links">
-                    <li><a href="https://www.rokomari.com/contactus">Contact Us</a></li>
-                    <li><a href="https://www.rokomari.com/guide">Guide</a></li>
-                    <li><a href="https://www.rokomari.com/faq">FAQ</a></li>
-                    <li><a href="https://www.rokomari.com/pointing-faq">FAQ About Points</a></li>
-                    <li><a href="https://www.rokomari.com/help">Help Desk</a></li>
-                </ul>
-            </div>
-
-            <div class="col-xs-6 col-md-3">
-                <h6>Quick Links</h6>
-                <ul class="footer-links">
-                    <li><a href="https://www.rokomari.com/aboutus">About Us</a></li>
-                    <li><a href="https://www.rokomari.com/terms">Terms of Use</a></li>
-                    <li><a href="https://www.rokomari.com/policy">Privacy Policy</a></li>
-                    <li><a href="https://www.rokomari.com/terms#return">Happy Return</a></li>
-                    <li><a href="https://www.rokomari.com/terms#refund">Refund Policy</a></li>
-                </ul>
-            </div>
-        </div>
-        <hr>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-sm-6 col-xs-12">
-                <p class="copyright-text">Copyright &copy; 2020 All Rights Reserved by
-                    <a href="#">Rokomari</a>.
-                </p>
-            </div>
-
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <ul class="social-icons">
-                    <li><a class="facebook" href="https://www.facebook.com/rokomari"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li><a class="twitter" href="https://twitter.com/RokomariDotCom"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li><a class="dribbble" href="https://www.instagram.com/rokomari/"><i
-                            class="fa fa-dribbble"></i></a></li>
-                    <li><a class="linkedin" href="https://www.linkedin.com/company/10239632"><i
-                            class="fa fa-linkedin"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
-<!--end of footer-->
+{#footer#}
+{% include 'base/footer.html' %}
 
 <script src={% static "vendor/jquery/jquery-3.2.1.min.js" %}></script>
 <script src={% static "vendor/animsition/js/animsition.min.js" %}></script>

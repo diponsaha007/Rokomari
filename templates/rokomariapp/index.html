@@ -14,56 +14,12 @@
     <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
 </head>
 
 <body>
 
-<nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'rokomariapp:index' %}">
-            <img src="{% static "backgroundimg/rokomari_logo.png" %}" width="110" height="40" alt="">
-        </a>
-
-        <div class="mx-auto order-0">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mx-auto mr-sm-2" type="search"
-                       placeholder="Search by Books, Authors or Publishers" aria-label="Search" style="width: 600px;">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-
-
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <button type="button" class="btn btn-outline-dark">Cart</button>
-                </a>
-            </li>
-            <li class="nav-item">
-                {% if logged_in %}
-                    <a class="nav-link" href="{% url 'login_registration:logout' %}">
-                        <button type="button" class="btn btn-outline-dark">
-                            Sign Out
-                        </button>
-                    </a>
-                {% else %}
-                    <a class="nav-link" href="{% url 'login_registration:login' %}">
-                        <button type="button" class="btn btn-outline-dark">
-                            Sign In
-                        </button>
-                    </a>
-                {% endif %}
-
-            </li>
-        </ul>
-    </div>
-</nav>
+{% include  'base/navbar.html' %}
 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -87,420 +43,732 @@
         </div>
     </div>
 </div>
+{% if best_seller %}
+    <div class="shell">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <h2>রকমারী <b>বেস্ট সেলার</b></h2>
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+                    <!-- Wrapper for carousel items -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                {% for i in best_seller|slice:"0:4" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
 
-<div class="shell">
-    <div class="row">
-        <div class="col-md-12">
-            <br>
-            <h2>Trending <b>Products</b></h2>
-            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
-                <!-- Wrapper for carousel items -->
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="{% static "images/rokomariapp/images/10001045.jpg" %}"
-                                             class="productImage" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Apple iPad</h4>
-                                        <p class="item-price"><strike>$400.00</strike> <span>$369.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
+                                                <div class="img-box">
+                                                    <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                         class="productImage"
+                                                         alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                                </div>
+                                                <div class="thumb-content">
+                                                    <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                    </a>
+                                                    <p>By {{ i.2 }}</p>
+                                                    <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                        <span>{{ i.4 }}৳</span></p>
+                                                    <div class="star-rating">
+                                                        <ul class="list-inline">
+                                                            {% for j in '01234'|make_list %}
+                                                                {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star-half-o"></i></li>
+                                                                {% elif i.5 >= j|add:"1" %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star"></i>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star-o"></i></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    <a href="#" class="btn btn-primary">Add to Cart</a>
+
+                                                </div>
+
                                         </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
                                     </div>
-                                </div>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="{% static "images/rokomariapp/images/10013887.jpg" %}"
-                                             class="productImage" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Sony Headphone</h4>
-                                        <p class="item-price"><strike>$25.00</strike> <span>$23.99</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% for i in best_seller|slice:"4:8" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                                <div class="img-box">
+                                                    <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                         class="productImage"
+                                                         alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                                </div>
+                                                <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                    <p>By {{ i.2 }}</p>
+                                                    <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                        <span>{{ i.4 }}৳</span></p>
+                                                    <div class="star-rating">
+                                                        <ul class="list-inline">
+                                                            {% for j in '01234'|make_list %}
+                                                                {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star-half-o"></i></li>
+                                                                {% elif i.5 >= j|add:"1" %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star"></i>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star-o"></i></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                                                </div>
+
                                         </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
                                     </div>
-                                </div>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="{% static "images/rokomariapp/images/10077988.jpg" %}"
-                                             class="productImage" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Macbook Air</h4>
-                                        <p class="item-price"><strike>$899.00</strike> <span>$649.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
-                                            </ul>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% for i in best_seller|slice:"8:12" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                                <div class="img-box">
+                                                    <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                         class="productImage"
+                                                         alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                                </div>
+                                                <div class="thumb-content">
+                                                    <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                    </a>
+                                                    <p>By {{ i.2 }}</p>
+                                                    <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                        <span>{{ i.4 }}৳</span></p>
+                                                    <div class="star-rating">
+                                                        <ul class="list-inline">
+                                                            {% for j in '01234'|make_list %}
+                                                                {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star-half-o"></i></li>
+                                                                {% elif i.5 >= j|add:"1" %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star"></i>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <li class="list-inline-item"><i
+                                                                            class="fa fa-star-o"></i></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                                                </div>
+
                                         </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="{% static "images/rokomariapp/images/10095999.jpg" %}"
-                                             class="productImage" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Nikon DSLR</h4>
-                                        <p class="item-price"><strike>$315.00</strike> <span>$250.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="/examples/images/products/play-station.jpg" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Sony Play Station</h4>
-                                        <p class="item-price"><strike>$289.00</strike> <span>$269.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="/examples/images/products/macbook-pro.jpg" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Macbook Pro</h4>
-                                        <p class="item-price"><strike>$1099.00</strike> <span>$869.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="/examples/images/products/speaker.jpg" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Bose Speaker</h4>
-                                        <p class="item-price"><strike>$109.00</strike> <span>$99.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="/examples/images/products/galaxy.jpg" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Samsung Galaxy S8</h4>
-                                        <p class="item-price"><strike>$599.00</strike> <span>$569.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="/examples/images/products/iphone.jpg" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Apple iPhone</h4>
-                                        <p class="item-price"><strike>$369.00</strike> <span>$349.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="/examples/images/products/canon.jpg" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Canon DSLR</h4>
-                                        <p class="item-price"><strike>$315.00</strike> <span>$250.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="/examples/images/products/pixel.jpg" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Google Pixel</h4>
-                                        <p class="item-price"><strike>$450.00</strike> <span>$418.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumb-wrapper">
-                                    <div class="img-box">
-                                        <img src="/examples/images/products/watch.jpg" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4>Apple Watch</h4>
-                                        <p class="item-price"><strike>$350.00</strike> <span>$330.00</span></p>
-                                        <div class="star-rating">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+
+                    <!-- Carousel controls -->
+                    <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 </div>
-                <!-- Carousel controls -->
-                <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                </a>
+
             </div>
         </div>
     </div>
-</div>
+{% endif %}
 
-<div class="shell2">
-    <br>
-    <h2>Product <b>Categories</b></h2>
-    <br>
-    <br>
-    <div class="container">
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group " role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
+{% if categories %}
+    <div class="shell2">
+        <br>
+        <h2>পপুলার <b>জনরা</b></h2>
+        <br>
+        <br>
+        <div class="container">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                {% for i in categories|slice:"0:1" %}
+                    <div class="btn-group " role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
+                {% for i in categories|slice:"1:5" %}
+                    <div class="btn-group ml-auto" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
             </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                {% for i in categories|slice:"5:6" %}
+                    <div class="btn-group " role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
+                {% for i in categories|slice:"6:10" %}
+                    <div class="btn-group ml-auto" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
 
-            <div class="btn-group ml-auto" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
             </div>
+        </div>
+        <br>
+    </div>
+{% endif %}
+<br>
+<br>
+{% if humayun_ahmed %}
+    <div class="shell">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <h2>বেস্ট অফ <b>হুমায়ূন আহমেদ</b></h2>
+                <div id="myCarousel1" class="carousel slide" data-ride="carousel" data-interval="0">
+                    <!-- Wrapper for carousel items -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                {% for i in humayun_ahmed|slice:"0:4" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% for i in humayun_ahmed|slice:"4:8" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% for i in humayun_ahmed|slice:"8:12" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="btn-group ml-auto" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
+
+                    <!-- Carousel controls -->
+                    <a class="carousel-control-prev" href="#myCarousel1" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel1" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
             </div>
-
-            <div class="btn-group ml-auto" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
-            </div>
-
-            <div class="btn-group ml-auto" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
-            </div>
-
         </div>
     </div>
-    <br>
-    <div class="container">
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group " role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
-            </div>
+{% endif %}
 
-            <div class="btn-group ml-auto" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
+{% if authors %}
+    <div class="shell2">
+        <br>
+        <h2>জনপ্রিয় <b>লেখক</b></h2>
+        <br>
+        <br>
+        <div class="container">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                {% for i in authors|slice:"0:1" %}
+                    <div class="btn-group " role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
+                {% for i in authors|slice:"1:5" %}
+                    <div class="btn-group ml-auto" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
             </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                {% for i in authors|slice:"5:6" %}
+                    <div class="btn-group " role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
+                {% for i in authors|slice:"6:10" %}
+                    <div class="btn-group ml-auto" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
 
-            <div class="btn-group ml-auto" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
             </div>
+        </div>
+        <br>
+    </div>
+{% endif %}
+<br>
+<br>
+{% if zafar_iqbal %}
+    <div class="shell">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <h2>বেস্ট অফ <b>মুহম্মদ জাফর ইকবাল</b></h2>
+                <div id="myCarousel2" class="carousel slide" data-ride="carousel" data-interval="0">
+                    <!-- Wrapper for carousel items -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                {% for i in zafar_iqbal|slice:"0:4" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% for i in zafar_iqbal|slice:"4:8" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% for i in zafar_iqbal|slice:"8:12" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
 
-            <div class="btn-group ml-auto" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Carousel controls -->
+                    <a class="carousel-control-prev" href="#myCarousel2" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel2" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
             </div>
-
-            <div class="btn-group ml-auto" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-dark">1</button>
-            </div>
-
         </div>
     </div>
-    <br>
-</div>
+{% endif %}
+
+{% if pubishers %}
+    <div class="shell2">
+        <br>
+        <h2>জনপ্রিয় <b>প্রকাশনী</b></h2>
+        <br>
+        <br>
+        <div class="container">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                {% for i in pubishers|slice:"0:1" %}
+                    <div class="btn-group " role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
+                {% for i in pubishers|slice:"1:5" %}
+                    <div class="btn-group ml-auto" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                {% for i in pubishers|slice:"5:6" %}
+                    <div class="btn-group " role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
+                {% for i in pubishers|slice:"6:10" %}
+                    <div class="btn-group ml-auto" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <br>
+    </div>
+{% endif %}
 
 <br>
-
-<!-- Site footer -->
-<footer class="site-footer">
-    <div class="container">
+<br>
+{% if best_discount %}
+    <div class="shell">
         <div class="row">
-            <div class="col-sm-12 col-md-6">
-                <h6>Rokomari</h6>
-                <p class="text-justify">Rokomari.com is now one of the leading e-commerce organizations in Bangladesh.
-                    It is indeed the biggest online bookshop or bookstore in Bangladesh that helps you save time and
-                    money. You can buy books online with a few clicks or a convenient phone call. With breathtaking
-                    discounts and offers you can buy anything from Bangla Upannash or English story books to academic,
-                    research or competitive exam books. Superfast cash on delivery service brings the products at your
-                    doorstep. Our customer support, return and replacement policies will surely add extra confidence in
-                    your online shopping experience. Happy Shopping with Rokomari.com!
+            <div class="col-md-12">
+                <br>
+                <h2>অবিশ্বাস্য <b>ছাড়</b></h2>
+                <div id="myCarousel3" class="carousel slide" data-ride="carousel" data-interval="0">
+                    <!-- Wrapper for carousel items -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                {% for i in best_discount|slice:"0:4" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% for i in best_discount|slice:"4:8" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% for i in best_discount|slice:"8:12" %}
+                                    <div class="col-sm-3">
+                                        <div class="thumb-wrapper">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="static/images/rokomariapp/images/book_image.jpg">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                                    <h4>{{ i.1 }}</h4>
+                                                </a>
+                                                <p>By {{ i.2 }}</p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
 
-                </p>
-            </div>
 
-            <div class="col-xs-6 col-md-3">
-                <h6>Support</h6>
-                <ul class="footer-links">
-                    <li><a href="https://www.rokomari.com/contactus">Contact Us</a></li>
-                    <li><a href="https://www.rokomari.com/guide">Guide</a></li>
-                    <li><a href="https://www.rokomari.com/faq">FAQ</a></li>
-                    <li><a href="https://www.rokomari.com/pointing-faq">FAQ About Points</a></li>
-                    <li><a href="https://www.rokomari.com/help">Help Desk</a></li>
-                </ul>
-            </div>
+                    <!-- Carousel controls -->
+                    <a class="carousel-control-prev" href="#myCarousel3" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel3" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
 
-            <div class="col-xs-6 col-md-3">
-                <h6>Quick Links</h6>
-                <ul class="footer-links">
-                    <li><a href="https://www.rokomari.com/aboutus">About Us</a></li>
-                    <li><a href="https://www.rokomari.com/terms">Terms of Use</a></li>
-                    <li><a href="https://www.rokomari.com/policy">Privacy Policy</a></li>
-                    <li><a href="https://www.rokomari.com/terms#return">Happy Return</a></li>
-                    <li><a href="https://www.rokomari.com/terms#refund">Refund Policy</a></li>
-                </ul>
             </div>
         </div>
-        <hr>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-sm-6 col-xs-12">
-                <p class="copyright-text">Copyright &copy; 2020 All Rights Reserved by
-                    <a href="#">Rokomari</a>.
-                </p>
-            </div>
+{% endif %}
+<br>
+<br>
+{#footer#}
+{% include 'base/footer.html' %}
 
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <ul class="social-icons">
-                    <li><a class="facebook" href="https://www.facebook.com/rokomari"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li><a class="twitter" href="https://twitter.com/RokomariDotCom"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li><a class="dribbble" href="https://www.instagram.com/rokomari/"><i
-                            class="fa fa-dribbble"></i></a></li>
-                    <li><a class="linkedin" href="https://www.linkedin.com/company/10239632"><i
-                            class="fa fa-linkedin"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
-<!--end of footer-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 </body>
 
