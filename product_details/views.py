@@ -53,6 +53,7 @@ def get_book_info(id, dict):
     quercmd2 = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) WHERE ((A.AUTHOR_NAME = :myauth OR B.BOOK_GENRE= :mygenre) AND B.BOOK_ID <> :myid) ORDER BY RATINGS DESC"
     quercmd3 = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) WHERE (B.BOOK_ID <> :myid) ORDER BY RATINGS DESC"
 
+    totalsimprod = 3
 
     result2 = conn.cursor()
     result2.execute(cntcmd1, myauth = dict['author_name'], mygenre = dict['genre'], myid = id)
@@ -60,11 +61,97 @@ def get_book_info(id, dict):
     print(countrow1)
 
     result2 = conn.cursor()
-    result2.execute(cntcmd2, myauth=dict['author_name'], mygenre=dict['genre'], myid = id)
-    countrow2 = result2.fetchone()[0]
-    print(countrow2)
+    result2.execute(quercmd1, myauth=dict['author_name'], mygenre=dict['genre'], myid=id)
+    simprods = result2.fetchmany(countrow1)
+    prodnum = 1
 
-    if countrow1 >= 3:
+    for row in simprods:
+        bookid_key = "prod_" + str(prodnum) + "_book_id"
+        bookname_key = "prod_" + str(prodnum) + "_book_name"
+        authname_key = "prod_" + str(prodnum) + "_author_name"
+        rating_key = "prod_" + str(prodnum) + "_rating"
+        price_key = "prod_" + str(prodnum) + "_price"
+        image_key = "prod_" + str(prodnum) + "_image"
+
+        dict[bookid_key] = row[0]
+        dict[bookname_key] = row[1]
+        dict[authname_key] = row[2]
+        dict[rating_key] = row[4]
+        dict[price_key] = row[3]
+
+        if check_if_image_exists(row[0]):
+            dict[image_key] = row[0]
+        else:
+            dict[image_key] = "book_image"
+
+        print(dict[bookname_key])
+        prodnum = prodnum + 1
+
+    if countrow1 < totalsimprod:
+        result2 = conn.cursor()
+        result2.execute(cntcmd2, myauth=dict['author_name'], mygenre=dict['genre'], myid = id)
+        countrow2 = result2.fetchone()[0]
+        print(countrow2)
+
+        fetchnum = totalsimprod - countrow1
+        if fetchnum>countrow2:
+            fetchnum = countrow2
+        result2 = conn.cursor()
+        result2.execute(quercmd2, myauth=dict['author_name'], mygenre=dict['genre'], myid=id)
+        simprods = result2.fetchmany(fetchnum)
+
+        for row in simprods:
+            bookid_key = "prod_" + str(prodnum) + "_book_id"
+            bookname_key = "prod_" + str(prodnum) + "_book_name"
+            authname_key = "prod_" + str(prodnum) + "_author_name"
+            rating_key = "prod_" + str(prodnum) + "_rating"
+            price_key = "prod_" + str(prodnum) + "_price"
+            image_key = "prod_" + str(prodnum) + "_image"
+
+            dict[bookid_key] = row[0]
+            dict[bookname_key] = row[1]
+            dict[authname_key] = row[2]
+            dict[rating_key] = row[4]
+            dict[price_key] = row[3]
+
+            if check_if_image_exists(row[0]):
+                dict[image_key] = row[0]
+            else:
+                dict[image_key] = "book_image"
+
+            print(dict[bookname_key])
+            prodnum = prodnum + 1
+
+        if (countrow2+countrow1)<totalsimprod:
+            fetchnum = totalsimprod - countrow1 - countrow2
+            result2 = conn.cursor()
+            result2.execute(quercmd3, myid=id)
+            simprods = result2.fetchmany(fetchnum)
+
+            for row in simprods:
+                bookid_key = "prod_" + str(prodnum) + "_book_id"
+                bookname_key = "prod_" + str(prodnum) + "_book_name"
+                authname_key = "prod_" + str(prodnum) + "_author_name"
+                rating_key = "prod_" + str(prodnum) + "_rating"
+                price_key = "prod_" + str(prodnum) + "_price"
+                image_key = "prod_" + str(prodnum) + "_image"
+
+                dict[bookid_key] = row[0]
+                dict[bookname_key] = row[1]
+                dict[authname_key] = row[2]
+                dict[rating_key] = row[4]
+                dict[price_key] = row[3]
+
+                if check_if_image_exists(row[0]):
+                    dict[image_key] = row[0]
+                else:
+                    dict[image_key] = "book_image"
+
+                print(dict[bookname_key])
+                prodnum = prodnum + 1
+
+
+    '''if countrow1 >= 3:
         prodquer = quercmd1
     elif countrow2 >= 3:
         prodquer = quercmd2
@@ -102,7 +189,7 @@ def get_book_info(id, dict):
             dict[image_key] = "book_image"
 
         print(dict[bookname_key])
-        prodnum = prodnum +1
+        prodnum = prodnum +1'''
 
 
 def check_if_image_exists(id):
