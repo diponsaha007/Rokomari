@@ -204,51 +204,69 @@
                             <div class="col-sm-6 col-lg-4">
                                 <div class="clean-related-item">
                                     <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
-                                                                        src="{% static "images/rokomariapp/images/10000489.jpg" %}"></a>
+                                                                        src="../../static/images/rokomariapp/images/{{ prod_1_image }}.jpg"></a>
                                     </div>
-                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
+                                    <div class="related-name">
+                                        <a href="#">{{ prod_1_book_name }}</a>
+                                        <p>By {{ prod_1_author_name }}</p>
                                         <div class="rating"><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                                {% for j in '01234'|make_list %}
+                                                    {% if prod_1_rating > j|add:"0" and prod_1_rating < j|add:"1" %}
+                                                        <img src={% static "product_assests/assets/img/star-half-empty.svg" %}
+                                                                     {% elif prod_1_rating >= j|add:"1" %}
+                                                                     <img src={% static "product_assests/assets/img/star.svg" %}>
+                                                    {% else %}
+                                                        <img src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                                    {% endif %}
+                                                {% endfor %}
                                         </div>
-                                        <h4>$300</h4>
+                                        <h4>{{ prod_1_price }} Tk</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-lg-4">
                                 <div class="clean-related-item">
                                     <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
-                                                                        src="{% static "images/rokomariapp/images/10095999.jpg" %}"></a>
+                                                                        src="../../static/images/rokomariapp/images/{{ prod_2_image }}.jpg"></a>
                                     </div>
-                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
+                                    <div class="related-name">
+                                        <a href="#">{{ prod_2_book_name }}</a>
+                                        <p>By {{ prod_2_author_name }}</p>
                                         <div class="rating"><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                                {% for j in '01234'|make_list %}
+                                                    {% if prod_2_rating > j|add:"0" and prod_2_rating < j|add:"1" %}
+                                                        <img src={% static "product_assests/assets/img/star-half-empty.svg" %}
+                                                                     {% elif prod_2_rating >= j|add:"1" %}
+                                                                     <img src={% static "product_assests/assets/img/star.svg" %}>
+                                                    {% else %}
+                                                        <img src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                                    {% endif %}
+                                                {% endfor %}
                                         </div>
-                                        <h4>$300</h4>
+                                        <h4>{{ prod_2_price }} Tk</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-lg-4">
                                 <div class="clean-related-item">
                                     <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
-                                                                        src="{% static "images/rokomariapp/images/10021176.jpg" %}"></a>
+                                                                        src="../../static/images/rokomariapp/images/{{ prod_3_image }}.jpg"></a>
                                     </div>
-                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
+                                    <div class="related-name">
+                                        <a href="#">{{ prod_3_book_name }}</a>
+                                        <p>By {{ prod_3_author_name }}</p>
                                         <div class="rating"><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                                {% for j in '01234'|make_list %}
+                                                    {% if prod_3_rating > j|add:"0" and prod_3_rating < j|add:"1" %}
+                                                        <img src={% static "product_assests/assets/img/star-half-empty.svg" %}
+                                                                     {% elif prod_3_rating >= j|add:"1" %}
+                                                                     <img src={% static "product_assests/assets/img/star.svg" %}>
+                                                    {% else %}
+                                                        <img src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                                    {% endif %}
+                                                {% endfor %}
                                         </div>
-                                        <h4>$300</h4>
+                                        <h4>{{ prod_3_price }} Tk</h4>
                                     </div>
                                 </div>
                             </div>
