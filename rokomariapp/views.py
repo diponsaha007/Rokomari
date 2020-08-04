@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import cx_Oracle
 import os
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -69,7 +69,7 @@ def get_categories():
 def get_zafar_iqbal():
     result = conn.cursor()
     result.execute(
-        "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.PRICE-B.DISCOUNT,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) WHERE A.AUTHOR_NAME = 'মুহম্মদ জাফর ইকবাল' ORDER BY TOTAL_SOLD DESC")
+        "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE+B.DISCOUNT,B.PRICE,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) WHERE A.AUTHOR_NAME = 'মুহম্মদ জাফর ইকবাল' ORDER BY TOTAL_SOLD DESC")
     li = []
     for i in range(12):
         cnt = result.fetchone()
@@ -88,7 +88,7 @@ def get_zafar_iqbal():
 def get_humayun_ahmed():
     result = conn.cursor()
     result.execute(
-        "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.PRICE-B.DISCOUNT,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) WHERE A.AUTHOR_NAME = 'হুমায়ূন আহমেদ' ORDER BY TOTAL_SOLD DESC")
+        "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE+B.DISCOUNT,B.PRICE,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) WHERE A.AUTHOR_NAME = 'হুমায়ূন আহমেদ' ORDER BY TOTAL_SOLD DESC")
     li = []
     for i in range(12):
         cnt = result.fetchone()
@@ -107,7 +107,7 @@ def get_humayun_ahmed():
 def get_best_discount():
     result = conn.cursor()
     result.execute(
-        "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.PRICE-B.DISCOUNT,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) ORDER BY DISCOUNT DESC")
+        "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE+B.DISCOUNT,B.PRICE,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) ORDER BY DISCOUNT DESC")
 
     li = []
     for i in range(12):
@@ -127,7 +127,7 @@ def get_best_discount():
 def get_best_seller():
     result = conn.cursor()
     result.execute(
-        "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.PRICE-B.DISCOUNT,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) ORDER BY TOTAL_SOLD DESC")
+        "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE+B.DISCOUNT,B.PRICE,B.RATINGS FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) ORDER BY TOTAL_SOLD DESC")
     li = []
     for i in range(12):
         cnt = result.fetchone()

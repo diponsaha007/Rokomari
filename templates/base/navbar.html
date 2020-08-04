@@ -6,12 +6,13 @@
         </a>
 
         <div class="mx-auto order-0">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mx-auto mr-sm-2" type="search"
+            <form class="form-inline my-2 my-lg-0" action="{% url 'search_result:search' %}" method="post">
+                {% csrf_token %}
+                <input class="form-control mx-auto mr-sm-2" type="search" name="search"
                        placeholder="Search by Books, Authors or Publishers" aria-label="Search" style="width: 600px;">
-                <a href="{% url 'search_result:search' %}">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></a>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
+
         </div>
 
 

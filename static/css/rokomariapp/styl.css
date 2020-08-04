@@ -196,11 +196,7 @@ h2::after {
   color:#3366cc;
   text-decoration:none;
 }
-.site-footer a:hover
-{
-  color:#3366cc;
-  text-decoration:none;
-}
+
 .carousel-indicators li, .carousel-indicators li.active {
     width: 10px;
     height: 10px;
