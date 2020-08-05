@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import cx_Oracle
 import os
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -113,6 +113,7 @@ def get_best_discount():
     for i in range(12):
         cnt = result.fetchone()
         l2 = []
+        print(l2)
         for j in cnt:
             l2.append(j)
         l2[1] = slice_name(l2[1])
@@ -139,6 +140,7 @@ def get_best_seller():
             l2.append(l2[0])
         else:
             l2.append("book_image")
+        #print(l2)
         li.append(l2)
 
     return li
