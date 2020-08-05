@@ -122,10 +122,10 @@
                                 <nav>
                                     <ul class="pagination">
                                         {% if search_result.has_previous %}
-                                            <li class="page-item"><a class="page-link" href="{% url 'search_result:search' %}?page={{ search_result.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">Previous Page</span></a></li>
+                                            <li class="page-item"><a class="page-link" href="{% url 'search_result:search' %}?search={{ query }}/?page={{ search_result.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">Previous Page</span></a></li>
                                         {% endif %}
                                         {% if search_result.has_next %}
-                                            <li class="page-item"><a class="page-link" href="{% url 'search_result:search' %}?page={{ search_result.next_page_number }}" aria-label="Next"><span aria-hidden="true">Next Page</span></a></li>
+                                            <li class="page-item"><a class="page-link" href="{% url 'search_result:search' %}?search={{ query }}/?page={{ search_result.next_page_number }}" aria-label="Next"><span aria-hidden="true">Next Page</span></a></li>
                                         {% endif %}
                                     </ul>
                                 </nav>

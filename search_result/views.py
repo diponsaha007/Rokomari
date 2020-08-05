@@ -11,28 +11,36 @@ conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 # Create your views here.
 def search_result(request):
-    print(request.GET.get('search'))
     query = request.GET.get('search')
+
+    querar = query.split("/?page=")
+    shape = np.asarray(querar).shape[0]
+
+    if shape == 1:
+        query = querar[0]
+        page_num = 1
+    else:
+        query = querar[0]
+        page_num = querar[1]
+    print(request.GET)
+    print(page_num)
+    print(query)
 
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
         dict['logged_in'] = True
     dict['search_result'] = get_book_info(query)
 
-    P = Paginator(dict['search_result'] , 9)
-    #print(P.num_pages)
-
-    page_num = request.GET.get('page', 1)
-    print(page_num)
+    P = Paginator(dict['search_result'], 9)
 
     try:
         page = P.page(page_num)
     except EmptyPage:
         page = P.page(1)
 
-    dict2 = {'logged_in' : dict['logged_in'], 'search_result': page}
+    dict2 = {'logged_in' : dict['logged_in'], 'search_result': page, 'query' : query}
     print(dict2)
-    return render(request, "search_result/search_result.html", dict)
+    return render(request, "search_result/search_result.html", dict2)
 
 def get_book_info(query):
     if is_banglish(query):
