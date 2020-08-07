@@ -12,7 +12,7 @@ conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 # Create your views here.
 def search_result(request):
     query = request.GET.get('search')
-
+    #print(request.POST.get("price"), "post method", request.method)
     querar = query.split("/?page=")
     shape = np.asarray(querar).shape[0]
 
@@ -22,14 +22,41 @@ def search_result(request):
     else:
         query = querar[0]
         page_num = querar[1]
-    print(request.GET)
-    print(page_num)
-    print(query)
+    #print(request.GET)
+    #print(page_num)
+    #print(query)
 
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
         dict['logged_in'] = True
-    dict['search_result'] = get_book_info(query)
+    if request.method == "GET":
+        dict['search_result'] = get_book_info(query, "GET")
+        #print("GET er vitor")
+    elif request.method == "POST":
+        price_from = request.POST.get("price_from")
+        price_to = request.POST.get("price_to")
+        rating_from = request.POST.get("rating_from")
+        rating_to = request.POST.get("rating_to")
+        sort = request.POST.get("sort")
+        if price_from=='':
+            price_from = 0
+        if price_to=='':
+            price_to = 50000
+        if rating_from=='':
+            rating_from = 0
+        if rating_to=='':
+            rating_to = 5
+        if sort== None:
+            sort = "TOTAL_SOLD DESC"
+        price_from = int(float(price_from))
+        price_to = int(float(price_to))
+        rating_from = int(float(rating_from))
+        rating_to = int(float(rating_to))
+        print(price_from, price_to, rating_from, rating_to, sort)
+        dict['search_result'] = get_book_info(query, "POST", price_from, price_to, rating_from, rating_to,sort)
+        return render(request, "search_result/search_result.html", dict)
+        #print("POST er vitor", price_from, price_to)
+
 
     P = Paginator(dict['search_result'], 9)
 
@@ -39,14 +66,18 @@ def search_result(request):
         page = P.page(1)
 
     dict2 = {'logged_in' : dict['logged_in'], 'search_result': page, 'query' : query}
-    print(dict2)
+    #print(dict2)
     return render(request, "search_result/search_result.html", dict2)
 
-def get_book_info(query):
+def get_book_info(query,method, price_from=0, price_to=50000, rating_from = 0, rating_to = 5, sort = "TOTAL_SOLD DESC"):
     if is_banglish(query):
         #print(avro.parse(query))
         query = avro.parse(query)
-    quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  ((B.BOOK_NAME LIKE '%" + query + "%') OR (A.AUTHOR_NAME LIKE '%" + query + "%') OR (C.PUBLISHER_NAME LIKE '%" + query + "%')) ORDER BY B.TOTAL_SOLD DESC"
+    #print(sort)
+    if method == "GET":
+        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  ((B.BOOK_NAME LIKE '%" + query + "%') OR (A.AUTHOR_NAME LIKE '%" + query + "%') OR (C.PUBLISHER_NAME LIKE '%" + query + "%')) ORDER BY B.TOTAL_SOLD DESC"
+    elif method == "POST":
+        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  ((B.PRICE >= " + str(price_from) + " AND B.PRICE <= " + str(price_to) + " AND B.RATINGS >= " + str(rating_from) + " AND B.RATINGS <= " + str(rating_to) + ") AND ((B.BOOK_NAME LIKE '%" + query + "%') OR (A.AUTHOR_NAME LIKE '%" + query + "%') OR (C.PUBLISHER_NAME LIKE '%" + query + "%'))) ORDER BY B." + sort
     #print(quercmd)
     #print(query)
     db_cursor = conn.cursor()
@@ -60,8 +91,10 @@ def get_book_info(query):
         for item in row:
             l2.append(item)
         l2[1] = slice_name(l2[1])
+
         if check_if_image_exists(l2[0]):
             l2.append(l2[0])
+            print(l2)
         else:
             l2.append("book_image")
         #print(l2)
