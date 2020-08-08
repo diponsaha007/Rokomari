@@ -65,13 +65,17 @@
                                     <h3><strike>{{ price }} Tk</strike></h3>
                                     <h3>{{ discount_price }} Tk</h3>
                                 </div>
-                                <button class="btn btn-primary" type="button"><i class="icon-basket"></i>Add
-                                    to Cart
-                                </button>
+                                <a href="{% url 'cart:add_book' pk=book_id %}">
+                                    <button class="btn btn-outline-success" type="button"><i class="icon-basket"></i>Add
+                                        to Cart
+                                    </button>
+                                </a>
                                 <br>
-                                <button class="btn btn-primary" type="button"><i class="icon-list"></i>Add
-                                    to Wishlist
-                                </button>
+                                <a href="{% url 'wishlist:add_book' pk=book_id %}">
+                                    <button class="btn btn-outline-primary" type="button"><i class="icon-list"></i>Add
+                                        to Wishlist
+                                    </button>
+                                </a>
                                 <div class="summary"></div>
                             </div>
                         </div>
@@ -203,8 +207,10 @@
                         <div class="row justify-content-center">
                             <div class="col-sm-6 col-lg-4">
                                 <div class="clean-related-item">
-                                    <div class="image"><a href="{% url 'product_details:product_details' pk=prod_1_book_id %}"><img class="img-fluid d-block mx-auto"
-                                                                        src="../../static/images/rokomariapp/images/{{ prod_1_image }}.jpg"></a>
+                                    <div class="image"><a
+                                            href="{% url 'product_details:product_details' pk=prod_1_book_id %}"><img
+                                            class="img-fluid d-block mx-auto"
+                                            src="../../static/images/rokomariapp/images/{{ prod_1_image }}.jpg"></a>
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_1_book_id %}">{{ prod_1_book_name }}</a>
@@ -226,8 +232,10 @@
                             </div>
                             <div class="col-sm-6 col-lg-4">
                                 <div class="clean-related-item">
-                                    <div class="image"><a href="{% url 'product_details:product_details' pk=prod_2_book_id %}"><img class="img-fluid d-block mx-auto"
-                                                                        src="../../static/images/rokomariapp/images/{{ prod_2_image }}.jpg"></a>
+                                    <div class="image"><a
+                                            href="{% url 'product_details:product_details' pk=prod_2_book_id %}"><img
+                                            class="img-fluid d-block mx-auto"
+                                            src="../../static/images/rokomariapp/images/{{ prod_2_image }}.jpg"></a>
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_2_book_id %}">{{ prod_2_book_name }}</a>
@@ -249,8 +257,10 @@
                             </div>
                             <div class="col-sm-6 col-lg-4">
                                 <div class="clean-related-item">
-                                    <div class="image"><a href="{% url 'product_details:product_details' pk=prod_3_book_id %}"><img class="img-fluid d-block mx-auto"
-                                                                        src="../../static/images/rokomariapp/images/{{ prod_3_image }}.jpg"></a>
+                                    <div class="image"><a
+                                            href="{% url 'product_details:product_details' pk=prod_3_book_id %}"><img
+                                            class="img-fluid d-block mx-auto"
+                                            src="../../static/images/rokomariapp/images/{{ prod_3_image }}.jpg"></a>
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_3_book_id %}">{{ prod_3_book_name }}</a>

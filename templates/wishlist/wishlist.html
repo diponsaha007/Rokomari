@@ -10,7 +10,7 @@
     <link rel="stylesheet" href={% static "cart_assets/assets/bootstrap/css/bootstrap.min.css" %}>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href={% static "css/cart/smoothproducts.css" %}>
+    <link rel="stylesheet" href={% static "css/wishlist/smoothproducts.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -29,9 +30,8 @@
     <section class="clean-block clean-cart">
         <div class="container">
             <div class="block-heading">
-                <h2>Shopping Cart</h2>
-                <p>This is your cart. By clicking Checkout we will place your order. Please provide valid order
-                    location. Otherwise you won't receive your order.</p>
+                <h2>Wish List</h2>
+                <p>This is your wish list. Books that you want to read or buy later can be saved and found here.</p>
             </div>
             {% if logged_in %}
                 <form method="post">
@@ -40,14 +40,14 @@
                         <div class="row no-gutters">
                             <div class="col-md-12 col-lg-8">
                                 <div class="items">
-                                    {% if cart_books %}
-                                        {% for i in cart_books %}
+                                    {% if wishlist_books %}
+                                        {% for i in wishlist_books %}
                                             <div class="product">
                                                 <div class="row justify-content-center align-items-center">
                                                     <div class="col-md-3">
                                                         <div class="product-image">
                                                             <img class="img-fluid d-block mx-auto image"
-                                                                 src="../../static/images/rokomariapp/images/{{ i.7 }}.jpg">
+                                                                 src="../../static/images/rokomariapp/images/{{ i.6 }}.jpg">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-5 product-info">
@@ -79,14 +79,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <a href="{% url 'cart:remove_book' pk=i.0 %}">Remove Item</a>
-                                                    </div>
-                                                    <div class="col-6 col-md-2 quantity"><label
-                                                            class="d-none d-md-block"
-                                                            for="quantity">Quantity</label>
-                                                        <input type="number" id="number" name="quantity"
-                                                               class="form-control quantity-input"
-                                                               value={{ i.6 }}>
+                                                        <a href="{% url 'wishlist:remove_book' pk=i.0 %}">Remove
+                                                            Item</a>
                                                     </div>
                                                     <div class="col-6 col-md-2 price"><span>{{ i.5 }} Tk</span></div>
                                                 </div>
@@ -98,13 +92,8 @@
                             <div class="col-md-12 col-lg-4">
                                 <div class="summary">
                                     <h3>Summary</h3>
-                                    <h4><span class="text">Subtotal</span><span class="price">360 Tk</span></h4>
-                                    <h4><span class="text">Discount</span><span class="price">0 Tk</span></h4>
-                                    <h4><span class="text">Shipping</span><span class="price">0 Tk</span></h4>
-                                    <h4><span class="text">Total</span><span class="price">360 Tk</span></h4>
-                                    <label for="Textarea1">Delivery Location:</label>
-                                    <textarea class="form-control" id="Textarea1" name="location" rows="2"></textarea>
-                                    <button class="btn btn-primary btn-block btn-lg" type="submit">Checkout</button>
+                                    <h4><span class="text">Total Books</span><span class="price">3</span></h4>
+                                    <h4><span class="text">Total Price</span><span class="price">360 Tk</span></h4>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +101,7 @@
                 </form>
             {% else %}
                 <div class="block-heading">
-                    <h4>Please log in first in order to view your cart!</h4>
+                    <h4>Please log in first in order to view your Wish List!</h4>
                 </div>
             {% endif %}
         </div>
@@ -123,11 +112,11 @@
 {% include 'base/footer.html' %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-<script src={% static "js/cart/jquery.min.js" %}></script>
+<script src={% static "js/wishlist/jquery.min.js" %}></script>
 <script src={% static "cart_assets/assets/bootstrap/js/bootstrap.min.js" %}></script>
-<script src={% static "js/cart/smoothproducts.min.js" %}></script>
-<script src={% static "js/cart/theme.js" %}></script>
-<script src={% static "js/cart/cart.js" %}></script>
+<script src={% static "js/wishlist/smoothproducts.min.js" %}></script>
+<script src={% static "js/wishlist/theme.js" %}></script>
+<script src={% static "js/wishlist/wishlist.js" %}></script>
 </body>
 
 </html>
