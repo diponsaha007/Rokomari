@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href={% static "product_assests/assets/fonts/simple-line-icons.min.css" %}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href={% static "css/product_details/smoothproducts.css" %}>
+    <link rel="stylesheet" href={% static "css/search_result/smoothproducts.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
@@ -25,131 +25,176 @@
 
 <body>
 {% include  'base/navbar.html' %}
-    <main class="page catalog-page">
-        <section class="clean-block clean-catalog dark">
-            <div class="container">
-                <div class="content">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="d-none d-md-block">
-                                <div class="filters">
-                                    <h2>Filter Results</h2>
-                                    <br>
-                                    <form method="POST" action="{% url 'search_result:search' %}?search={{ query }}">
-                                        {% csrf_token %}
-                                        <div class="filter-item">
-                                                    <h3>Prices</h3>
-                                                            <input class="form-control mx-auto mr-sm-2" type="search" name="price_from" placeholder="From" aria-label="Search" style="width: 200px;">
-                                                            <input class="form-control mx-auto mr-sm-2" type="search" name="price_to" placeholder="To" aria-label="Search" style="width: 200px;">
-                                                </div>
-                                        <div class="filter-item">
-                                                    <h3>Ratings</h3>
-                                                            <input class="form-control mx-auto mr-sm-2" type="search" name="rating_from" placeholder="From" aria-label="Search" style="width: 200px;">
-                                                            <input class="form-control mx-auto mr-sm-2" type="search" name="rating_to" placeholder="To" aria-label="Search" style="width: 200px;">
-                                                </div>
-                                        <div class="filter-item">
-                                                    <h3>Sort</h3>
-                                                    <input type="radio" name="sort" value="PRICE ASC"> Price - Low to High<br>
-                                                    <input type="radio" name="sort" value="PRICE DESC"> Price - High to Low<br>
-                                                    <input type="radio" name="sort" value="DISCOUNT DESC"> Discount - High to Low<br>
-                                                    <input type="radio" name="sort" value="TOTAL_SOLD DESC"> Best Seller<br>
-                                                </div>
-                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
-                                    </form>
+<br>
+<br>
+<br>
+<main class="page catalog-page">
+    <section class="clean-block clean-catalog">
+        <div class="container">
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="d-none d-md-block">
+                            <div class="filters">
+                                <h2>Filter Results</h2>
+                                <br>
+                                <form method="POST" action="{% url 'search_result:search' %}?search={{ query }}">
+                                    {% csrf_token %}
+                                    <div class="filter-item">
+                                        <h3>Prices</h3>
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="price_from"
+                                               placeholder="From" aria-label="Search" style="width: 200px;">
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="price_to"
+                                               placeholder="To" aria-label="Search" style="width: 200px;">
+                                    </div>
+                                    <div class="filter-item">
+                                        <h3>Ratings</h3>
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="rating_from"
+                                               placeholder="From" aria-label="Search" style="width: 200px;">
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="rating_to"
+                                               placeholder="To" aria-label="Search" style="width: 200px;">
+                                    </div>
+                                    <div class="filter-item">
+                                        <h3>Sort</h3>
+                                        <input type="radio" name="sort" value="PRICE ASC"> Price - Low to High<br>
+                                        <input type="radio" name="sort" value="PRICE DESC"> Price - High to Low<br>
+                                        <input type="radio" name="sort" value="DISCOUNT DESC"> Discount - High to
+                                        Low<br>
+                                        <input type="radio" name="sort" value="TOTAL_SOLD DESC"> Best Seller<br>
+                                    </div>
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+                                </form>
 
-                                </div>
                             </div>
-                            <div class="d-md-none"><a class="btn btn-link d-md-none filter-collapse" data-toggle="collapse" aria-expanded="false" aria-controls="filters" href="#filters" role="button">Filters<i class="icon-arrow-down filter-caret"></i></a>
-                                <div class="collapse"
-                                    id="filters">
-                                    <div class="filters">
-                                        <div class="filter-item">
-                                            <h3>Categories</h3>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Phones</label></div>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2">Laptops</label></div>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">PC</label></div>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">Tablets</label></div>
+                        </div>
+                        <div class="d-md-none"><a class="btn btn-link d-md-none filter-collapse" data-toggle="collapse"
+                                                  aria-expanded="false" aria-controls="filters" href="#filters"
+                                                  role="button">Filters<i class="icon-arrow-down filter-caret"></i></a>
+                            <div class="collapse"
+                                 id="filters">
+                                <div class="filters">
+                                    <div class="filter-item">
+                                        <h3>Categories</h3>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-1"><label class="form-check-label"
+                                                                                               for="formCheck-1">Phones</label>
                                         </div>
-                                        <div class="filter-item">
-                                            <h3>Brands</h3>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-5">Samsung</label></div>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6"><label class="form-check-label" for="formCheck-6">Apple</label></div>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7"><label class="form-check-label" for="formCheck-7">HTC</label></div>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-2"><label class="form-check-label"
+                                                                                               for="formCheck-2">Laptops</label>
                                         </div>
-                                        <div class="filter-item">
-                                            <h3>OS</h3>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8"><label class="form-check-label" for="formCheck-8">Android</label></div>
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9"><label class="form-check-label" for="formCheck-9">iOS</label></div>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-3"><label class="form-check-label"
+                                                                                               for="formCheck-3">PC</label>
+                                        </div>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-4"><label class="form-check-label"
+                                                                                               for="formCheck-4">Tablets</label>
+                                        </div>
+                                    </div>
+                                    <div class="filter-item">
+                                        <h3>Brands</h3>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-5"><label class="form-check-label"
+                                                                                               for="formCheck-5">Samsung</label>
+                                        </div>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-6"><label class="form-check-label"
+                                                                                               for="formCheck-6">Apple</label>
+                                        </div>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-7"><label class="form-check-label"
+                                                                                               for="formCheck-7">HTC</label>
+                                        </div>
+                                    </div>
+                                    <div class="filter-item">
+                                        <h3>OS</h3>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-8"><label class="form-check-label"
+                                                                                               for="formCheck-8">Android</label>
+                                        </div>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-9"><label class="form-check-label"
+                                                                                               for="formCheck-9">iOS</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-9">
-                            <div class="products">
-                                <div class="row no-gutters">
-                                    {% if search_result %}
-                                        {% for i in search_result %}
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="clean-product-item">
-                                                    <div class="image"><a href="{% url 'product_details:product_details' pk=i.0 %}"><img class="img-fluid d-block mx-auto"
-                                                                                src="../../static/images/rokomariapp/images/{{ i.7 }}.jpg"></a></div>
-                                                    <div class="product-name">
-                                                        <a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
-                                                        <p>{{ i.2 }}</p>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="products">
+                            <div class="row no-gutters">
+                                {% if search_result %}
+                                    {% for i in search_result %}
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="clean-product-item">
+                                                <div class="image"><a
+                                                        href="{% url 'product_details:product_details' pk=i.0 %}"><img
+                                                        class="img-fluid d-block mx-auto"
+                                                        src="../../static/images/rokomariapp/images/{{ i.7 }}.jpg"></a>
+                                                </div>
+                                                <div class="product-name">
+                                                    <a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
+                                                    <p>{{ i.2 }}</p>
+                                                </div>
+                                                <div class="about">
+                                                    <br>
+                                                    <div class="rating">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.4 > j|add:"0" and i.4 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.4 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     </div>
-                                                    <div class="about">
-
-                                                        <br>
-                                                        <div class="rating">
-                                                            {% for j in '01234'|make_list %}
-                                                                {% if i.4 > j|add:"0" and i.4 < j|add:"1" %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star-half-o"></i></li>
-                                                                {% elif i.4 >= j|add:"1" %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star"></i>
-                                                                    </li>
-                                                                {% else %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star-o"></i></li>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </div>
-                                                        <div class="price">
-                                                            <h3>{{ i.3 }} Tk</h3>
-                                                        </div>
+                                                    <div class="price">
+                                                        <h3>{{ i.3 }} Tk</h3>
                                                     </div>
                                                 </div>
                                             </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                                <nav>
-                                    <ul class="pagination">
-                                        {% if search_result.has_previous %}
-                                            <li class="page-item"><a class="page-link" href="{% url 'search_result:search' %}?search={{ query }}/?page={{ search_result.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">Previous Page</span></a></li>
-                                        {% endif %}
-                                        {% if search_result.has_next %}
-                                            <li class="page-item"><a class="page-link" href="{% url 'search_result:search' %}?search={{ query }}/?page={{ search_result.next_page_number }}" aria-label="Next"><span aria-hidden="true">Next Page</span></a></li>
-                                        {% endif %}
-                                    </ul>
-                                </nav>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
+                            <nav>
+                                <ul class="pagination">
+                                    {% if search_result.has_previous %}
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="{% url 'search_result:search' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
+                                                                 aria-label="Previous"><span aria-hidden="true">Previous Page</span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if search_result.has_next %}
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="{% url 'search_result:search' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
+                                                                 aria-label="Next"><span
+                                                aria-hidden="true">Next Page</span></a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-    {#footer#}
+        </div>
+    </section>
+</main>
+{#footer#}
 {% include 'base/footer.html' %}
 
-<script src={% static "js/product_details/jquery.min.js" %}></script>
+<script src={% static "js/search_result/jquery.min.js" %}></script>
 <script src={% static "product_assests/assets/bootstrap/js/bootstrap.min.js" %}></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-<script src={% static "js/product_details/smoothproducts.min.js" %}></script>
-<script src={% static "js/product_details/theme.js" %}></script>
+<script src={% static "js/search_result/smoothproducts.min.js" %}></script>
+<script src={% static "js/search_result/theme.js" %}></script>
 
 </body>
 

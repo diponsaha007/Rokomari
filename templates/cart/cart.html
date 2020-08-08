@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Buy Book Online | Rokomari.com</title>
+    <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
+    <link rel="stylesheet" href={% static "cart_assets/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href={% static "css/cart/smoothproducts.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animate/animate.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/css-hamburgers/hamburgers.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+{% include  'base/navbar.html' %}
+<main class="page shopping-cart-page">
+    <section class="clean-block clean-cart">
+        <div class="container">
+            <div class="block-heading">
+                <h2>Shopping Cart</h2>
+                <p>This is your cart. By clicking Checkout we will place your order. Please provide valid order
+                    location. Otherwise you won't receive your order.</p>
+            </div>
+            {% if logged_in %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="content">
+                        <div class="row no-gutters">
+                            <div class="col-md-12 col-lg-8">
+                                <div class="items">
+                                    {% if cart_books %}
+                                        {% for i in cart_books %}
+                                            <div class="product">
+                                                <div class="row justify-content-center align-items-center">
+                                                    <div class="col-md-3">
+                                                        <div class="product-image">
+                                                            <img class="img-fluid d-block mx-auto image"
+                                                                 src="../../static/images/rokomariapp/images/{{ i.7 }}.jpg">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5 product-info">
+                                                        <a class="product-name"
+                                                           href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
+                                                        <div class="product-specs">
+                                                            <div><span>Author :&nbsp;</span><span
+                                                                    class="value">{{ i.2 }}</span></div>
+                                                            <div><span>Genre :&nbsp;</span><span
+                                                                    class="value">{{ i.3 }}</span></div>
+                                                            <div><span>Rating :&nbsp;</span>
+                                                                <div class="star-rating">
+                                                                    <ul class="list-inline">
+                                                                        {% for j in '01234'|make_list %}
+                                                                            {% if i.4 > j|add:"0" and i.4 < j|add:"1" %}
+                                                                                <li class="list-inline-item"><i
+                                                                                        class="fa fa-star-half-o"></i>
+                                                                                </li>
+                                                                            {% elif i.4 >= j|add:"1" %}
+                                                                                <li class="list-inline-item"><i
+                                                                                        class="fa fa-star"></i>
+                                                                                </li>
+                                                                            {% else %}
+                                                                                <li class="list-inline-item"><i
+                                                                                        class="fa fa-star-o"></i></li>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a href="{% url 'cart:remove_book' pk=i.0 %}">Remove Item</a>
+                                                    </div>
+                                                    <div class="col-6 col-md-2 quantity"><label
+                                                            class="d-none d-md-block"
+                                                            for="quantity">Quantity</label>
+                                                        <input type="number" id="number" name="quantity"
+                                                               class="form-control quantity-input"
+                                                               value={{ i.6 }}>
+                                                    </div>
+                                                    <div class="col-6 col-md-2 price"><span>{{ i.5 }} Tk</span></div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-4">
+                                <div class="summary">
+                                    <h3>Summary</h3>
+                                    <h4><span class="text">Subtotal</span><span class="price">360 Tk</span></h4>
+                                    <h4><span class="text">Discount</span><span class="price">0 Tk</span></h4>
+                                    <h4><span class="text">Shipping</span><span class="price">0 Tk</span></h4>
+                                    <h4><span class="text">Total</span><span class="price">360 Tk</span></h4>
+                                    <button class="btn btn-primary btn-block btn-lg" type="submit">Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+                <div class="block-heading">
+                    <h4>Please log in first in order to view your cart!</h4>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</main>
+
+{#footer#}
+{% include 'base/footer.html' %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src={% static "js/cart/jquery.min.js" %}></script>
+<script src={% static "cart_assets/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "js/cart/smoothproducts.min.js" %}></script>
+<script src={% static "js/cart/theme.js" %}></script>
+<script src={% static "js/cart/cart.js" %}></script>
+</body>
+
+</html>

@@ -5,7 +5,7 @@ import numpy as np
 from pyavrophonetic import avro
 from django.core.paginator import Paginator
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -52,7 +52,7 @@ def search_result(request):
         price_to = int(float(price_to))
         rating_from = int(float(rating_from))
         rating_to = int(float(rating_to))
-        print(price_from, price_to, rating_from, rating_to, sort)
+        #print(price_from, price_to, rating_from, rating_to, sort)
         dict['search_result'] = get_book_info(query, "POST", price_from, price_to, rating_from, rating_to,sort)
         return render(request, "search_result/search_result.html", dict)
         #print("POST er vitor", price_from, price_to)
@@ -94,7 +94,7 @@ def get_book_info(query,method, price_from=0, price_to=50000, rating_from = 0, r
 
         if check_if_image_exists(l2[0]):
             l2.append(l2[0])
-            print(l2)
+            #print(l2)
         else:
             l2.append("book_image")
         #print(l2)
