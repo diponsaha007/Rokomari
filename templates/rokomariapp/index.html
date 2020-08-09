@@ -208,12 +208,12 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in categories|slice:"0:1" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:genre' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
                 {% for i in categories|slice:"1:5" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:genre' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
             </div>
@@ -223,12 +223,12 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in categories|slice:"5:6" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:genre' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
                 {% for i in categories|slice:"6:10" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:genre' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
 
@@ -395,12 +395,12 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in authors|slice:"0:1" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:author' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
                 {% for i in authors|slice:"1:5" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:author' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
             </div>
@@ -410,12 +410,12 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in authors|slice:"5:6" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:author' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
                 {% for i in authors|slice:"6:10" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:author' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
 
@@ -583,12 +583,12 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in pubishers|slice:"0:1" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:publisher' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
                 {% for i in pubishers|slice:"1:5" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:publisher' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
             </div>
@@ -598,12 +598,12 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in pubishers|slice:"5:6" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:publisher' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
                 {% for i in pubishers|slice:"6:10" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        <a href="{% url 'product_list:publisher' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
                     </div>
                 {% endfor %}
 

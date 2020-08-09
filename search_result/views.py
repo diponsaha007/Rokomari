@@ -5,7 +5,7 @@ import numpy as np
 from pyavrophonetic import avro
 from django.core.paginator import Paginator
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -54,6 +54,7 @@ def search_result(request):
         rating_to = int(float(rating_to))
         #print(price_from, price_to, rating_from, rating_to, sort)
         dict['search_result'] = get_book_info(query, "POST", price_from, price_to, rating_from, rating_to,sort)
+        dict['query'] = query
         return render(request, "search_result/search_result.html", dict)
         #print("POST er vitor", price_from, price_to)
 
