@@ -206,7 +206,7 @@ def get_book_info(query,method, type, price_from=0, price_to=50000, rating_from 
 
     search_results = db_cursor.fetchall()
     li = []
-
+    summary = ' '
     for row in search_results:
         l2 = []
         for item in row:
@@ -218,15 +218,17 @@ def get_book_info(query,method, type, price_from=0, price_to=50000, rating_from 
             summary = row[9]
         else:
             summary = ' '
-        if summary == None:
-            summary = ' '
-        #print(row[7], row[9], summary)
+
+        print(row[7], row[9], summary)
         if check_if_image_exists(l2[0]):
             l2.append(l2[0])
         else:
             l2.append("book_image")
 
         li.append(l2)
+
+    if summary == None:
+        summary = ' '
     return li , summary
 
 
