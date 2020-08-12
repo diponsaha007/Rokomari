@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import cx_Oracle
 from argon2 import PasswordHasher as ph
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
@@ -99,7 +99,7 @@ def check_registration(request):
     result.execute("SELECT USER_NAME FROM ROKOMARIADMIN.CUSTOMER WHERE USER_NAME= :mybv", mybv=username)
     cnt = result.fetchone()
     if cnt is not None:
-        print("Already ache")
+        # print("Already ache")
         return -2
     # get the maximum id till now
     result.execute("SELECT MAX(USER_ID) FROM ROKOMARIADMIN.CUSTOMER")

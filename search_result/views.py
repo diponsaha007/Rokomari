@@ -5,7 +5,7 @@ import numpy as np
 from pyavrophonetic import avro
 from django.core.paginator import Paginator
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -76,9 +76,9 @@ def get_book_info(query,method, price_from=0, price_to=50000, rating_from = 0, r
         query = avro.parse(query)
     #print(sort)
     if method == "GET":
-        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  ((B.BOOK_NAME LIKE '%" + query + "%') OR (A.AUTHOR_NAME LIKE '%" + query + "%') OR (C.PUBLISHER_NAME LIKE '%" + query + "%')) ORDER BY B.TOTAL_SOLD DESC"
+        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  ((B.BOOK_NAME LIKE '%" + query + "%') OR (A.AUTHOR_NAME LIKE '%" + query + "%') OR (C.PUBLISHER_NAME LIKE '%" + query + "%') OR (B.BOOK_GENRE LIKE '%" + query + "%')) ORDER BY B.TOTAL_SOLD DESC"
     elif method == "POST":
-        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  ((B.PRICE >= " + str(price_from) + " AND B.PRICE <= " + str(price_to) + " AND B.RATINGS >= " + str(rating_from) + " AND B.RATINGS <= " + str(rating_to) + ") AND ((B.BOOK_NAME LIKE '%" + query + "%') OR (A.AUTHOR_NAME LIKE '%" + query + "%') OR (C.PUBLISHER_NAME LIKE '%" + query + "%'))) ORDER BY B." + sort
+        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  ((B.PRICE >= " + str(price_from) + " AND B.PRICE <= " + str(price_to) + " AND B.RATINGS >= " + str(rating_from) + " AND B.RATINGS <= " + str(rating_to) + ") AND ((B.BOOK_NAME LIKE '%" + query + "%') OR (A.AUTHOR_NAME LIKE '%" + query + "%') OR (C.PUBLISHER_NAME LIKE '%" + query + "%')OR (B.BOOK_GENRE LIKE '%" + query + "%'))) ORDER BY B." + sort
     #print(quercmd)
     #print(query)
     db_cursor = conn.cursor()

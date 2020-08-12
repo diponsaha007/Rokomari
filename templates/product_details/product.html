@@ -46,8 +46,11 @@
                         <div class="col-md-6">
                             <div class="info">
                                 <h3>{{ book_name }}</h3>
-                                <p>By {{ author_name }}</p>
-                                <p>Genre : {{ genre }}</p>
+                                <div class="extraDetails">
+                                    <p>By <a href="{% url 'product_list:author' query=author_name %}">{{ author_name }}</a>
+                                    </p>
+                                    <p>Genre : <a href="{% url 'product_list:genre' query=genre %}">{{ genre }}</a></p>
+                                </div>
                                 <div class="rating">
                                     {% for j in '01234'|make_list %}
                                         {% if rating > j|add:"0" and rating < j|add:"1" %}
@@ -109,11 +112,14 @@
                                         </tr>
                                         <tr>
                                             <td class="stat">Book Author</td>
-                                            <td>{{ author_name }}</td>
+                                            <td>
+                                                <a href="{% url 'product_list:author' query=author_name %}">{{ author_name }}</a>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="stat">Book Genre</td>
-                                            <td>{{ genre }}</td>
+                                            <td><a href="{% url 'product_list:genre' query=genre %}">{{ genre }}</a>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="stat">Book Price</td>
@@ -121,7 +127,9 @@
                                         </tr>
                                         <tr>
                                             <td class="stat">Publisher</td>
-                                            <td>{{ publisher_name }}</td>
+                                            <td>
+                                                <a href="{% url 'product_list:publisher' query=publisher_name %}">{{ publisher_name }}</a>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="stat">ISBN</td>
@@ -190,8 +198,8 @@
                                                 src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
                                                 src={% static "product_assests/assets/img/star-empty.svg" %}>
                                         </div>
-                                        <h4>Incredible product</h4><span class="text-muted"><a href="#">John
-                                                    Smith</a>, 20 Jan 2018</span>
+                                        <h4>Incredible product</h4>
+                                        <span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue
                                             nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum
                                             dolor sit amet, consectetur adipiscing elit.</p>
@@ -214,7 +222,7 @@
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_1_book_id %}">{{ prod_1_book_name }}</a>
-                                        <p>By {{ prod_1_author_name }}</p>
+                                        <p>By <a href="{% url 'product_list:author' query=prod_1_author_name %}">{{ prod_1_author_name }}</a></p>
                                         <div class="rating">
                                             {% for j in '01234'|make_list %}
                                                 {% if prod_1_rating > j|add:"0" and prod_1_rating < j|add:"1" %}
@@ -239,7 +247,7 @@
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_2_book_id %}">{{ prod_2_book_name }}</a>
-                                        <p>By {{ prod_2_author_name }}</p>
+                                        <p>By <a href="{% url 'product_list:author' query=prod_2_author_name %}">{{ prod_2_author_name }}</a></p>
                                         <div class="rating">
                                             {% for j in '01234'|make_list %}
                                                 {% if prod_2_rating > j|add:"0" and prod_2_rating < j|add:"1" %}
@@ -264,7 +272,7 @@
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_3_book_id %}">{{ prod_3_book_name }}</a>
-                                        <p>By {{ prod_3_author_name }}</p>
+                                        <p>By <a href="{% url 'product_list:author' query=prod_3_author_name %}">{{ prod_3_author_name }}</a></p>
                                         <div class="rating"><img
                                             {% for j in '01234'|make_list %}
                                                 {% if prod_3_rating > j|add:"0" and prod_3_rating < j|add:"1" %}

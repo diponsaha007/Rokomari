@@ -9,10 +9,51 @@ body {
     color: #383838;
     background: #3b3b3b url(../../backgroundimg/body.png);
 }
-.product-page img{
+
+.product-page img {
     max-width: 150px;
     max-height: 350px;
 }
+
+.extraDetails a:link {
+    color: #3e3636;
+    text-decoration: none;
+}
+
+.extraDetails a:visited {
+    color: #425f95;
+    text-decoration: none;
+}
+
+.extraDetails a:hover {
+    color: #024cee;
+    text-decoration: none;
+}
+
+.extraDetails a:active {
+    color: #1533d0;
+    text-decoration: none;
+}
+td a:link {
+    color: #3a4155;
+    text-decoration: none;
+}
+
+td a:visited {
+    color: #1e8cb6;
+    text-decoration: none;
+}
+
+td a:hover {
+    color: #024cee;
+    text-decoration: none;
+}
+
+td a:active {
+    color: #1533d0;
+    text-decoration: none;
+}
+
 
 .sp-loading {
     text-align: center;

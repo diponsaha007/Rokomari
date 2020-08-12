@@ -5,7 +5,7 @@ import numpy as np
 from pyavrophonetic import avro
 from django.core.paginator import Paginator
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -67,7 +67,7 @@ def product_list_author(request, query):
         page = P.page(page_num)
     except EmptyPage:
         page = P.page(1)
-    print(dict['summary'])
+    #print(dict['summary'])
     dict2 = {'logged_in' : dict['logged_in'], 'search_result': page,  'name' : query, 'classify' : 'এর', 'is_author' : True, 'is_genre' : False , 'is_publication' : False ,  type : "A.AUTHOR_NAME", 'summary' : dict['summary']}
 
     return render(request, "product_list/product_list.html", dict2)
@@ -128,7 +128,7 @@ def product_list_genre(request, query):
         page = P.page(page_num)
     except EmptyPage:
         page = P.page(1)
-    print(dict['summary'])
+    #print(dict['summary'])
     dict2 = {'logged_in' : dict['logged_in'], 'search_result': page,  'name' : query, 'classify' : "জন্রা'র", 'is_author' : False, 'is_genre' : True , 'is_publication' : False ,  type : "A.AUTHOR_NAME", 'summary' : dict['summary']}
 
     return render(request, "product_list/product_list.html", dict2)
@@ -189,7 +189,7 @@ def product_list_publisher(request, query):
         page = P.page(page_num)
     except EmptyPage:
         page = P.page(1)
-    print(dict['summary'])
+    #print(dict['summary'])
     dict2 = {'logged_in' : dict['logged_in'], 'search_result': page,  'name' : query, 'classify' : "এর", 'is_author' : False, 'is_genre' : False , 'is_publisher' : True ,  type : "A.AUTHOR_NAME", 'summary' : dict['summary']}
 
     return render(request, "product_list/product_list.html", dict2)
@@ -197,7 +197,7 @@ def product_list_publisher(request, query):
 def get_book_info(query,method, type, price_from=0, price_to=50000, rating_from = 0, rating_to = 5, sort = "TOTAL_SOLD DESC"):
     if method == "GET":
         quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT, A.AUTHOR_SUMMARY, B.BOOK_GENRE, C.PUBLISHER_SUMMARY FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  " + type +" = '" + query +"' ORDER BY B.TOTAL_SOLD DESC"
-        print(quercmd)
+        #print(quercmd)
     elif method == "POST":
         quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT, A.AUTHOR_SUMMARY, B.BOOK_GENRE, C.PUBLISHER_SUMMARY FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  B.PRICE >= " + str(price_from) + " AND B.PRICE <= " + str(price_to) + " AND B.RATINGS >= " + str(rating_from) + " AND B.RATINGS <= " + str(rating_to) + " AND " + type +" = '" + query +"' ORDER BY B." + sort
 
@@ -219,7 +219,7 @@ def get_book_info(query,method, type, price_from=0, price_to=50000, rating_from 
         else:
             summary = ' '
 
-        print(row[7], row[9], summary)
+        #print(row[7], row[9], summary)
         if check_if_image_exists(l2[0]):
             l2.append(l2[0])
         else:

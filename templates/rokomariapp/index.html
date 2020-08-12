@@ -58,39 +58,42 @@
                                     <div class="col-sm-3">
                                         <div class="thumb-wrapper">
 
-                                                <div class="img-box">
-                                                    <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
-                                                         class="productImage"
-                                                         alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
-                                                </div>
-                                                <div class="thumb-content">
-                                                    <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
-                                                    </a>
-                                                    <p>By {{ i.2 }}</p>
-                                                    <p class="item-price"><strike>{{ i.3 }}৳</strike>
-                                                        <span>{{ i.4 }}৳</span></p>
-                                                    <div class="star-rating">
-                                                        <ul class="list-inline">
-                                                            {% for j in '01234'|make_list %}
-                                                                {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star-half-o"></i></li>
-                                                                {% elif i.5 >= j|add:"1" %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star"></i>
-                                                                    </li>
-                                                                {% else %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star-o"></i></li>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
+                                                </a>
 
-                                                    <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
 
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
                                                 </div>
+
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
+
+                                            </div>
 
                                         </div>
                                     </div>
@@ -102,37 +105,38 @@
                                 {% for i in best_seller|slice:"4:8" %}
                                     <div class="col-sm-3">
                                         <div class="thumb-wrapper">
-                                                <div class="img-box">
-                                                    <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
-                                                         class="productImage"
-                                                         alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
-                                                </div>
-                                                <div class="thumb-content">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                    <p>By {{ i.2 }}</p>
-                                                    <p class="item-price"><strike>{{ i.3 }}৳</strike>
-                                                        <span>{{ i.4 }}৳</span></p>
-                                                    <div class="star-rating">
-                                                        <ul class="list-inline">
-                                                            {% for j in '01234'|make_list %}
-                                                                {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star-half-o"></i></li>
-                                                                {% elif i.5 >= j|add:"1" %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star"></i>
-                                                                    </li>
-                                                                {% else %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star-o"></i></li>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                    <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
                                                 </div>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -144,37 +148,38 @@
                                 {% for i in best_seller|slice:"8:12" %}
                                     <div class="col-sm-3">
                                         <div class="thumb-wrapper">
-                                                <div class="img-box">
-                                                    <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
-                                                         class="productImage"
-                                                         alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
-                                                </div>
-                                                <div class="thumb-content">
-                                                    <a href="{% url 'product_details:product_details' pk=i.0 %}">
+                                            <div class="img-box">
+                                                <img src="static/images/rokomariapp/images/{{ i.6 }}.jpg"
+                                                     class="productImage"
+                                                     alt="{% static "images/rokomariapp/images/book_image.jpg" %}">
+                                            </div>
+                                            <div class="thumb-content">
+                                                <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
-                                                    </a>
-                                                    <p>By {{ i.2 }}</p>
-                                                    <p class="item-price"><strike>{{ i.3 }}৳</strike>
-                                                        <span>{{ i.4 }}৳</span></p>
-                                                    <div class="star-rating">
-                                                        <ul class="list-inline">
-                                                            {% for j in '01234'|make_list %}
-                                                                {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star-half-o"></i></li>
-                                                                {% elif i.5 >= j|add:"1" %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star"></i>
-                                                                    </li>
-                                                                {% else %}
-                                                                    <li class="list-inline-item"><i
-                                                                            class="fa fa-star-o"></i></li>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                    <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                </a>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p class="item-price"><strike>{{ i.3 }}৳</strike>
+                                                    <span>{{ i.4 }}৳</span></p>
+                                                <div class="star-rating">
+                                                    <ul class="list-inline">
+                                                        {% for j in '01234'|make_list %}
+                                                            {% if i.5 > j|add:"0" and i.5 < j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-half-o"></i></li>
+                                                            {% elif i.5 >= j|add:"1" %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star"></i>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="list-inline-item"><i
+                                                                        class="fa fa-star-o"></i></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
                                                 </div>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -208,12 +213,16 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in categories|slice:"0:1" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <a href="{% url 'product_list:genre' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:genre' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
                 {% for i in categories|slice:"1:5" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <a href="{% url 'product_list:genre' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:genre' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
             </div>
@@ -223,12 +232,16 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in categories|slice:"5:6" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <a href="{% url 'product_list:genre' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:genre' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
                 {% for i in categories|slice:"6:10" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <a href="{% url 'product_list:genre' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:genre' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
 
@@ -262,7 +275,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -281,7 +294,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -302,7 +316,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -321,7 +335,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -342,7 +357,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -361,7 +376,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -395,12 +411,16 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in authors|slice:"0:1" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <a href="{% url 'product_list:author' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:author' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
                 {% for i in authors|slice:"1:5" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <a href="{% url 'product_list:author' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:author' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
             </div>
@@ -410,12 +430,16 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in authors|slice:"5:6" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <a href="{% url 'product_list:author' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:author' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
                 {% for i in authors|slice:"6:10" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <a href="{% url 'product_list:author' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:author' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
 
@@ -449,7 +473,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -468,7 +492,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -489,7 +514,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -508,7 +533,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -530,7 +556,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -549,7 +575,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -583,12 +610,16 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in pubishers|slice:"0:1" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <a href="{% url 'product_list:publisher' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:publisher' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
                 {% for i in pubishers|slice:"1:5" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <a href="{% url 'product_list:publisher' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:publisher' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
             </div>
@@ -598,12 +629,16 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 {% for i in pubishers|slice:"5:6" %}
                     <div class="btn-group " role="group" aria-label="First group">
-                        <a href="{% url 'product_list:publisher' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:publisher' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
                 {% for i in pubishers|slice:"6:10" %}
                     <div class="btn-group ml-auto" role="group" aria-label="First group">
-                        <a href="{% url 'product_list:publisher' query=i %}"><button type="button" class="btn btn-outline-dark">{{ i }}</button></a>
+                        <a href="{% url 'product_list:publisher' query=i %}">
+                            <button type="button" class="btn btn-outline-dark">{{ i }}</button>
+                        </a>
                     </div>
                 {% endfor %}
 
@@ -638,7 +673,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -657,7 +692,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -678,7 +714,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -697,7 +733,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -718,7 +755,7 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By {{ i.2 }}</p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -737,7 +774,8 @@
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
-                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add to Cart</a>
+                                                <a href="{% url 'cart:add_book' pk=i.0 %}" class="btn btn-primary">Add
+                                                    to Cart</a>
                                             </div>
                                         </div>
                                     </div>

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, reverse
 import cx_Oracle
 import os
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -14,7 +14,7 @@ def cart(request):
     if request.session.has_key('user_id'):
         dict['logged_in'] = True
         dict['cart_books'] = get_cart_books(request.session['user_id'])
-        print(request.POST)
+        #print(request.POST)
     return render(request, "cart/cart.html", dict)
 
 

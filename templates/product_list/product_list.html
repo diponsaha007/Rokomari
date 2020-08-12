@@ -39,38 +39,38 @@
                                 <h2>Filter Results</h2>
                                 <br>
                                 {% if is_author %}
-                                <form method="POST" action="{% url 'product_list:author' query=name %}">
-                                    {% endif %}
-                                    {% if is_genre %}
-                                <form method="POST" action="{% url 'product_list:genre' query=name %}">
-                                    {% endif %}
-                                    {% if is_publisher %}
-                                <form method="POST" action="{% url 'product_list:publisher' query=name %}">
-                                    {% endif %}
-                                    {% csrf_token %}
-                                    <div class="filter-item">
-                                        <h3>Prices</h3>
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="price_from"
-                                               placeholder="From" aria-label="Search" style="width: 200px;">
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="price_to"
-                                               placeholder="To" aria-label="Search" style="width: 200px;">
-                                    </div>
-                                    <div class="filter-item">
-                                        <h3>Ratings</h3>
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="rating_from"
-                                               placeholder="From" aria-label="Search" style="width: 200px;">
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="rating_to"
-                                               placeholder="To" aria-label="Search" style="width: 200px;">
-                                    </div>
-                                    <div class="filter-item">
-                                        <h3>Sort</h3>
-                                        <input type="radio" name="sort" value="PRICE ASC"> Price - Low to High<br>
-                                        <input type="radio" name="sort" value="PRICE DESC"> Price - High to Low<br>
-                                        <input type="radio" name="sort" value="DISCOUNT DESC"> Discount - High to
-                                        Low<br>
-                                        <input type="radio" name="sort" value="TOTAL_SOLD DESC"> Best Seller<br>
-                                    </div>
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+                                    <form method="POST" action="{% url 'product_list:author' query=name %}">
+                                {% endif %}
+                                {% if is_genre %}
+                                    <form method="POST" action="{% url 'product_list:genre' query=name %}">
+                                {% endif %}
+                                {% if is_publisher %}
+                                    <form method="POST" action="{% url 'product_list:publisher' query=name %}">
+                                {% endif %}
+                                {% csrf_token %}
+                                <div class="filter-item">
+                                    <h3>Prices</h3>
+                                    <input class="form-control mx-auto mr-sm-2" type="search" name="price_from"
+                                           placeholder="From" aria-label="Search" style="width: 200px;">
+                                    <input class="form-control mx-auto mr-sm-2" type="search" name="price_to"
+                                           placeholder="To" aria-label="Search" style="width: 200px;">
+                                </div>
+                                <div class="filter-item">
+                                    <h3>Ratings</h3>
+                                    <input class="form-control mx-auto mr-sm-2" type="search" name="rating_from"
+                                           placeholder="From" aria-label="Search" style="width: 200px;">
+                                    <input class="form-control mx-auto mr-sm-2" type="search" name="rating_to"
+                                           placeholder="To" aria-label="Search" style="width: 200px;">
+                                </div>
+                                <div class="filter-item">
+                                    <h3>Sort</h3>
+                                    <input type="radio" name="sort" value="PRICE ASC"> Price - Low to High<br>
+                                    <input type="radio" name="sort" value="PRICE DESC"> Price - High to Low<br>
+                                    <input type="radio" name="sort" value="DISCOUNT DESC"> Discount - High to
+                                    Low<br>
+                                    <input type="radio" name="sort" value="TOTAL_SOLD DESC"> Best Seller<br>
+                                </div>
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
                                 </form>
 
                             </div>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <div class = "summary">
+                        <div class="summary">
                             <br>
                             <h2>{{ name }} {{ classify }} বইসমূহ</h2>
                             <p>{{ summary }}</p>
@@ -150,7 +150,7 @@
                                                 </div>
                                                 <div class="product-name">
                                                     <a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
-                                                    <p>{{ i.2 }}</p>
+                                                    <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 </div>
                                                 <div class="about">
                                                     <br>
@@ -201,24 +201,24 @@
                                         {% endif %}
                                     {% endif %}
                                     {% if search_result.has_next %}
-                                    {% if is_author %}
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="{% url 'product_list:author' query=name %}?page={{ search_result.next_page_number }}"
-                                                                 aria-label="Next"><span
-                                                aria-hidden="true">Next Page</span></a></li>
-                                    {% endif %}
-                                    {% if is_genre %}
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="{% url 'product_list:genre' query=name %}?page={{ search_result.next_page_number }}"
-                                                                 aria-label="Next"><span
-                                                aria-hidden="true">Next Page</span></a></li>
-                                    {% endif %}
-                                    {% if is_publisher %}
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="{% url 'product_list:publisher' query=name %}?page={{ search_result.next_page_number }}"
-                                                                 aria-label="Next"><span
-                                                aria-hidden="true">Next Page</span></a></li>
-                                    {% endif %}
+                                        {% if is_author %}
+                                            <li class="page-item"><a class="page-link"
+                                                                     href="{% url 'product_list:author' query=name %}?page={{ search_result.next_page_number }}"
+                                                                     aria-label="Next"><span
+                                                    aria-hidden="true">Next Page</span></a></li>
+                                        {% endif %}
+                                        {% if is_genre %}
+                                            <li class="page-item"><a class="page-link"
+                                                                     href="{% url 'product_list:genre' query=name %}?page={{ search_result.next_page_number }}"
+                                                                     aria-label="Next"><span
+                                                    aria-hidden="true">Next Page</span></a></li>
+                                        {% endif %}
+                                        {% if is_publisher %}
+                                            <li class="page-item"><a class="page-link"
+                                                                     href="{% url 'product_list:publisher' query=name %}?page={{ search_result.next_page_number }}"
+                                                                     aria-label="Next"><span
+                                                    aria-hidden="true">Next Page</span></a></li>
+                                        {% endif %}
                                     {% endif %}
                                 </ul>
                             </nav>

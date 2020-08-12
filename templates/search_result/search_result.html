@@ -83,7 +83,7 @@
                                                 </div>
                                                 <div class="product-name">
                                                     <a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
-                                                    <p>{{ i.2 }}</p>
+                                                    <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
                                                 </div>
                                                 <div class="about">
                                                     <br>

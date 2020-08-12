@@ -10,7 +10,7 @@
     <link rel="stylesheet" href={% static "cart_assets/assets/bootstrap/css/bootstrap.min.css" %}>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href={% static "css/wishlist/smoothproducts.css" %}>
+    <link rel="stylesheet" href={% static "css/my_account/smoothproducts.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
@@ -26,26 +26,33 @@
 
 <body>
 {% include  'base/navbar.html' %}
+{% if logged_in %}
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-                <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Profile</h3>
+                <div class="container">
+                    <br>
+                    <br>
                     <div class="row mb-3">
                         <div class="col-lg-4">
                             <div class="card mb-3">
-                                <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="/static/photos/{{ profile_info.13 }}.{{ profile_info.14 }}" width="160" height="160">
-                                <form method="POST" action="{% url 'my_account:update_photo' %}"  enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
-                                    </div>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary btn-sm" type="submit">Save Photo</button>
-                                    </div>
-                                    <input type="file" id="myFile" name="filename">
-                                    <input type="submit">
-                                </form>
+                                <div class="card-body text-center shadow">
+                                    <img class="rounded-circle mb-3 mt-4" src="../../{{ profile_info.13 }}" width="160"
+                                         height="160">
+                                    <h4>{{ profile_info.1 }}</h4>
+                                    <form method="POST" action="{% url 'my_account:update_photo' %}"
+                                          enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <label class="btn btn-primary btn-sm">
+                                                Change Photo <input type="file" id="myFile" name="filename" hidden>
+                                            </label>
+
+                                        </div>
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary btn-sm" type="submit">Save Photo</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -53,123 +60,167 @@
                             <div class="row">
                                 <div class="col">
 
-                                    <div class="card shadow mb-3"  id = "show_form_personal">
+                                    <div class="card shadow mb-3" id="show_form_personal">
                                         <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Personal Information</p>
+                                            <h5 class="text-primary m-0 font-weight-bold">Personal Information</h5>
                                         </div>
                                         <div class="card-body">
 
 
-                                                <div class="form-group">
-                                                    <label for="username"><strong>Username</strong></label>
-                                                    <p>{{profile_info.1}}</p>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="username"><strong>Username</strong></label>
+                                                <p>{{ profile_info.1 }}</p>
+                                            </div>
 
-                                                <div class="form-group">
-                                                    <label for="first_name"><strong>First Name</strong></label>
-                                                    <p>{{profile_info.2}}</p>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="first_name"><strong>First Name</strong></label>
+                                                <p>{{ profile_info.2 }}</p>
+                                            </div>
 
-                                                <div class="form-group">
-                                                    <label for="last_name"><strong>Last Name</strong></label>
-                                                    <p>{{profile_info.3}}</p>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="last_name"><strong>Last Name</strong></label>
+                                                <p>{{ profile_info.3 }}</p>
+                                            </div>
 
-                                                <div class="form-group">
-                                                    <label for="email"><strong>Email Address</strong></label>
-                                                    <p>{{profile_info.4}}</p>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="email"><strong>Email Address</strong></label>
+                                                <p>{{ profile_info.4 }}</p>
+                                            </div>
 
-                                                <div class="form-group">
-                                                    <label for="email"><strong>Mobile Number</strong></label>
-                                                    <p>{{profile_info.12}}</p>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="email"><strong>Mobile Number</strong></label>
+                                                <p>{{ profile_info.12 }}</p>
+                                            </div>
 
-                                                <div class="form-group"><button class="btn btn-primary btn-sm" id = "edit_personal">Edit</button></div>
+                                            <div class="form-group">
+                                                <button class="btn btn-primary " id="edit_personal">Edit</button>
+                                            </div>
 
                                         </div>
                                     </div>
-                                    <div class="card shadow mb-3"  id = "edit_form_personal" style = "display:none">
+                                    <div class="card shadow mb-3" id="edit_form_personal" style="display:none">
                                         <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Personal Information</p>
+                                            <h5 class="text-primary m-0 font-weight-bold">Personal Information</h5>
                                         </div>
                                         <div class="card-body">
                                             <form method="POST" action="{% url 'my_account:update_personal' %}">
                                                 {% csrf_token %}
-                                                    <div class="col">
-                                                        <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" value={{profile_info.1}} name="username"></div>
+                                                <div class="col">
+                                                    <div class="form-group"><label
+                                                            for="username"><strong>Username</strong></label><input
+                                                            class="form-control" type="text"
+                                                            value={{ profile_info.1 }} name="username"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="first_name"><strong>First
+                                                        Name</strong></label><input class="form-control" type="text"
+                                                                                    value={{ profile_info.2 }} name="first_name">
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" value={{profile_info.2}} name="first_name"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="last_name"><strong>Last
+                                                        Name</strong></label><input class="form-control" type="text"
+                                                                                    value={{ profile_info.3 }} name="last_name">
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" value={{profile_info.3}} name="last_name"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="email"><strong>Email
+                                                        Address</strong></label><input class="form-control" type="email"
+                                                                                       value={{ profile_info.4 }} name="email">
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="form-group"><label for="email"><strong>Email Address</strong></label><input class="form-control" type="email" value={{profile_info.4}} name="email"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="mobile_number"><strong>Mobile
+                                                        Number</strong></label><input class="form-control" type="text"
+                                                                                      value={{ profile_info.12 }} name="mobile_number">
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="form-group"><label for="mobile_number"><strong>Mobile Number</strong></label><input class="form-control" type="text" value={{profile_info.12}} name="mobile_number"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary" type="submit">Save</button>
                                                     </div>
-                                                <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save</button></div>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="card shadow" id = "show_form_contact">
+                                    <div class="card shadow" id="show_form_contact">
                                         <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Contact Information</p>
+                                            <h5 class="text-primary m-0 font-weight-bold">Contact Information</h5>
                                         </div>
                                         <div class="card-body">
 
 
-                                                <div class="form-group">
-                                                    <label for="present_address"><strong>Present Address</strong></label>
-                                                    <p>{{profile_info.8}}</p>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="present_address"><strong>Present Address</strong></label>
+                                                <p>{{ profile_info.8 }}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="country"><strong>Permanent Address</strong></label>
+                                                <p>{{ profile_info.9 }}</p>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="city"><strong>City</strong></label>
+                                                <p>{{ profile_info.10 }}</p>
+                                            </div>
 
 
-                                                    <div class="form-group">
-                                                        <label for="city"><strong>City</strong></label>
-                                                        <p>{{profile_info.10}}</p>
-                                                    </div>
+                                            <div class="form-group">
+                                                <label for="country"><strong>Country</strong></label>
+                                                <p>{{ profile_info.11 }}</p>
+                                            </div>
 
 
-                                                    <div class="form-group">
-                                                        <label for="country"><strong>Country</strong></label>
-                                                        <p>{{profile_info.11}}</p>
-                                                    </div>
-
-
-                                                <div class="form-group">
-                                                    <label for="country"><strong>Permanent Address</strong></label>
-                                                    <p>{{profile_info.9}}</p>
-                                                </div>
-
-                                                <div class="form-group"><button class="btn btn-primary btn-sm" id = "edit_contact">Edit</button></div>
+                                            <div class="form-group">
+                                                <button class="btn btn-primary " id="edit_contact">Edit</button>
+                                            </div>
 
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="card shadow" id = "edit_form_contact" style = "display:none">
+                                    <div class="card shadow" id="edit_form_contact" style="display:none">
                                         <div class="card-header py-3">
-                                            <p class="text-primary m-0 font-weight-bold">Contact Information</p>
+                                            <h5 class="text-primary m-0 font-weight-bold">Contact Information</h5>
                                         </div>
                                         <div class="card-body">
                                             <form method="POST" action="{% url 'my_account:update_contact' %}">
                                                 {% csrf_token %}
-                                                <div class="form-group">
-                                                    <label for="present_address"><strong>Present Address</strong></label>
-                                                    <input class="form-control" type="text" value="{{profile_info.8}}" name="present_address"></div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="present_address"><strong>Present
+                                                            Address</strong></label>
+                                                        <input class="form-control" type="text"
+                                                               value="{{ profile_info.8 }}"
+                                                               name="present_address"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="permanent_address"><strong>Permanent
+                                                        Address</strong></label><input class="form-control" type="text"
+                                                                                       value={{ profile_info.9 }} name="permanent_address">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label
+                                                            for="city"><strong>City</strong></label><input
+                                                            class="form-control"
+                                                            type="text"
+                                                            value={{ profile_info.10 }} name="city">
+                                                    </div>
+                                                </div>
 
-                                                <div class="form-group"><label for="city"><strong>City</strong></label><input class="form-control" type="text" value={{profile_info.10}} name="city"></div>
+                                                <div class="col">
+                                                    <div class="form-group"><label
+                                                            for="country"><strong>Country</strong></label><input
+                                                            class="form-control" type="text"
+                                                            value={{ profile_info.11 }} name="country"></div>
+                                                </div>
 
 
-                                                <div class="form-group"><label for="country"><strong>Country</strong></label><input class="form-control" type="text" value={{profile_info.11}} name="country"></div>
-
-
-                                                <div class="form-group"><label for="permanent_address"><strong>Permanent Address</strong></label><input class="form-control" type="text" value={{profile_info.9}} name="permanent_address"></div>
-
-                                                <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save</button></div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary " type="submit">Save</button>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -181,12 +232,25 @@
                 </div>
             </div>
         </div>
+    </div>
+{% else %}
+    <div class="container block-heading">
+        <br><br><br><br>
+        <h1>Please log in first in order to view your account!</h1>
+        <br><br><br><br><br><br>
+    </div>
+{% endif %}
 
-    {#footer#}
-    {% include 'base/footer.html' %}
+{#footer#}
+{% include 'base/footer.html' %}
 
-    <script src={% static "js/my_account/my_account.js" %}></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src={% static "js/my_account/my_account.js" %}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src={% static "js/my_account/jquery.min.js" %}></script>
+<script src={% static "cart_assets/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "js/my_account/smoothproducts.min.js" %}></script>
+<script src={% static "js/my_account/theme.js" %}></script>
 </body>
 
 </html>
