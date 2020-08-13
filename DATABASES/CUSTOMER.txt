@@ -1,1 +1,5 @@
 "USER_ID"	"USER_NAME"	"FIRST_NAME"	"LAST_NAME"	"EMAIL"	"PASSWORD"	"SIGNUP_DATE"	"TOTAL_BOUGHT"
+"2"	"zaber123"	"Zaber"	"Ibn Abdul Hakim"	"ak5236638@gmail.com"	"$argon2id$v=19$m=102400,t=2,p=8$B+0SVvsF/nSziZMnfCbz7Q$CbKXBiS6AfENaxu6j/ILXA"	"13/8/2020 11:06:50"	"0"
+"3"	"zarif123"	"ZARIF"	"UL ALAM"	"zarif98sjs@gmail.com"	"$argon2id$v=19$m=102400,t=2,p=8$qI/YfNmth8iNNLF0yDXXDA$+JyjlHy0hB/nBCydFeYJMA"	"13/8/2020 11:08:39"	"0"
+"4"	"najib123"	"NAJIBUL "	"HAQUE SARKER"	"najibhaq98@gmail.com"	"$argon2id$v=19$m=102400,t=2,p=8$Iy4ksLNOiwWo04MJr1DGtA$VfKZFfYej9DsmuuXpEm8Ow"	"13/8/2020 11:10:12"	"0"
+"1"	"diponsaha007"	"Apurba"	"Saha"	"diponsaha007@gmail.com"	"$argon2id$v=19$m=102400,t=2,p=8$VgqODLo8j900r1bzr+6RWQ$29rVlQeC8yTesMCbCnkUqw"	"2/8/2020 21:24:10"	"0"

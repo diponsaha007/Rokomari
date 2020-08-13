@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 import cx_Oracle
 import os
+from django.http import HttpResponseRedirect
 
 dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
@@ -11,8 +12,97 @@ def product_details(request, pk):
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
         dict['logged_in'] = True
+        get_reviews(pk, dict, request.session['user_id'])
     get_book_info(pk, dict)
+    # print(dict['reviews'])
+    # print(dict)
     return render(request, "product_details/product.html", dict)
+
+
+def update_review(request, pk):
+    if request.method == 'POST' and request.session.has_key('user_id'):
+        user_id = request.session['user_id']
+        book_id = pk
+        rating = int(request.POST.get('rating'))
+        review = str(request.POST.get('detailed_review'))
+        if rating >= 1 and rating <= 5 and len(review) >= 1 and len(review) < 3000:
+            result = conn.cursor()
+            result.execute(
+                "UPDATE REVIEW SET RATINGS = :bv1 ,FULL_REVIEW= :bv2 WHERE USER_ID= :bv3 AND BOOK_ID = :bv4",
+                bv1=int(rating),
+                bv2=str(review), bv3=int(user_id), bv4=int(book_id)
+            )
+            conn.commit()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def add_review(request, pk):
+    if request.method == 'POST' and request.session.has_key('user_id'):
+        user_id = request.session['user_id']
+        book_id = pk
+        rating = int(request.POST.get('rating'))
+        review = str(request.POST.get('detailed_review'))
+        if rating >= 1 and rating <= 5 and len(review) >= 1 and len(review) < 3000:
+            result = conn.cursor()
+            result.execute(
+                "INSERT INTO REVIEW (BOOK_ID,USER_ID,RATINGS,FULL_REVIEW)  VALUES(:bv1,:bv2,:bv3,:bv4)",
+                bv1=int(book_id),
+                bv2=int(user_id), bv3=int(rating), bv4=str(review)
+            )
+            conn.commit()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def delete_review(request, pk):
+    if request.method == 'POST' and request.session.has_key('user_id'):
+        user_id = request.session['user_id']
+        book_id = pk
+        result = conn.cursor()
+        result.execute(
+            "DELETE REVIEW WHERE USER_ID = :bv1 AND BOOK_ID = :bv2",
+            bv1=user_id, bv2=book_id
+        )
+        conn.commit()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def get_reviews(book_id, dict, user_id):
+    result = conn.cursor()
+    result.execute(
+        "SELECT R.USER_ID  ,A.FIRST_NAME , A.LAST_NAME , R.FULL_REVIEW , R.RATINGS, R.REVIEW_DATE FROM REVIEW R JOIN CUSTOMER A ON(R.USER_ID=A.USER_ID) WHERE (BOOK_ID = :bv1 AND R.USER_ID =:bv2)",
+        bv1=book_id, bv2=user_id
+    )
+    cnt = result.fetchone()
+    if cnt is not None:
+        li = []
+        for i in cnt:
+            li.append(i)
+        li.append(check_file(li[0]))
+        dict['my_review'] = li
+    result.execute(
+        "SELECT R.USER_ID  ,A.FIRST_NAME , A.LAST_NAME , R.FULL_REVIEW , R.RATINGS, R.REVIEW_DATE FROM REVIEW R JOIN CUSTOMER A ON(R.USER_ID=A.USER_ID) WHERE (BOOK_ID = :bv1 AND R.USER_ID <>:bv2)",
+        bv1=book_id, bv2=user_id
+    )
+    li = []
+    while True:
+        cnt = result.fetchone()
+        if cnt is None:
+            break
+        l2 = []
+        for i in cnt:
+            l2.append(i)
+        l2.append(check_file(l2[0]))
+        li.append(l2)
+
+    dict['reviews'] = li
+
+
+def check_file(user_id):
+    nam = 'static/images/my_account/' + str(user_id) + '.jpg'
+    if os.path.isfile(nam):
+        return nam
+    else:
+        return 'static/images/my_account/' + 'default.jpg'
 
 
 def get_book_info(id, dict):
@@ -91,7 +181,7 @@ def get_book_info(id, dict):
         result2 = conn.cursor()
         result2.execute(cntcmd2, myauth=dict['author_name'], mygenre=dict['genre'], myid=id)
         countrow2 = result2.fetchone()[0]
-        #print(countrow2)
+        # print(countrow2)
 
         fetchnum = totalsimprod - countrow1
         if fetchnum > countrow2:

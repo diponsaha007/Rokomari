@@ -20,6 +20,8 @@
     <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
 </head>
 
@@ -47,7 +49,8 @@
                             <div class="info">
                                 <h3>{{ book_name }}</h3>
                                 <div class="extraDetails">
-                                    <p>By <a href="{% url 'product_list:author' query=author_name %}">{{ author_name }}</a>
+                                    <p>By <a
+                                            href="{% url 'product_list:author' query=author_name %}">{{ author_name }}</a>
                                     </p>
                                     <p>Genre : <a href="{% url 'product_list:genre' query=genre %}">{{ genre }}</a></p>
                                 </div>
@@ -157,54 +160,116 @@
                             </div>
                             <!-- Reviews -->
                             <div class="tab-pane fade show" role="tabpanel" id="reviews">
-                                <div class="reviews">
-                                    <div class="review-item">
-                                        <div class="rating"><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                {% if logged_in %}
+                                    {% if my_review %}
+                                        <div class="reviews" id="show_myreview" style="display: block">
+                                            <div class="review-item">
+                                                <div class="text-muted">
+                                                    <h5 style="color:#1828d0;">
+                                                        <img class="rounded-circle mb-2 mr-2"
+                                                             src="../../{{ my_review.6 }}" width="50"
+                                                             height="50">
+                                                        {{ my_review.1 }} {{ my_review.2 }}, {{ my_review.5 }}</h5>
+                                                </div>
+                                                <div class="rating">
+                                                    {% for j in '01234'|make_list %}
+                                                        {% if my_review.4 > j|add:"0" and my_review.4 < j|add:"1" %}
+                                                            <img src={% static "product_assests/assets/img/star-half-empty.svg" %}>
+                                                        {% elif my_review.4 >= j|add:"1" %}
+                                                            <img src={% static "product_assests/assets/img/star.svg" %}>
+                                                        {% else %}
+                                                            <img src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <p>{{ my_review.3 }}</p>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button class="btn btn-outline-primary mr-2" id="edit_review">Edit
+                                                        Review
+                                                    </button>
+                                                    <form method="POST"
+                                                          action="{% url 'product_details:delete_review' pk=book_id %} ">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-outline-primary"
+                                                                id="edit_review">
+                                                            Delete Review
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
                                         </div>
-                                        <h4>Incredible product</h4><span class="text-muted"><a href="#">John
-                                                    Smith</a>, 20 Jan 2018</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue
-                                            nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum
-                                            dolor sit amet, consectetur adipiscing elit.</p>
-                                    </div>
-                                </div>
-                                <div class="reviews">
-                                    <div class="review-item">
-                                        <div class="rating"><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                        <div class="reviews" id="edit_myreview" style="display: none">
+                                            <div class="review-item">
+                                                <h5 style="color:#1828d0;">Edit Review</h5>
+                                                <form method="POST"
+                                                      action="{% url 'product_details:update_review' pk=book_id %} ">
+                                                    {% csrf_token %}
+                                                    <label for="rating">Ratings (between 1 and 5) : </label>
+                                                    <input type="number" id="rating" name="rating" min="1" max="5"
+                                                           value={{ my_review.4 }}>
+                                                    <br>
+                                                    <label for="Textarea">Detailed review (between 1 and 3000
+                                                        character):</label>
+                                                    <textarea class="form-control" id="Textarea" name="detailed_review"
+                                                              rows="5">{{ my_review.3 }}</textarea>
+                                                    <br>
+                                                    <button class="btn btn-primary btn-outline-primary" type="submit">
+                                                        Save
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <h4>Incredible product</h4><span class="text-muted"><a href="#">John
-                                                    Smith</a>, 20 Jan 2018</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue
-                                            nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum
-                                            dolor sit amet, consectetur adipiscing elit.</p>
-                                    </div>
-                                </div>
-                                <div class="reviews">
-                                    <div class="review-item">
-                                        <div class="rating"><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-half-empty.svg" %}><img
-                                                src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                    {% else %}
+                                        <div class="reviews">
+                                            <div class="review-item">
+                                                <h5 style="color:#1828d0;">Read the Book? Add a honest Review</h5>
+                                                <form method="POST"
+                                                      action="{% url 'product_details:add_review' pk=book_id %} ">
+                                                    {% csrf_token %}
+                                                    <label for="rating">Ratings (between 1 and 5) : </label>
+                                                    <input type="number" id="rating" name="rating" min="1" max="5"
+                                                           value="5">
+                                                    <br>
+                                                    <label for="Textarea">Detailed review (between 1 and 3000
+                                                        character):</label>
+                                                    <textarea class="form-control" id="Textarea" name="detailed_review"
+                                                              rows="5"></textarea>
+                                                    <br>
+                                                    <button class="btn btn-primary btn-outline-primary" type="submit">
+                                                        Save
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <h4>Incredible product</h4>
-                                        <span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue
-                                            nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum
-                                            dolor sit amet, consectetur adipiscing elit.</p>
-                                    </div>
-                                </div>
+                                    {% endif %}
+                                    {% for i in reviews %}
+                                        <div class="reviews">
+                                            <div class="review-item">
+                                                <div class="text-muted">
+                                                    <h5 style="color:#1828d0;">
+                                                        <img class="rounded-circle mb-2 mr-2"
+                                                             src="../../{{ i.6 }}" width="50"
+                                                             height="50">
+                                                        {{ i.1 }} {{ i.2 }}, {{ i.5 }}</h5>
+                                                </div>
+                                                <div class="rating">
+                                                    {% for j in '01234'|make_list %}
+                                                        {% if i.4 > j|add:"0" and i.4 < j|add:"1" %}
+                                                            <img src={% static "product_assests/assets/img/star-half-empty.svg" %}>
+                                                        {% elif i.4 >= j|add:"1" %}
+                                                            <img src={% static "product_assests/assets/img/star.svg" %}>
+                                                        {% else %}
+                                                            <img src={% static "product_assests/assets/img/star-empty.svg" %}>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <p>{{ i.3 }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -222,7 +287,9 @@
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_1_book_id %}">{{ prod_1_book_name }}</a>
-                                        <p>By <a href="{% url 'product_list:author' query=prod_1_author_name %}">{{ prod_1_author_name }}</a></p>
+                                        <p>By <a
+                                                href="{% url 'product_list:author' query=prod_1_author_name %}">{{ prod_1_author_name }}</a>
+                                        </p>
                                         <div class="rating">
                                             {% for j in '01234'|make_list %}
                                                 {% if prod_1_rating > j|add:"0" and prod_1_rating < j|add:"1" %}
@@ -247,7 +314,9 @@
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_2_book_id %}">{{ prod_2_book_name }}</a>
-                                        <p>By <a href="{% url 'product_list:author' query=prod_2_author_name %}">{{ prod_2_author_name }}</a></p>
+                                        <p>By <a
+                                                href="{% url 'product_list:author' query=prod_2_author_name %}">{{ prod_2_author_name }}</a>
+                                        </p>
                                         <div class="rating">
                                             {% for j in '01234'|make_list %}
                                                 {% if prod_2_rating > j|add:"0" and prod_2_rating < j|add:"1" %}
@@ -272,7 +341,9 @@
                                     </div>
                                     <div class="related-name">
                                         <a href="{% url 'product_details:product_details' pk=prod_3_book_id %}">{{ prod_3_book_name }}</a>
-                                        <p>By <a href="{% url 'product_list:author' query=prod_3_author_name %}">{{ prod_3_author_name }}</a></p>
+                                        <p>By <a
+                                                href="{% url 'product_list:author' query=prod_3_author_name %}">{{ prod_3_author_name }}</a>
+                                        </p>
                                         <div class="rating"><img
                                             {% for j in '01234'|make_list %}
                                                 {% if prod_3_rating > j|add:"0" and prod_3_rating < j|add:"1" %}
@@ -305,7 +376,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src={% static "js/product_details/smoothproducts.min.js" %}></script>
 <script src={% static "js/product_details/theme.js" %}></script>
-
+<script src={% static "js/product_details/review.js" %}></script>
 </body>
 
 </html>
