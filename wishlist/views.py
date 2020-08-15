@@ -12,7 +12,7 @@ conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 def wishlist(request):
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
-        dict['logged_in'] = True
+        dict['logged_in'] = get_user_name(request.session['user_id'])
         dict['wishlist_books'] = get_wishlist_books(request.session['user_id'])
     return render(request, "wishlist/wishlist.html", dict)
 
@@ -84,3 +84,9 @@ def check_if_image_exists(id):
     if os.path.isfile(nam):
         return True
     return False
+
+
+def get_user_name(user_id):
+    result = conn.cursor()
+    result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
+    return str(result.fetchone()[0])

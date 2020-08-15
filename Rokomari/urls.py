@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-
 urlpatterns = [
     path('', include("rokomariapp.urls", namespace="rokomariapp")),
     path('', include("login_registration.urls", namespace="login_registration")),
@@ -26,5 +25,6 @@ urlpatterns = [
     path('', include("wishlist.urls", namespace="wishlist")),
     path('', include("product_list.urls", namespace="product_list")),
     path('', include("my_account.urls", namespace="my_account")),
+    path('', include("order_list.urls", namespace="order_list")),
     path('admin/', admin.site.urls),
 ]

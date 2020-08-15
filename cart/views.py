@@ -12,10 +12,58 @@ conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 def cart(request):
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
-        dict['logged_in'] = True
+        dict['logged_in'] = get_user_name(request.session['user_id'])
+        if request.method == 'POST':
+            print(request.POST)
+            place_order(request)
         dict['cart_books'] = get_cart_books(request.session['user_id'])
-        #print(request.POST)
     return render(request, "cart/cart.html", dict)
+
+
+def get_user_name(user_id):
+    result = conn.cursor()
+    result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
+    return str(result.fetchone()[0])
+
+
+def place_order(request):
+    quantity = request.POST.getlist('quantity')
+    location = request.POST['location']
+    user_id = request.session['user_id']
+    if len(quantity) == 0 or len(location) == 0:
+        return
+    result = conn.cursor()
+    result.execute("SELECT BOOK_ID from CART_DETAILS WHERE CART_ID = :bv ORDER BY BOOK_ID ASC", bv=user_id)
+    if result.fetchone() is None:
+        return
+    total_price = request.POST['total_price']
+    result.execute("SELECT MAX(ORDER_ID) FROM ORDER_LIST")
+    order_id = 1
+    try:
+        order_id = result.fetchone()[0] + 1
+    except:
+        pass
+    result.execute(
+        "INSERT INTO ORDER_LIST (ORDER_ID,USER_ID,ADMIN_ID ,TOTAL_PRICE , ORDER_LOCATION) VALUES (:bv1, :bv2, 2, :bv4, :bv3)",
+        bv1=order_id, bv2=user_id, bv4=int(total_price), bv3=location)
+    conn.commit()
+    result.execute("SELECT BOOK_ID from CART_DETAILS WHERE CART_ID = :bv ORDER BY BOOK_ID ASC", bv=user_id)
+    book_id_list = []
+    while True:
+        cnt = result.fetchone()
+        if cnt is None:
+            break
+        book_id_list.append(int(cnt[0]))
+    for i in range(len(book_id_list)):
+        result.execute("UPDATE CART_DETAILS SET QUANTITY = :bv1 WHERE (BOOK_ID = :bv2 and CART_ID = :bv3)",
+                       bv1=int(quantity[i]), bv2=int(book_id_list[i]), bv3=user_id)
+        conn.commit()
+    result.execute(
+        "INSERT INTO ORDER_DETAILS (ORDER_ID,BOOK_ID,QUANTITY)  SELECT :bv1, BOOK_ID , QUANTITY FROM CART_DETAILS WHERE CART_ID = :bv2 ",
+        bv1=order_id, bv2=user_id)
+    conn.commit()
+    result.execute("DELETE FROM CART_DETAILS WHERE CART_ID = :bv1", bv1=user_id)
+    conn.commit()
 
 
 def remove_book(request, pk):

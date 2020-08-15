@@ -23,7 +23,7 @@ function convert_text_to_int(price_text){
 $(document).ready(function () {
     console.log(quantity_input)
     console.log(price_text)
-    for (var i = 2; i < quantity_input.length; i++) {
+    for (var i = 2; i < quantity_input.length-1; i++) {
         // console.log("Here")
         prices[i - 2] = convert_text_to_int(price_text.eq(i - 2).text()) / parseInt(quantity_input.eq(i).val())
         quantity[i - 2] = parseInt(quantity_input.eq(i).val())
@@ -52,7 +52,7 @@ quantity_input.bind("input", function () {
         $(this).val(1)
     }
     subtotal = 0
-    for (var i = 2; i < quantity_input.length; i++) {
+    for (var i = 2; i < quantity_input.length-1; i++) {
         quantity[i - 2] = parseInt(quantity_input.eq(i).val())
         price_text.eq(i - 2).text((prices[i - 2] * quantity[i - 2]) + " Tk")
         subtotal += prices[i - 2] * quantity[i - 2]
@@ -65,4 +65,5 @@ quantity_input.bind("input", function () {
     price_text.eq(-4).text(subtotal + " Tk")
     price_text.eq(-2).text(shipping + " Tk")
     price_text.eq(-1).text((subtotal + shipping) + " Tk")
+    quantity_input.eq(quantity_input.length-1).val((subtotal + shipping))
 })

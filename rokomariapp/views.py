@@ -22,7 +22,7 @@ def index(request):
     """
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
-        dict['logged_in'] = True
+        dict['logged_in'] = get_user_name(request.session['user_id'])
     dict['best_seller'] = get_best_seller()
     dict['best_discount'] = get_best_discount()
     dict['humayun_ahmed'] = get_humayun_ahmed()
@@ -113,7 +113,7 @@ def get_best_discount():
     for i in range(12):
         cnt = result.fetchone()
         l2 = []
-        #print(l2)
+        # print(l2)
         for j in cnt:
             l2.append(j)
         l2[1] = slice_name(l2[1])
@@ -140,7 +140,7 @@ def get_best_seller():
             l2.append(l2[0])
         else:
             l2.append("book_image")
-        #print(l2)
+        # print(l2)
         li.append(l2)
 
     return li
@@ -160,3 +160,9 @@ def slice_name(str):
             break
         ret += str[i]
     return ret
+
+
+def get_user_name(user_id):
+    result = conn.cursor()
+    result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
+    return str(result.fetchone()[0])

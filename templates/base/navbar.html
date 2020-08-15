@@ -27,12 +27,12 @@
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <button type="button" class="btn btn-outline-dark">
-                            My Contents
+                            {{ logged_in }}
                         </button>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{% url 'my_account:my_account' %}">My Profile</a>
-                        <a class="dropdown-item" href="#">My Orders</a>
+                        <a class="dropdown-item" href="{% url 'order_list:order_list' %}">My Orders</a>
                         <a class="dropdown-item" href="{% url 'wishlist:wishlist' %}">My Wishlist</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'login_registration:logout' %}">Sign Out</a>

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href={% static "product_assests/assets/fonts/simple-line-icons.min.css" %}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href={% static "css/search_result/smoothproducts.css" %}>
+    <link rel="stylesheet" href={% static "css/order_list/smoothproducts.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
@@ -83,7 +83,9 @@
                                                 </div>
                                                 <div class="product-name">
                                                     <a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
-                                                    <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                    <p>By <a
+                                                            href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                    </p>
                                                 </div>
                                                 <div class="about">
                                                     <br>
@@ -137,11 +139,11 @@
 {#footer#}
 {% include 'base/footer.html' %}
 
-<script src={% static "js/search_result/jquery.min.js" %}></script>
+<script src={% static "js/order_list/jquery.min.js" %}></script>
 <script src={% static "product_assests/assets/bootstrap/js/bootstrap.min.js" %}></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-<script src={% static "js/search_result/smoothproducts.min.js" %}></script>
-<script src={% static "js/search_result/theme.js" %}></script>
+<script src={% static "js/order_list/smoothproducts.min.js" %}></script>
+<script src={% static "js/order_list/theme.js" %}></script>
 
 </body>
 

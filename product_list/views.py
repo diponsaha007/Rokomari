@@ -20,10 +20,9 @@ def product_list_author(request, query):
     else:
         page_num = querar[1]
 
-
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
-        dict['logged_in'] = True
+        dict['logged_in'] = get_user_name(request.session['user_id'])
     dict['classify'] = "এর"
     dict['name'] = query
     dict['type'] = "A.AUTHOR_NAME"
@@ -31,35 +30,34 @@ def product_list_author(request, query):
     dict['is_genre'] = False
     dict['is_publisher'] = False
 
-
     if request.method == "POST":
         price_from = request.POST.get("price_from")
         price_to = request.POST.get("price_to")
         rating_from = request.POST.get("rating_from")
         rating_to = request.POST.get("rating_to")
         sort = request.POST.get("sort")
-        if price_from=='':
+        if price_from == '':
             price_from = 0
-        if price_to=='':
+        if price_to == '':
             price_to = 50000
-        if rating_from=='':
+        if rating_from == '':
             rating_from = 0
-        if rating_to=='':
+        if rating_to == '':
             rating_to = 5
-        if sort== None:
+        if sort == None:
             sort = "TOTAL_SOLD DESC"
         price_from = int(float(price_from))
         price_to = int(float(price_to))
         rating_from = int(float(rating_from))
         rating_to = int(float(rating_to))
-        #print(price_from, price_to, rating_from, rating_to, sort)
-        dict['search_result'], dict['summary'] = get_book_info(query, "POST", dict['type'], price_from, price_to, rating_from, rating_to,sort)
+        # print(price_from, price_to, rating_from, rating_to, sort)
+        dict['search_result'], dict['summary'] = get_book_info(query, "POST", dict['type'], price_from, price_to,
+                                                               rating_from, rating_to, sort)
         return render(request, "product_list/product_list.html", dict)
 
 
     else:
         dict['search_result'], dict['summary'] = get_book_info(query, "GET", dict['type'])
-
 
     P = Paginator(dict['search_result'], 9)
 
@@ -67,10 +65,12 @@ def product_list_author(request, query):
         page = P.page(page_num)
     except EmptyPage:
         page = P.page(1)
-    #print(dict['summary'])
-    dict2 = {'logged_in' : dict['logged_in'], 'search_result': page,  'name' : query, 'classify' : 'এর', 'is_author' : True, 'is_genre' : False , 'is_publication' : False ,  type : "A.AUTHOR_NAME", 'summary' : dict['summary']}
+    # print(dict['summary'])
+    dict2 = {'logged_in': dict['logged_in'], 'search_result': page, 'name': query, 'classify': 'এর', 'is_author': True,
+             'is_genre': False, 'is_publication': False, type: "A.AUTHOR_NAME", 'summary': dict['summary']}
 
     return render(request, "product_list/product_list.html", dict2)
+
 
 def product_list_genre(request, query):
     x = request.META['QUERY_STRING']
@@ -82,10 +82,9 @@ def product_list_genre(request, query):
     else:
         page_num = querar[1]
 
-
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
-        dict['logged_in'] = True
+        dict['logged_in'] = get_user_name(request.session['user_id'])
     dict['classify'] = "জন্রা'র"
     dict['name'] = query
     dict['type'] = "B.BOOK_GENRE"
@@ -93,34 +92,33 @@ def product_list_genre(request, query):
     dict['is_genre'] = True
     dict['is_publisher'] = False
 
-
     if request.method == "POST":
         price_from = request.POST.get("price_from")
         price_to = request.POST.get("price_to")
         rating_from = request.POST.get("rating_from")
         rating_to = request.POST.get("rating_to")
         sort = request.POST.get("sort")
-        if price_from=='':
+        if price_from == '':
             price_from = 0
-        if price_to=='':
+        if price_to == '':
             price_to = 50000
-        if rating_from=='':
+        if rating_from == '':
             rating_from = 0
-        if rating_to=='':
+        if rating_to == '':
             rating_to = 5
-        if sort== None:
+        if sort == None:
             sort = "TOTAL_SOLD DESC"
         price_from = int(float(price_from))
         price_to = int(float(price_to))
         rating_from = int(float(rating_from))
         rating_to = int(float(rating_to))
-        dict['search_result'], dict['summary'] = get_book_info(query, "POST", dict['type'], price_from, price_to, rating_from, rating_to,sort)
+        dict['search_result'], dict['summary'] = get_book_info(query, "POST", dict['type'], price_from, price_to,
+                                                               rating_from, rating_to, sort)
         return render(request, "product_list/product_list.html", dict)
 
 
     else:
         dict['search_result'], dict['summary'] = get_book_info(query, "GET", dict['type'])
-
 
     P = Paginator(dict['search_result'], 9)
 
@@ -128,10 +126,13 @@ def product_list_genre(request, query):
         page = P.page(page_num)
     except EmptyPage:
         page = P.page(1)
-    #print(dict['summary'])
-    dict2 = {'logged_in' : dict['logged_in'], 'search_result': page,  'name' : query, 'classify' : "জন্রা'র", 'is_author' : False, 'is_genre' : True , 'is_publication' : False ,  type : "A.AUTHOR_NAME", 'summary' : dict['summary']}
+    # print(dict['summary'])
+    dict2 = {'logged_in': dict['logged_in'], 'search_result': page, 'name': query, 'classify': "জন্রা'র",
+             'is_author': False, 'is_genre': True, 'is_publication': False, type: "A.AUTHOR_NAME",
+             'summary': dict['summary']}
 
     return render(request, "product_list/product_list.html", dict2)
+
 
 def product_list_publisher(request, query):
     x = request.META['QUERY_STRING']
@@ -143,10 +144,9 @@ def product_list_publisher(request, query):
     else:
         page_num = querar[1]
 
-
     dict = {'logged_in': False}
     if request.session.has_key('user_id'):
-        dict['logged_in'] = True
+        dict['logged_in'] = get_user_name(request.session['user_id'])
     dict['classify'] = "এর"
     dict['name'] = query
     dict['type'] = "C.PUBLISHER_NAME"
@@ -154,34 +154,33 @@ def product_list_publisher(request, query):
     dict['is_genre'] = False
     dict['is_publisher'] = True
 
-
     if request.method == "POST":
         price_from = request.POST.get("price_from")
         price_to = request.POST.get("price_to")
         rating_from = request.POST.get("rating_from")
         rating_to = request.POST.get("rating_to")
         sort = request.POST.get("sort")
-        if price_from=='':
+        if price_from == '':
             price_from = 0
-        if price_to=='':
+        if price_to == '':
             price_to = 50000
-        if rating_from=='':
+        if rating_from == '':
             rating_from = 0
-        if rating_to=='':
+        if rating_to == '':
             rating_to = 5
-        if sort== None:
+        if sort == None:
             sort = "TOTAL_SOLD DESC"
         price_from = int(float(price_from))
         price_to = int(float(price_to))
         rating_from = int(float(rating_from))
         rating_to = int(float(rating_to))
-        dict['search_result'], dict['summary'] = get_book_info(query, "POST", dict['type'], price_from, price_to, rating_from, rating_to,sort)
+        dict['search_result'], dict['summary'] = get_book_info(query, "POST", dict['type'], price_from, price_to,
+                                                               rating_from, rating_to, sort)
         return render(request, "product_list/product_list.html", dict)
 
 
     else:
         dict['search_result'], dict['summary'] = get_book_info(query, "GET", dict['type'])
-
 
     P = Paginator(dict['search_result'], 9)
 
@@ -189,17 +188,23 @@ def product_list_publisher(request, query):
         page = P.page(page_num)
     except EmptyPage:
         page = P.page(1)
-    #print(dict['summary'])
-    dict2 = {'logged_in' : dict['logged_in'], 'search_result': page,  'name' : query, 'classify' : "এর", 'is_author' : False, 'is_genre' : False , 'is_publisher' : True ,  type : "A.AUTHOR_NAME", 'summary' : dict['summary']}
+    # print(dict['summary'])
+    dict2 = {'logged_in': dict['logged_in'], 'search_result': page, 'name': query, 'classify': "এর", 'is_author': False,
+             'is_genre': False, 'is_publisher': True, type: "A.AUTHOR_NAME", 'summary': dict['summary']}
 
     return render(request, "product_list/product_list.html", dict2)
 
-def get_book_info(query,method, type, price_from=0, price_to=50000, rating_from = 0, rating_to = 5, sort = "TOTAL_SOLD DESC"):
+
+def get_book_info(query, method, type, price_from=0, price_to=50000, rating_from=0, rating_to=5,
+                  sort="TOTAL_SOLD DESC"):
     if method == "GET":
-        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT, A.AUTHOR_SUMMARY, B.BOOK_GENRE, C.PUBLISHER_SUMMARY FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  " + type +" = '" + query +"' ORDER BY B.TOTAL_SOLD DESC"
-        #print(quercmd)
+        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT, A.AUTHOR_SUMMARY, B.BOOK_GENRE, C.PUBLISHER_SUMMARY FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  " + type + " = '" + query + "' ORDER BY B.TOTAL_SOLD DESC"
+        # print(quercmd)
     elif method == "POST":
-        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT, A.AUTHOR_SUMMARY, B.BOOK_GENRE, C.PUBLISHER_SUMMARY FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  B.PRICE >= " + str(price_from) + " AND B.PRICE <= " + str(price_to) + " AND B.RATINGS >= " + str(rating_from) + " AND B.RATINGS <= " + str(rating_to) + " AND " + type +" = '" + query +"' ORDER BY B." + sort
+        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT, A.AUTHOR_SUMMARY, B.BOOK_GENRE, C.PUBLISHER_SUMMARY FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE  B.PRICE >= " + str(
+            price_from) + " AND B.PRICE <= " + str(price_to) + " AND B.RATINGS >= " + str(
+            rating_from) + " AND B.RATINGS <= " + str(
+            rating_to) + " AND " + type + " = '" + query + "' ORDER BY B." + sort
 
     db_cursor = conn.cursor()
     db_cursor.execute(quercmd)
@@ -219,7 +224,7 @@ def get_book_info(query,method, type, price_from=0, price_to=50000, rating_from 
         else:
             summary = ' '
 
-        #print(row[7], row[9], summary)
+        # print(row[7], row[9], summary)
         if check_if_image_exists(l2[0]):
             l2.append(l2[0])
         else:
@@ -229,7 +234,7 @@ def get_book_info(query,method, type, price_from=0, price_to=50000, rating_from 
 
     if summary == None:
         summary = ' '
-    return li , summary
+    return li, summary
 
 
 def check_if_image_exists(id):
@@ -246,3 +251,9 @@ def slice_name(str):
             break
         ret += str[i]
     return ret
+
+
+def get_user_name(user_id):
+    result = conn.cursor()
+    result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
+    return str(result.fetchone()[0])

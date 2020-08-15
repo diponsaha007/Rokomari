@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Buy Book Online | Rokomari.com</title>
+    <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
+    <link rel="stylesheet" href={% static "product_assests/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href={% static "product_assests/assets/fonts/simple-line-icons.min.css" %}>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href={% static "css/search_result/smoothproducts.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animate/animate.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/css-hamburgers/hamburgers.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
+
+</head>
+
+<body>
+{% include  'base/navbar.html' %}
+<br>
+<br>
+<br>
+{% for order in orders %}
+    <main class="page catalog-page">
+        <section class="clean-block clean-catalog">
+            <div class="container">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12 ml-3">
+                            <div class="summary" , style="color: #1e79bd;font-weight: bolder;text-align: center">
+                                <br>
+                                <h3>YOUR ORDER ID: {{ order.0 }}</h3>
+                                <h5>ORDER DATE: {{ order.1 }}</h5>
+                                <h5>RECEIVED DATE: {{ order.2 }}</h5>
+                                <h5>DELIVERY LOCATION: {{ order.3 }}</h5>
+                                <h5>TOTAL PRICE: {{ order.4 }}</h5>
+                            </div>
+                            <div class="products">
+                                <div class="row no-gutters">
+                                    {% for i in order.5 %}
+                                        <div class="col-12 col-md-4 col-lg-3">
+                                            <div class="clean-product-item">
+                                                <div class="image"><a
+                                                        href="{% url 'product_details:product_details' pk=i.0 %}"><img
+                                                        class="img-fluid d-block mx-auto"
+                                                        src="../../static/images/rokomariapp/images/{{ i.4 }}.jpg"></a>
+                                                </div>
+                                                <div class="product-name">
+                                                    <a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
+                                                    <p>By <a
+                                                            href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                    </p>
+                                                    <h5 style="color: #106dd0">Quantity {{ i.3 }}</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endfor %}
+
+{#footer#}
+{% include 'base/footer.html' %}
+
+<script src={% static "js/search_result/jquery.min.js" %}></script>
+<script src={% static "product_assests/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src={% static "js/search_result/smoothproducts.min.js" %}></script>
+<script src={% static "js/search_result/theme.js" %}></script>
+
+</body>
+
+</html>
