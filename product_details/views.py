@@ -251,10 +251,14 @@ def check_if_image_exists(id):
 def slice_name(str):
     ret = ""
     for i in range(len(str)):
+        if len(ret) >= 42:
+            ret += "..."
+            break
         if str[i] == ':' or str[i] == '(':
             break
         ret += str[i]
     return ret
+
 
 def get_user_name(user_id):
     result = conn.cursor()

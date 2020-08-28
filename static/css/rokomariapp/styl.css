@@ -9,18 +9,13 @@ body {
 .shell {
     background-color: #ffffff;
     text-align: justify;
-    margin: 0px 70px 0px 70px;
+    margin: 0px 8ch 0px 8ch;
 }
 
 .shell2 {
     background-color: #ffffff;
     text-align: justify;
-    margin: 50px 70px 0px 70px;
-}
-.shell3 {
-    background-color: #ffffff;
-    text-align: justify;
-    margin: 50px 70px 0px 70px;
+    margin: 0px 8ch 0px 8ch;
 }
 
 
@@ -72,7 +67,7 @@ h2::after {
 
 .carousel .carousel-item .img-box {
     height: 180px;
-    width: 120px;
+    width: 8vw;
     position: relative;
 }
 
@@ -86,15 +81,14 @@ h2::after {
 }
 
 .carousel .carousel-item .productImage {
-    margin-left: 80px;
+    margin-left:5vw;
 }
 
 .carousel .thumb-wrapper {
     border: 5px solid #b2cdb2;
-    border-radius: 5px;
     background-color: rgb(234, 227, 227);
     text-align: center;
-    width: 280px;
+    width: 18vw;
 }
 
 .carousel .thumb-content {
@@ -117,13 +111,12 @@ h2::after {
     border: 1px solid #ccc;
     padding: 5px 10px;
     margin-top: 5px;
-    line-height: 16px;
+    line-height: 25px;
 }
 
 .carousel .carousel-item .btn:hover, .carousel .carousel-item .btn:focus {
-    color: #fff;
-    background: #000;
-    border-color: #000;
+    color: #FFF;
+    background: #FFAD33;
     box-shadow: none;
 }
 
@@ -135,7 +128,7 @@ h2::after {
 
 
 .carousel-control-prev, .carousel-control-next {
-    height: 100px;
+    height: 80px;
     width: 40px;
     background: none;
     margin: auto 0;
@@ -170,7 +163,8 @@ h2::after {
 }
 
 .carousel .item-price strike {
-    color: #999;
+    color: #5f5c5c;
+    font-size : 110%;
     margin-right: 5px;
 }
 

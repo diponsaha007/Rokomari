@@ -30,8 +30,9 @@
         <div class="container">
             <div class="block-heading">
                 <h2>Shopping Cart</h2>
-                <p>This is your cart. By clicking Checkout we will place your order. Please provide valid order
-                    location. Otherwise you won't receive your order.</p>
+                <p>This is your cart.The Save Cart button will save the current state of your cart in case you want to
+                    place the order later. By clicking Checkout we will place your order. Please provide valid and
+                    detailed order location. Otherwise you may not receive your order.</p>
             </div>
             {% if logged_in %}
                 <form method="post">
@@ -93,6 +94,10 @@
                                             </div>
                                         {% endfor %}
                                     {% endif %}
+                                    <button class="btn btn-primary btn-block" style="float: bottom" type="submit" name="save_cart">
+                                        Save Cart
+                                    </button>
+
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-4">
@@ -102,10 +107,12 @@
                                     <h4><span class="text">Discount</span><span class="price">0 Tk</span></h4>
                                     <h4><span class="text">Shipping</span><span class="price">0 Tk</span></h4>
                                     <h4><span class="text">Total</span><span class="price">360 Tk</span></h4>
-                                    <input type = "hidden" name = "total_price" value = "360" />
+                                    <input type="hidden" name="total_price" value="360"/>
                                     <label for="Textarea1">Delivery Location:</label>
                                     <textarea class="form-control" id="Textarea1" name="location" rows="2"></textarea>
-                                    <button class="btn btn-primary btn-block btn-lg" type="submit" name="order_submit">Checkout</button>
+                                    <button class="btn btn-primary btn-block btn-lg" type="submit" name="order_submit">
+                                        Checkout
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -43,10 +43,12 @@
         </div>
     </div>
 </div>
+
+
 {% if best_seller %}
     <div class="shell">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-3">
                 <br>
                 <h2>রকমারী <b>বেস্ট সেলার</b></h2>
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
@@ -68,7 +70,8 @@
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
 
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
 
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
@@ -114,7 +117,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -157,7 +161,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -202,7 +207,8 @@
         </div>
     </div>
 {% endif %}
-
+<br>
+<br>
 {% if categories %}
     <div class="shell2">
         <br>
@@ -275,7 +281,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -316,7 +323,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -357,7 +365,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -400,7 +409,8 @@
         </div>
     </div>
 {% endif %}
-
+<br>
+<br>
 {% if authors %}
     <div class="shell2">
         <br>
@@ -473,7 +483,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -514,7 +525,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -556,7 +568,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -599,7 +612,8 @@
         </div>
     </div>
 {% endif %}
-
+<br>
+<br>
 {% if pubishers %}
     <div class="shell2">
         <br>
@@ -647,7 +661,6 @@
         <br>
     </div>
 {% endif %}
-
 <br>
 <br>
 {% if best_discount %}
@@ -673,7 +686,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -714,7 +728,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
@@ -755,7 +770,8 @@
                                                 <a href="{% url 'product_details:product_details' pk=i.0 %}">
                                                     <h4>{{ i.1 }}</h4>
                                                 </a>
-                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a></p>
+                                                <p>By <a href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
+                                                </p>
                                                 <p class="item-price"><strike>{{ i.3 }}৳</strike>
                                                     <span>{{ i.4 }}৳</span></p>
                                                 <div class="star-rating">
