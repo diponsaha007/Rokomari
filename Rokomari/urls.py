@@ -26,5 +26,6 @@ urlpatterns = [
     path('', include("product_list.urls", namespace="product_list")),
     path('', include("my_account.urls", namespace="my_account")),
     path('', include("order_list.urls", namespace="order_list")),
+    path('', include("add_new_book.urls", namespace="add_new_book")),
     path('admin/', admin.site.urls),
 ]

@@ -3,14 +3,19 @@ import cx_Oracle
 import os
 from django.http import HttpResponseRedirect
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
 # Create your views here.
 def product_details(request, pk):
-    dict = {'logged_in': False}
-    if request.session.has_key('user_id'):
+    dict = {'logged_in': False, 'is_admin': False}
+
+    if request.session.has_key('is_admin'):
+        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+        dict['is_admin'] = True
+        get_reviews(pk, dict, request.session['user_id'])
+    elif request.session.has_key('user_id'):
         dict['logged_in'] = get_user_name(request.session['user_id'])
         get_reviews(pk, dict, request.session['user_id'])
     get_book_info(pk, dict)
@@ -263,4 +268,9 @@ def slice_name(str):
 def get_user_name(user_id):
     result = conn.cursor()
     result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
+    return str(result.fetchone()[0])
+
+def get_user_name_admin(user_id):
+    result = conn.cursor()
+    result.execute("SELECT USER_NAME FROM ADMIN WHERE ADMIN_ID = :bv1", bv1=user_id)
     return str(result.fetchone()[0])

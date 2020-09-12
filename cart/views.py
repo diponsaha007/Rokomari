@@ -3,16 +3,19 @@ from django.shortcuts import render, redirect, reverse
 import cx_Oracle
 import os
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
 # Create your views here.
 
 def cart(request):
-    dict = {'logged_in': False}
+    dict = {'logged_in': False, 'is_admin': False}
+
+    if request.session.has_key('is_admin'):
+        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+        dict['is_admin'] = True
     if request.session.has_key('user_id'):
-        dict['logged_in'] = get_user_name(request.session['user_id'])
         if request.method == 'POST':
             print(request.POST)
             if 'save_cart' in request.POST.keys():

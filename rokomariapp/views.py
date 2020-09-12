@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import cx_Oracle
 import os
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -20,8 +20,12 @@ def index(request):
     'publisher' : contains top 10 publications based on no. of books sold
     'authors' : constains top 10 authors based on no. of books sold
     """
-    dict = {'logged_in': False}
-    if request.session.has_key('user_id'):
+    dict = {'logged_in': False, 'is_admin': False}
+
+    if request.session.has_key('is_admin'):
+        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+        dict['is_admin'] = True
+    elif request.session.has_key('user_id'):
         dict['logged_in'] = get_user_name(request.session['user_id'])
     dict['best_seller'] = get_best_seller()
     dict['best_discount'] = get_best_discount()
@@ -169,4 +173,9 @@ def slice_name(str):
 def get_user_name(user_id):
     result = conn.cursor()
     result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
+    return str(result.fetchone()[0])
+
+def get_user_name_admin(user_id):
+    result = conn.cursor()
+    result.execute("SELECT USER_NAME FROM ADMIN WHERE ADMIN_ID = :bv1", bv1=user_id)
     return str(result.fetchone()[0])
