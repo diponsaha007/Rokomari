@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, reverse
 import cx_Oracle
 import os
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -16,6 +16,7 @@ def cart(request):
         dict['logged_in'] = get_user_name_admin(request.session['user_id'])
         dict['is_admin'] = True
     if request.session.has_key('user_id'):
+        dict['logged_in'] = get_user_name(request.session['user_id'])
         if request.method == 'POST':
             print(request.POST)
             if 'save_cart' in request.POST.keys():
@@ -30,6 +31,12 @@ def cart(request):
 def get_user_name(user_id):
     result = conn.cursor()
     result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
+    return str(result.fetchone()[0])
+
+
+def get_user_name_admin(user_id):
+    result = conn.cursor()
+    result.execute("SELECT USER_NAME FROM ADMIN WHERE ADMIN_ID = :bv1", bv1=user_id)
     return str(result.fetchone()[0])
 
 
@@ -68,7 +75,6 @@ def place_order(request):
     result.execute("SELECT BOOK_ID from CART_DETAILS WHERE CART_ID = :bv ORDER BY BOOK_ID ASC", bv=user_id)
     if result.fetchone() is None:
         return
-    total_price = request.POST['total_price']
     result.execute("SELECT MAX(ORDER_ID) FROM ORDER_LIST")
     order_id = 1
     try:
@@ -76,8 +82,8 @@ def place_order(request):
     except:
         pass
     result.execute(
-        "INSERT INTO ORDER_LIST (ORDER_ID,USER_ID,ADMIN_ID ,TOTAL_PRICE , ORDER_LOCATION) VALUES (:bv1, :bv2, :bv5, :bv4, :bv3)",
-        bv1=order_id, bv2=user_id, bv5=int(admin_id), bv4=int(total_price), bv3=location)
+        "INSERT INTO ORDER_LIST (ORDER_ID,USER_ID,ADMIN_ID  , ORDER_LOCATION) VALUES (:bv1, :bv2, :bv5,  :bv3)",
+        bv1=order_id, bv2=user_id, bv5=int(admin_id), bv3=location)
     conn.commit()
     result.execute("SELECT BOOK_ID from CART_DETAILS WHERE CART_ID = :bv ORDER BY BOOK_ID ASC", bv=user_id)
     book_id_list = []
@@ -91,7 +97,7 @@ def place_order(request):
                        bv1=int(quantity[i]), bv2=int(book_id_list[i]), bv3=user_id)
         conn.commit()
     result.execute(
-        "INSERT INTO ORDER_DETAILS (ORDER_ID,BOOK_ID,QUANTITY)  SELECT :bv1, BOOK_ID , QUANTITY FROM CART_DETAILS WHERE CART_ID = :bv2 ",
+        "INSERT INTO ORDER_DETAILS (ORDER_ID,BOOK_ID,QUANTITY,PRICE_PER_BOOK) SELECT :bv1, C.BOOK_ID , C.QUANTITY,B.PRICE FROM CART_DETAILS C JOIN BOOK B ON(B.BOOK_ID = C.BOOK_ID) WHERE  C.CART_ID = :bv2",
         bv1=order_id, bv2=user_id)
     conn.commit()
     result.execute("DELETE FROM CART_DETAILS WHERE CART_ID = :bv1", bv1=user_id)

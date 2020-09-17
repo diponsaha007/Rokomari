@@ -45,7 +45,7 @@
                                             <form method="POST" action="{% url 'add_new_book:add_book' %}" enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <div class="col">
-                                                    <img id="blah" src="#" alt="your image" />
+                                                    <img id="blah" src="../../static/images/rokomariapp/images/book_image.jpg" width="150" height="200" />
                                                     <br>
                                                     <label class="btn btn-primary btn-sm">
                                                         Select Cover <input type="file" id="myFile" name="filename" onchange="readURL(this);" hidden>

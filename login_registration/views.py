@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import cx_Oracle
 from argon2 import PasswordHasher as ph
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
@@ -120,6 +120,9 @@ def check_registration(request):
     return 1
 
 
+#########        Admin Code            #########
+
+
 def login_admin(request):
     # If user is already logged in then he cannot visit the login page
     if request.session.has_key('user_id'):
@@ -149,17 +152,27 @@ def logout_admin(request):
 
 
 def registration_admin(request):
-    # If user is already logged in then he cannot visit the registration page
-    if request.session.has_key('user_id'):
+    # Only an admin can register another admin
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        dict = {'logged_in': False, 'is_admin': False}
+        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+        dict['is_admin'] = True
+        if request.method == 'POST':
+            res = check_registration_admin(request)
+            dict['can_reg'] = res
+            return render(request, "login_registration/registration_admin.html", context=dict)
+        return render(request, "login_registration/registration_admin.html", dict)
+    else:
         return redirect(reverse('rokomariapp:index'))
-    if request.method == 'POST':
-        res = check_registration_admin(request)
-        dict = {'can_reg': res}
-        return render(request, "login_registration/registration_admin.html", context=dict)
-    return render(request, "login_registration/registration_admin.html")
 
 
 # These are helper functions for the views
+def get_user_name_admin(user_id):
+    result = conn.cursor()
+    result.execute("SELECT USER_NAME FROM ADMIN WHERE ADMIN_ID = :bv1", bv1=user_id)
+    return str(result.fetchone()[0])
+
+
 def check_login_admin(request):
     """
     Takes a POST request object and determines if the user can login
@@ -195,17 +208,13 @@ def check_registration_admin(request):
     password = str(request.POST['password'])
     # using argon2 hashing for password
     password = ph().hash(password)
-    address1 = str(request.POST['address1'])
-    address2 = str(request.POST['address2'])
-    city = str(request.POST['city'])
-    country = str(request.POST['country'])
     phone = str(request.POST['phone'])
     # check if the lens are valid
     if len(username) > 512 or len(firstname) > 512 or len(lastname) > 512 or len(email) > 128:
         return -1
-    if len(password) > 512 or len(address1) > 512 or len(address2) > 512 or len(city) > 128:
+    if len(password) > 512:
         return -1
-    if len(country) > 128 or len(phone) > 30:
+    if len(phone) > 30:
         return -1
     # check if this username already exists
     result = conn.cursor()

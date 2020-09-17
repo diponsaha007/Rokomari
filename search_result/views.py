@@ -5,7 +5,7 @@ import numpy as np
 from pyavrophonetic import avro
 from django.core.paginator import Paginator
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -66,7 +66,7 @@ def search_result(request):
 
     try:
         page = P.page(page_num)
-    except EmptyPage:
+    except :
         page = P.page(1)
 
     dict2 = {'logged_in': dict['logged_in'], 'search_result': page, 'query': query}

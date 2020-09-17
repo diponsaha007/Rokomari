@@ -51,14 +51,16 @@
                                                 <div class="image"><a
                                                         href="{% url 'product_details:product_details' pk=i.0 %}"><img
                                                         class="img-fluid d-block mx-auto"
-                                                        src="../../static/images/rokomariapp/images/{{ i.4 }}.jpg"></a>
+                                                        src="../../static/images/rokomariapp/images/{{ i.5 }}.jpg"></a>
                                                 </div>
                                                 <div class="product-name">
                                                     <a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
                                                     <p>By <a
                                                             href="{% url 'product_list:author' query=i.2 %}">{{ i.2 }}</a>
                                                     </p>
-                                                    <h5 style="color: #106dd0">Quantity {{ i.3 }}</h5>
+                                                    <h6 style="color: #106dd0">Per Book Price {{ i.4 }}</h6>
+                                                    <h6 style="color: #106dd0">Quantity {{ i.3 }}</h6>
+
                                                 </div>
 
                                             </div>

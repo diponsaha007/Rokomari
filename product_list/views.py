@@ -5,7 +5,7 @@ import numpy as np
 from pyavrophonetic import avro
 from django.core.paginator import Paginator
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -67,7 +67,7 @@ def product_list_author(request, query):
 
     try:
         page = P.page(page_num)
-    except EmptyPage:
+    except:
         page = P.page(1)
     # print(dict['summary'])
     dict2 = {'logged_in': dict['logged_in'], 'search_result': page, 'name': query, 'classify': 'এর', 'is_author': True,
@@ -131,7 +131,7 @@ def product_list_genre(request, query):
 
     try:
         page = P.page(page_num)
-    except EmptyPage:
+    except:
         page = P.page(1)
     # print(dict['summary'])
     dict2 = {'logged_in': dict['logged_in'], 'search_result': page, 'name': query, 'classify': "জন্রা'র",
@@ -196,7 +196,7 @@ def product_list_publisher(request, query):
 
     try:
         page = P.page(page_num)
-    except EmptyPage:
+    except:
         page = P.page(1)
     # print(dict['summary'])
     dict2 = {'logged_in': dict['logged_in'], 'search_result': page, 'name': query, 'classify': "এর", 'is_author': False,
@@ -267,6 +267,7 @@ def get_user_name(user_id):
     result = conn.cursor()
     result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
     return str(result.fetchone()[0])
+
 
 def get_user_name_admin(user_id):
     result = conn.cursor()

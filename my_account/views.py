@@ -3,7 +3,7 @@ import cx_Oracle
 import os
 from django.core.files.storage import FileSystemStorage
 
-dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='globaldb')
 conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 
@@ -68,16 +68,17 @@ def update_photo(request):
         user_id = request.session['user_id']
         check_and_delete_if_image_exists(user_id)
         folder = 'static/images/my_account'
-        myfile = request.FILES['filename']
-        extension = myfile.name
-        extension = extension.split('.')
-        extension = extension[1]
-        filename = str(user_id) + '.' + 'jpg'
-
-        fs = FileSystemStorage(location=folder)  # defaults to   MEDIA_ROOT
-        filename = fs.save(filename, myfile)
-        file_url = fs.url(filename)
-
+        try:
+            myfile = request.FILES['filename']
+            extension = myfile.name
+            extension = extension.split('.')
+            extension = extension[1]
+            filename = str(user_id) + '.' + 'jpg'
+            fs = FileSystemStorage(location=folder)  # defaults to   MEDIA_ROOT
+            filename = fs.save(filename, myfile)
+            file_url = fs.url(filename)
+        except:
+            pass
     return redirect(reverse('my_account:my_account'))
 
 
@@ -104,6 +105,7 @@ def get_profile_info(id):
         l2.append("static/images/my_account/default.jpg")
     # print(l2)
     return l2
+
 
 def get_user_name_admin(user_id):
     result = conn.cursor()
