@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Buy Book Online | Rokomari.com</title>
+    <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
+    <link rel="stylesheet" href={% static "admin_dashboard_assets/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+    {% include  'base/admin_nav.html' %}
+    <div class="d-flex flex-column" id="content-wrapper"
+         style="color: #383838;background: #3b3b3b url(../../static/backgroundimg/body.png);">
+        <br>
+        <div id="content">
+            <div class="container-fluid">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-light mb-0">Admin Dashboard</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-primary py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>AVERAGE Earnings (monthly) 2020</span>
+                                        </div>
+                                        <div class="text-dark font-weight-bold h5 mb-0">
+                                            <span>{{ monthly_avg }} Tk</span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="fa fa-calendar fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Average Earnings (annual) </span>
+                                        </div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{ annual_avg }} Tk</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto"><i class="fa fa-dollar fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-info py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-info font-weight-bold text-xs mb-1">
+                                            <span>Total Sell 2020</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{ current_year_income }} Tk</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-auto"><i class="fa fa-money fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-warning py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending Orders</span>
+                                        </div>
+                                        <div class="text-dark font-weight-bold h5 mb-0">
+                                            <span>{{ pending_orders }}</span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="fa fa-comments fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7 col-xl-8">
+                        <div class="card shadow mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="text-primary font-weight-bold m-0">Monthly Sell Overview 2020</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area" id="monthly_earnings" style="height: 350px;width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-xl-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="text-primary font-weight-bold m-0">Popular Genres of 2020</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area" id="genre_sell" style="height: 350px;width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="text-primary font-weight-bold m-0">Your Recent Orders</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                                     aria-describedby="dataTable_info">
+                                    <table class="table my-0" id="dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Name</th>
+                                            <th>Order Date</th>
+                                            <th>Received Date</th>
+                                            <th>Location</th>
+                                            <th>Amount (Tk)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in recent_orders %}
+                                            {% if i.6 is 1 %}
+                                                <tr style="background-color: #1cc88a;color: white">
+                                                    <td>{{ i.0 }}</td>
+                                                    <td>{{ i.1 }}</td>
+                                                    <td>{{ i.2 }}</td>
+                                                    <td>{{ i.3 }}</td>
+                                                    <td>{{ i.4 }}</td>
+                                                    <td>{{ i.5 }}</td>
+                                                </tr>
+                                            {% else %}
+                                                <tr style="background-color: #4e73df;color: white">
+                                                    <td>{{ i.0 }}</td>
+                                                    <td>{{ i.1 }}</td>
+                                                    <td>{{ i.2 }}</td>
+                                                    <td>{{ i.3 }}</td>
+                                                    <td>{{ i.4 }}</td>
+                                                    <td>{{ i.5 }}</td>
+                                                </tr>
+                                            {% endif %}
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <div class="card text-white bg-primary shadow">
+                                    <div class="card-body">
+                                        <p class="m-0">Pending Order</p>
+                                        <p class="text-white-50 small m-0">#4e73df</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="card text-white bg-success shadow">
+                                    <div class="card-body">
+                                        <p class="m-0">Delivered Order</p>
+                                        <p class="text-white-50 small m-0">#1cc88a</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary font-weight-bold m-0">Best Customers of 2020</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                                         aria-describedby="dataTable_info">
+                                        <table class="table my-0" id="dataTable">
+                                            <thead>
+                                            <tr>
+                                                <th>Order Id</th>
+                                                <th>User Name</th>
+                                                <th>Total Books Bought</th>
+                                                <th>Total Price(Tk)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for i in best_buyers %}
+                                                <tr>
+                                                    <td><img class="rounded-circle mr-2" width="40" height="40"
+                                                             src="../../{{ i.4 }}">{{ i.1 }}
+                                                    </td>
+                                                    <td>{{ i.0 }}</td>
+                                                    <td>{{ i.2 }}</td>
+                                                    <td>{{ i.3 }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% include 'base/footer.html' %}
+<script src={% static "js/admin_dashboard/jquery.min.js" %}></script>
+<script src={% static "admin_dashboard_assets/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "js/admin_dashboard/chart.min.js" %}></script>
+<script src={% static "js/admin_dashboard/bs-init.js" %}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src={% static "js/admin_dashboard/theme.js" %}></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    var dataa = JSON.parse("{{monthly_sell|escapejs}}");
+    var dataa2 = JSON.parse("{{genre_sell|escapejs}}");
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var arr = [['Month', 'Sell (Tk)']]
+        for (var i = 0; i < dataa.length; i++)
+            arr.push(dataa[i])
+        var data = google.visualization.arrayToDataTable(arr)
+        var options = {
+            legend: 'none',
+            width: '100%',
+            height: '100%',
+            chartArea: {
+                left: "8%",
+                top: "8%",
+                bottom: "8%",
+                right: "8%",
+                height: "94%",
+                width: "94%"
+            }
+        };
+        var arr2 = [['Genre', 'Sell in 2020(%)']]
+        for (var i2 = 0; i2 < dataa2.length; i2++)
+            arr2.push(dataa2[i2])
+        var data2 = google.visualization.arrayToDataTable(arr2)
+        var options2 = {
+            pieHole: 0.4,
+            width: '100%',
+            height: '100%',
+            chartArea: {
+                left: "3%",
+                top: "3%",
+                height: "94%",
+                width: "94%"
+            }
+        };
+        var chart2 = new google.visualization.PieChart(document.getElementById('genre_sell'));
+        chart2.draw(data2, options2);
+        var chart = new google.visualization.LineChart(document.getElementById('monthly_earnings'));
+        chart.draw(data, options);
+    }
+</script>
+</body>
+
+</html>

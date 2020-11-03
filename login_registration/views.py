@@ -126,14 +126,14 @@ def check_registration(request):
 def login_admin(request):
     # If user is already logged in then he cannot visit the login page
     if request.session.has_key('user_id'):
-        return redirect(reverse('rokomariapp:index'))
+        return redirect(reverse('admin_dashboard:admin_dashboard'))
     if request.method == 'POST':
         user_id = check_login_admin(request)
         if user_id != -1:
             # this line here logs the user in
             request.session['user_id'] = user_id
             request.session['is_admin'] = True
-            return redirect(reverse('rokomariapp:index'))
+            return redirect(reverse('admin_dashboard:admin_dashboard'))
         else:
             # failed to enter
             dict = {'failed': True}
@@ -148,7 +148,7 @@ def logout_admin(request):
         del request.session['is_admin']
     except:
         pass
-    return redirect(reverse('rokomariapp:index'))
+    return redirect(reverse('login_registration:login_admin'))
 
 
 def registration_admin(request):

@@ -1,0 +1,32 @@
+{% load static %}
+<link rel="stylesheet" href={% static "css/base/admin_nav.css" %}>
+
+<nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+    <div class="container-fluid d-flex flex-column p-0">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="{% url 'admin_dashboard:admin_dashboard' %}">
+            <div class="sidebar-brand-icon rotate-n-0">
+                <img src="../../static/backgroundimg/icons/0.png" width="30" height="30">
+            </div>
+            <div class="sidebar-brand-text mx-3"><span>Rokomari</span></div>
+        </a>
+        <br>
+        <div class="mylink">
+            <a class="dropdown-item" href="#">{{ logged_in }}</a>
+            <a class="dropdown-item" href="#">Author Database</a>
+            <a class="dropdown-item" href="#">Publisher Database</a>
+            <a class="dropdown-item" href="#">Book Database</a>
+            <a class="dropdown-item" href="#">Customer Database</a>
+            <a class="dropdown-item" href="#">Admin Database</a>
+            <a class="dropdown-item" href="{% url 'add_new_book:add_new' %}">Add Book</a>
+            <a class="dropdown-item" href="#">Add Author</a>
+            <a class="dropdown-item" href="#">Add Publisher</a>
+            <a class="dropdown-item" href="#">Manage Your Orders</a>
+            <a class="dropdown-item" href="{% url 'login_registration:registration_admin' %}">Add Admin</a>
+            <a class="dropdown-item" href="{% url 'login_registration:logout_admin' %}">Sign Out</a>
+
+        </div>
+
+        <hr class="sidebar-divider my-0">
+        <ul class="nav navbar-nav text-light" id="accordionSidebar"></ul>
+    </div>
+</nav>

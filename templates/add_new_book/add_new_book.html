@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Buy Book Online | Rokomari.com</title>
     <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
-    <link rel="stylesheet" href={% static "cart_assets/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href={% static "admin_dashboard_assets/assets/bootstrap/css/bootstrap.min.css" %}>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
     <link rel="stylesheet" href={% static "css/my_account/smoothproducts.css" %}>
@@ -25,10 +25,11 @@
 </head>
 
 <body>
-{% include  'base/navbar.html' %}
 {% if logged_in %}
     <div id="wrapper">
-        <div class="d-flex flex-column" id="content-wrapper">
+        {% include  'base/admin_nav.html' %}
+        <div class="d-flex flex-column" id="content-wrapper"
+             style="color: #383838;background: #3b3b3b url(../../static/backgroundimg/body.png);">
             <div id="content">
                 <div class="container">
                     <br>
@@ -37,57 +38,84 @@
                         <div class="col-lg-12">
                             <div class="row">
                                 <div class="col">
-                                    <div class="card shadow mb-3" id="edit_form_personal" >
+                                    <div class="card shadow mb-3" id="edit_form_personal">
                                         <div class="card-header py-3">
                                             <h5 class="text-primary m-0 font-weight-bold">New Book Informations</h5>
                                         </div>
                                         <div class="card-body">
-                                            <form method="POST" action="{% url 'add_new_book:add_book' %}" enctype="multipart/form-data">
+                                            <form method="POST" action="{% url 'add_new_book:add_book' %}"
+                                                  enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <div class="col">
-                                                    <img id="blah" src="../../static/images/rokomariapp/images/book_image.jpg" width="150" height="200" />
+                                                    <img id="blah"
+                                                         src="../../static/images/rokomariapp/images/book_image.jpg"
+                                                         width="150" height="200"/>
                                                     <br>
                                                     <label class="btn btn-primary btn-sm">
-                                                        Select Cover <input type="file" id="myFile" name="filename" onchange="readURL(this);" hidden>
+                                                        Select Cover <input type="file" id="myFile" name="filename"
+                                                                            onchange="readURL(this);" hidden>
                                                     </label>
 
                                                 </div>
                                                 <div class="col">
-                                                    <div class="form-group"><label for="book_name"><strong>Book Name</strong></label><input class="form-control" type="text" name="book_name"></div>
+                                                    <div class="form-group"><label for="book_name"><strong>Book
+                                                        Name</strong></label><input class="form-control" type="text"
+                                                                                    name="book_name"></div>
                                                 </div>
                                                 <div class="col">
-                                                    <div class="form-group"><label for="book_genre"><strong>Book Genre</strong></label><input class="form-control" type="text" name="book_genre"></div>
+                                                    <div class="form-group"><label for="book_genre"><strong>Book
+                                                        Genre</strong></label><input class="form-control" type="text"
+                                                                                     name="book_genre"></div>
                                                 </div>
                                                 <div class="col">
-                                                    <div class="form-group"><label for="edition"><strong>Edition</strong></label><input class="form-control" type="text"  name="edition"></div>
+                                                    <div class="form-group"><label
+                                                            for="edition"><strong>Edition</strong></label><input
+                                                            class="form-control" type="text" name="edition"></div>
                                                 </div>
                                                 <div class="col">
-                                                    <div class="form-group"><label for="author"><strong>Author</strong></label><input class="form-control" type="text"  name="author"></div>
+                                                    <div class="form-group"><label for="author"><strong>Author</strong></label><input
+                                                            class="form-control" type="text" name="author"></div>
                                                 </div>
                                                 <div class="col">
-                                                        <div class="form-group"><label for="publisher"><strong>Publisher</strong></label><input class="form-control" type="text"  name="publisher"></div>
-                                                    </div>
+                                                    <div class="form-group"><label
+                                                            for="publisher"><strong>Publisher</strong></label><input
+                                                            class="form-control" type="text" name="publisher"></div>
+                                                </div>
                                                 <div class="col">
-                                                        <div class="form-group"><label for="price"><strong>Price</strong></label><input class="form-control" type="text"  name="price"></div>
-                                                    </div>
+                                                    <div class="form-group"><label
+                                                            for="price"><strong>Price</strong></label><input
+                                                            class="form-control" type="text" name="price"></div>
+                                                </div>
                                                 <div class="col">
-                                                        <div class="form-group"><label for="discount"><strong>Discount</strong></label><input class="form-control" type="text"  name="discount"></div>
-                                                    </div>
+                                                    <div class="form-group"><label
+                                                            for="discount"><strong>Discount</strong></label><input
+                                                            class="form-control" type="text" name="discount"></div>
+                                                </div>
                                                 <div class="col">
-                                                        <div class="form-group"><label for="country"><strong>country</strong></label><input class="form-control" type="text"  name="country"></div>
-                                                    </div>
+                                                    <div class="form-group"><label
+                                                            for="country"><strong>Country</strong></label><input
+                                                            class="form-control" type="text" name="country"></div>
+                                                </div>
                                                 <div class="col">
-                                                        <div class="form-group"><label for="language"><strong>language</strong></label><input class="form-control" type="text"  name="language"></div>
-                                                    </div>
+                                                    <div class="form-group"><label
+                                                            for="language"><strong>Language</strong></label><input
+                                                            class="form-control" type="text" name="language"></div>
+                                                </div>
                                                 <div class="col">
-                                                        <div class="form-group"><label for="summary"><strong>Summary</strong></label><input class="form-control" type="text"  name="summary"></div>
-                                                    </div>
+                                                    <div class="form-group"><label
+                                                            for="summary"><strong>Summary</strong></label><input
+                                                            class="form-control" type="text" name="summary"></div>
+                                                </div>
                                                 <div class="col">
-                                                        <div class="form-group"><label for="isbn"><strong>ISBN</strong></label><input class="form-control" type="text"  name="isbn"></div>
-                                                    </div>
+                                                    <div class="form-group"><label
+                                                            for="isbn"><strong>ISBN</strong></label><input
+                                                            class="form-control" type="text" name="isbn"></div>
+                                                </div>
                                                 <div class="col">
-                                                        <div class="form-group"><label for="pages"><strong>Number of Pages</strong></label><input class="form-control" type="text"  name="pages"></div>
-                                                    </div>
+                                                    <div class="form-group"><label for="pages"><strong>Number of
+                                                        Pages</strong></label><input class="form-control" type="text"
+                                                                                     name="pages"></div>
+                                                </div>
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <button class="btn btn-primary" type="submit">Save</button>
@@ -119,7 +147,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src={% static "js/my_account/jquery.min.js" %}></script>
-<script src={% static "cart_assets/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "admin_dashboard_assets/assets/bootstrap/js/bootstrap.min.js" %}></script>
 <script src={% static "js/my_account/smoothproducts.min.js" %}></script>
 <script src={% static "js/my_account/theme.js" %}></script>
 </body>
