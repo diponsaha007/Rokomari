@@ -82,6 +82,18 @@
                                         to Wishlist
                                     </button>
                                 </a>
+                            <br>
+                            {% if is_admin %}
+                                <a href="{% url 'showdata:delete_book' pk=book_id %}">
+                                    <button class="btn btn-outline-primary" type="button">Delete Book
+                                    </button>
+                                </a>
+                                <br>
+                                <a href="{% url 'showdata:update_book' pk=book_id %}">
+                                    <button class="btn btn-outline-primary" type="button">Update Book
+                                    </button>
+                                </a>
+                            {% endif %}
                                 <div class="summary"></div>
                             </div>
                         </div>

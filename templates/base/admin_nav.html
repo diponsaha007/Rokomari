@@ -12,14 +12,12 @@
         <br>
         <div class="mylink">
             <a class="dropdown-item" href="#">{{ logged_in }}</a>
-            <a class="dropdown-item" href="#">Author Database</a>
-            <a class="dropdown-item" href="#">Publisher Database</a>
-            <a class="dropdown-item" href="#">Book Database</a>
+            <a class="dropdown-item" href="{% url 'showdata:showdata_author' %}">Author Database</a>
+            <a class="dropdown-item" href="{% url 'showdata:showdata_publisher' %}">Publisher Database</a>
+            <a class="dropdown-item" href="{% url 'showdata:showdata' %}">Book Database</a>
             <a class="dropdown-item" href="#">Customer Database</a>
             <a class="dropdown-item" href="#">Admin Database</a>
             <a class="dropdown-item" href="{% url 'add_new_book:add_new' %}">Add Book</a>
-            <a class="dropdown-item" href="#">Add Author</a>
-            <a class="dropdown-item" href="#">Add Publisher</a>
             <a class="dropdown-item" href="#">Manage Your Orders</a>
             <a class="dropdown-item" href="{% url 'login_registration:registration_admin' %}">Add Admin</a>
             <a class="dropdown-item" href="{% url 'login_registration:logout_admin' %}">Sign Out</a>

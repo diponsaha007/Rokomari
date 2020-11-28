@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Buy Book Online | Rokomari.com</title>
+    <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
+    <link rel="stylesheet" href={% static "admin_dashboard_assets/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href={% static "css/my_account/smoothproducts.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animate/animate.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/css-hamburgers/hamburgers.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+{% if logged_in %}
+    <div id="wrapper">
+        {% include  'base/admin_nav.html' %}
+        <div class="d-flex flex-column" id="content-wrapper"
+             style="color: #383838;background: #3b3b3b url(../../static/backgroundimg/body.png);">
+            <div id="content">
+                <div class="container">
+                    <br>
+                    <br>
+                    <div class="row mb-3">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow mb-3" id="edit_form_personal">
+                                        {% for i in search_result %}
+                                        <div class="card-header py-3">
+                                            <h5 class="text-primary m-0 font-weight-bold">Update Book Informations</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form method="POST" action="{% url 'showdata:update_book' pk=i.0 %}"
+                                                  enctype="multipart/form-data">
+                                                {% csrf_token %}
+
+                                                <div class="col">
+                                                    <div class="form-group"><label for="book_id"><strong>Book
+                                                        ID</strong></label><br>{{ i.0 }}</div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <div class="form-group"><label for="book_name"><strong>Book
+                                                        Name</strong></label><br>{{ i.1 }}</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="book_genre"><strong>Book
+                                                        Genre</strong></label><br>{{ i.9 }}</div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <div class="form-group"><label for="author"><strong>Author</strong></label><br>
+                                                    {{ i.2 }}</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label
+                                                            for="publisher"><strong>Publisher</strong></label><br>{{ i.5 }}</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label
+                                                            for="edition"><strong>Edition</strong></label><input
+                                                            class="form-control" type="text" name="edition" value={{ i.7 }}></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label
+                                                            for="price"><strong>Price</strong></label><input
+                                                            class="form-control" type="text" name="price" value={{ i.3 }}></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label
+                                                            for="discount"><strong>Discount</strong></label><input
+                                                            class="form-control" type="text" name="discount" value={{ i.6 }}></div>
+                                                </div>
+
+
+                                                <div class="col">
+                                                    <div class="form-group"><label
+                                                            for="summary"><strong>Summary</strong></label><input
+                                                            class="form-control" type="text" name="summary" value={{ i.10 }}></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="pages"><strong>Number of
+                                                        Pages</strong></label><input class="form-control" type="text"
+                                                                                     name="pages" value={{ i.8 }}></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary" type="submit">Save</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="container block-heading">
+        <br><br><br><br>
+        <h1>Please log in first in order to view your account!</h1>
+        <br><br><br><br><br><br>
+    </div>
+{% endif %}
+
+{#footer#}
+{% include 'base/footer.html' %}
+
+<script src={% static "js/add_new_book/add_new_book.js" %}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src={% static "js/my_account/jquery.min.js" %}></script>
+<script src={% static "admin_dashboard_assets/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "js/my_account/smoothproducts.min.js" %}></script>
+<script src={% static "js/my_account/theme.js" %}></script>
+</body>
+
+</html>

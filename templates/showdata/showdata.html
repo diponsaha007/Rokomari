@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Buy Book Online | Rokomari.com</title>
+    <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
+    <link rel="stylesheet" href={% static "product_assests/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href={% static "product_assests/assets/fonts/simple-line-icons.min.css" %}>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href={% static "css/order_list/smoothproducts.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animate/animate.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/css-hamburgers/hamburgers.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
+
+</head>
+
+<body>
+{% include  'base/navbar.html' %}
+<div id="wrapper">
+<div class="container">
+<br>
+<br>
+<br>
+<main class="page catalog-page">
+    <section class="clean-block clean-catalog">
+        <div class="container">
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="d-none d-md-block">
+                            <div class="filters">
+                                <h2>Filter Results</h2>
+                                <br>
+                                <form method="POST" action="{% url 'showdata:showdata' %}?search={{ query }}">
+                                    {% csrf_token %}
+                                    <div class="filter-item">
+                                        <h3>Specify Row</h3>
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="book_name"
+                                               placeholder="Book Name" aria-label="Search" style="width: 200px;">
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="author_name"
+                                               placeholder="Author Name" aria-label="Search" style="width: 200px;">
+                                    </div>
+                                    <div class="filter-item">
+                                        <h3>Prices</h3>
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="price_from"
+                                               placeholder="From" aria-label="Search" style="width: 200px;">
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="price_to"
+                                               placeholder="To" aria-label="Search" style="width: 200px;">
+                                    </div>
+                                    <div class="filter-item">
+                                        <h3>Ratings</h3>
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="rating_from"
+                                               placeholder="From" aria-label="Search" style="width: 200px;">
+                                        <input class="form-control mx-auto mr-sm-2" type="search" name="rating_to"
+                                               placeholder="To" aria-label="Search" style="width: 200px;">
+                                    </div>
+                                    <div class="filter-item">
+                                        <h3>Sort</h3>
+                                        <input type="radio" name="sort" value="PRICE ASC"> Price - Low to High<br>
+                                        <input type="radio" name="sort" value="PRICE DESC"> Price - High to Low<br>
+                                        <input type="radio" name="sort" value="DISCOUNT DESC"> Discount - High to
+                                        Low<br>
+                                        <input type="radio" name="sort" value="TOTAL_SOLD DESC"> Best Seller<br>
+                                    </div>
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-9">
+                        <div class="products">
+                            <div class="row no-gutters">
+                            <h1 style="text-align:center">BOOK DATABASE</h1>
+                            <br>
+                            <br>
+                            <table style="width:100%; border: 1px solid black">
+                                {% if search_result %}
+                                    <tr>
+                                <th>BOOK ID</th>
+                                <th>BOOK NAME</th>
+                                <th>AUTHOR NAME</th>
+                                <th>PRICE</th>
+                                <th>RATING</th>
+                                <th>PUBLISHER</th>
+                                <th>DISCOUNT</th>
+                                    </tr>
+                                    {% for i in search_result %}
+                                        <tr>
+                                        <td>{{ i.0 }}</td>
+                                        <td><a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a></td>
+                                        <td>{{ i.2 }}</td>
+                                        <td>{{ i.3 }}</td>
+                                        <td>{{ i.4 }}</td>
+                                        <td>{{ i.5 }}</td>
+                                        <td>{{ i.6 }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            </table>
+                            </div>
+                            <nav>
+                                <ul class="pagination">
+                                    {% if search_result.has_previous %}
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="{% url 'showdata:showdata' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
+                                                                 aria-label="Previous"><span aria-hidden="true">Previous Page</span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if search_result.has_next %}
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="{% url 'showdata:showdata' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
+                                                                 aria-label="Next"><span
+                                                aria-hidden="true">Next Page</span></a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</div>
+
+</div>
+{#footer#}
+{% include 'base/footer.html' %}
+
+<script src={% static "js/order_list/jquery.min.js" %}></script>
+<script src={% static "product_assests/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src={% static "js/order_list/smoothproducts.min.js" %}></script>
+<script src={% static "js/order_list/theme.js" %}></script>
+
+</body>
+
+</html>

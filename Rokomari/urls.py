@@ -28,5 +28,6 @@ urlpatterns = [
     path('', include("order_list.urls", namespace="order_list")),
     path('', include("add_new_book.urls", namespace="add_new_book")),
     path('', include("admin_dashboard.urls", namespace="admin_dashboard")),
+    path('', include("showdata.urls", namespace="showdata")),
     path('admin/', admin.site.urls),
 ]
