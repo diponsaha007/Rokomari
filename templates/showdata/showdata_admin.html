@@ -26,113 +26,127 @@
 <body>
 {% include  'base/navbar.html' %}
 <div id="wrapper">
-<div class="container">
-<br>
-<br>
-<br>
-<main class="page catalog-page">
-    <section class="clean-block clean-catalog">
-        <div class="container">
-            <div class="content">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="d-none d-md-block">
-                            <div class="filters">
-                                <h2>Filter Results</h2>
-                                <br>
-                                <form method="POST" action="{% url 'showdata:showdata' %}?search={{ query }}">
-                                    {% csrf_token %}
-                                    <div class="filter-item">
-                                        <h3>Specify Row</h3>
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="book_name"
-                                               placeholder="Book Name" aria-label="Search" style="width: 200px;">
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="author_name"
-                                               placeholder="Author Name" aria-label="Search" style="width: 200px;">
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <main class="page catalog-page">
+            <section class="clean-block clean-catalog">
+                <div class="container">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="d-none d-md-block">
+                                    <div class="filters">
+                                        <h2>Filter Results</h2>
+                                        <br>
+                                        <form method="POST" action="{% url 'showdata:showdata' %}?search={{ query }}">
+                                            {% csrf_token %}
+                                            <div class="filter-item">
+                                                <h3>Specify Row</h3>
+                                                <input class="form-control mx-auto mr-sm-2" type="search"
+                                                       name="book_name"
+                                                       placeholder="Book Name" aria-label="Search"
+                                                       style="width: 200px;">
+                                                <input class="form-control mx-auto mr-sm-2" type="search"
+                                                       name="author_name"
+                                                       placeholder="Author Name" aria-label="Search"
+                                                       style="width: 200px;">
+                                            </div>
+                                            <div class="filter-item">
+                                                <h3>Prices</h3>
+                                                <input class="form-control mx-auto mr-sm-2" type="search"
+                                                       name="price_from"
+                                                       placeholder="From" aria-label="Search" style="width: 200px;">
+                                                <input class="form-control mx-auto mr-sm-2" type="search"
+                                                       name="price_to"
+                                                       placeholder="To" aria-label="Search" style="width: 200px;">
+                                            </div>
+                                            <div class="filter-item">
+                                                <h3>Ratings</h3>
+                                                <input class="form-control mx-auto mr-sm-2" type="search"
+                                                       name="rating_from"
+                                                       placeholder="From" aria-label="Search" style="width: 200px;">
+                                                <input class="form-control mx-auto mr-sm-2" type="search"
+                                                       name="rating_to"
+                                                       placeholder="To" aria-label="Search" style="width: 200px;">
+                                            </div>
+                                            <div class="filter-item">
+                                                <h3>Sort</h3>
+                                                <input type="radio" name="sort" value="PRICE ASC"> Price - Low to
+                                                High<br>
+                                                <input type="radio" name="sort" value="PRICE DESC"> Price - High to
+                                                Low<br>
+                                                <input type="radio" name="sort" value="DISCOUNT DESC"> Discount - High
+                                                to
+                                                Low<br>
+                                                <input type="radio" name="sort" value="TOTAL_SOLD DESC"> Best Seller<br>
+                                            </div>
+                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter
+                                            </button>
+                                        </form>
+
                                     </div>
-                                    <div class="filter-item">
-                                        <h3>Prices</h3>
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="price_from"
-                                               placeholder="From" aria-label="Search" style="width: 200px;">
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="price_to"
-                                               placeholder="To" aria-label="Search" style="width: 200px;">
-                                    </div>
-                                    <div class="filter-item">
-                                        <h3>Ratings</h3>
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="rating_from"
-                                               placeholder="From" aria-label="Search" style="width: 200px;">
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="rating_to"
-                                               placeholder="To" aria-label="Search" style="width: 200px;">
-                                    </div>
-                                    <div class="filter-item">
-                                        <h3>Sort</h3>
-                                        <input type="radio" name="sort" value="PRICE ASC"> Price - Low to High<br>
-                                        <input type="radio" name="sort" value="PRICE DESC"> Price - High to Low<br>
-                                        <input type="radio" name="sort" value="DISCOUNT DESC"> Discount - High to
-                                        Low<br>
-                                        <input type="radio" name="sort" value="TOTAL_SOLD DESC"> Best Seller<br>
-                                    </div>
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
-                                </form>
+                                </div>
 
                             </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-9">
-                        <div class="products">
-                            <div class="row no-gutters">
-                            <h1 style="text-align:center">BOOK DATABASE</h1>
-                            <br>
-                            <br>
-                            <table style="width:100%; border: 1px solid black">
-                                {% if search_result %}
-                                    <tr>
-                                <th>BOOK ID</th>
-                                <th>BOOK NAME</th>
-                                <th>AUTHOR NAME</th>
-                                <th>PRICE</th>
-                                <th>RATING</th>
-                                <th>PUBLISHER</th>
-                                <th>DISCOUNT</th>
-                                    </tr>
-                                    {% for i in search_result %}
-                                        <tr>
-                                        <td>{{ i.0 }}</td>
-                                        <td><a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a></td>
-                                        <td>{{ i.2 }}</td>
-                                        <td>{{ i.3 }}</td>
-                                        <td>{{ i.4 }}</td>
-                                        <td>{{ i.5 }}</td>
-                                        <td>{{ i.6 }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                {% endif %}
-                            </table>
+                            <div class="col-md-9">
+                                <div class="products">
+                                    <div class="row no-gutters">
+                                        <h1 style="text-align:center">BOOK DATABASE</h1>
+                                        <br>
+                                        <br>
+                                        <table style="width:100%; border: 1px solid black">
+                                            {% if search_result %}
+                                                <tr>
+                                                    <th>BOOK ID</th>
+                                                    <th>BOOK NAME</th>
+                                                    <th>AUTHOR NAME</th>
+                                                    <th>PRICE</th>
+                                                    <th>RATING</th>
+                                                    <th>PUBLISHER</th>
+                                                    <th>DISCOUNT</th>
+                                                </tr>
+                                                {% for i in search_result %}
+                                                    <tr>
+                                                        <td>{{ i.0 }}</td>
+                                                        <td>
+                                                            <a href="{% url 'product_details:product_details' pk=i.0 %}">{{ i.1 }}</a>
+                                                        </td>
+                                                        <td>{{ i.2 }}</td>
+                                                        <td>{{ i.3 }}</td>
+                                                        <td>{{ i.4 }}</td>
+                                                        <td>{{ i.5 }}</td>
+                                                        <td>{{ i.6 }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </table>
+                                    </div>
+                                    <nav>
+                                        <ul class="pagination">
+                                            {% if search_result.has_previous %}
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="{% url 'showdata:showdata' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
+                                                                         aria-label="Previous"><span aria-hidden="true">Previous Page</span></a>
+                                                </li>
+                                            {% endif %}
+                                            {% if search_result.has_next %}
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="{% url 'showdata:showdata' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
+                                                                         aria-label="Next"><span
+                                                        aria-hidden="true">Next Page</span></a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
-                            <nav>
-                                <ul class="pagination">
-                                    {% if search_result.has_previous %}
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="{% url 'showdata:showdata' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
-                                                                 aria-label="Previous"><span aria-hidden="true">Previous Page</span></a>
-                                        </li>
-                                    {% endif %}
-                                    {% if search_result.has_next %}
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="{% url 'showdata:showdata' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
-                                                                 aria-label="Next"><span
-                                                aria-hidden="true">Next Page</span></a></li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-</main>
-</div>
+            </section>
+        </main>
+    </div>
 
 </div>
 {#footer#}

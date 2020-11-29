@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href={% static "product_assests/assets/fonts/simple-line-icons.min.css" %}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href={% static "css/order_list/smoothproducts.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
@@ -20,91 +19,112 @@
     <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
-
+    <link rel="stylesheet" href={% static "admin_dashboard_assets/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/showdata/style.css" %}>
 </head>
 
+
 <body>
-{% include  'base/navbar.html' %}
+
 <div id="wrapper">
-<div class="container">
-<br>
-<br>
-<br>
-<main class="page catalog-page">
-    <section class="clean-block clean-catalog">
-        <div class="container">
-            <div class="content">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="d-none d-md-block">
-                            <div class="filters">
-                                <h2>Filter Results</h2>
-                                <br>
-                                <form method="POST" action="{% url 'showdata:showdata_author' %}?search={{ query }}">
-                                    {% csrf_token %}
-                                    <div class="filter-item">
-                                        <h3>Specify Row</h3>
-                                        <input class="form-control mx-auto mr-sm-2" type="search" name="author_name_part"
-                                               placeholder="Part of Author's Name" aria-label="Search" style="width: 200px;">
+    {% include  'base/admin_nav.html' %}
+    <div class="d-flex flex-column" id="content-wrapper"
+         style="color: #383838;background: #3b3b3b url(../../static/backgroundimg/body.png);">
+        <div id="content">
+            <div class="container">
+                <br>
+                <br>
+                <br>
+                <div class="card shadow mb-3">
+                    <main class="page catalog-page">
+                        <section class="clean-block clean-catalog">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="d-none d-md-block">
+                                            <div class="filters">
+                                                <br>
+                                                <br>
+                                                <h2>Filter Results</h2>
+                                                <br>
+                                                <form method="POST"
+                                                      action="{% url 'showdata:showdata_author' %}?search={{ query }}">
+                                                    {% csrf_token %}
+                                                    <div class="filter-item">
+                                                        <h3>Specify Row</h3>
+                                                        <input class="form-control mx-auto mr-sm-2" type="search"
+                                                               name="author_name_part"
+                                                               placeholder="Part of Author's Name"
+                                                               aria-label="Search" style="width: 200px;">
+                                                    </div>
+
+                                                    <button class="btn btn-outline-success my-2 my-sm-0"
+                                                            type="submit">Filter
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+
                                     </div>
-
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
-                                </form>
-
+                                    <div class="col-md-9">
+                                        <div class="products">
+                                            <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                                                 aria-describedby="dataTable_info">
+                                                <h1 style="text-align:center">Author DATABASE</h1>
+                                                <br>
+                                                <br>
+                                                <table class="table my-0" id="dataTable">
+                                                    {% if search_result %}
+                                                        <thead>
+                                                        <tr>
+                                                            <th>AUTHOR ID</th>
+                                                            <th>AUTHOR NAME</th>
+                                                            <th>Delete All His/Her Books</th>
+                                                        </tr>
+                                                        </thead>
+                                                        {% for i in search_result %}
+                                                            <tr>
+                                                                <td>{{ i.0 }}</td>
+                                                                <td>
+                                                                    <a href="{% url 'product_list:author' query=i.1 %}">{{ i.1 }}</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="{% url 'showdata:delete_author' pk=i.0 %}">Delete</a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </table>
+                                            </div>
+                                            <nav>
+                                                <ul class="pagination">
+                                                    {% if search_result.has_previous %}
+                                                        <li class="page-item"><a class="page-link"
+                                                                                 href="{% url 'showdata:showdata_author' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
+                                                                                 aria-label="Previous"><span
+                                                                aria-hidden="true">Previous Page</span></a>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if search_result.has_next %}
+                                                        <li class="page-item"><a class="page-link"
+                                                                                 href="{% url 'showdata:showdata_author' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
+                                                                                 aria-label="Next"><span
+                                                                aria-hidden="true">Next Page</span></a></li>
+                                                    {% endif %}
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-9">
-                        <div class="products">
-                            <div class="row no-gutters">
-                            <h1 style="text-align:center">Author DATABASE</h1>
-                            <br>
-                            <br>
-                            <table style="width:100%; border: 1px solid black">
-                                {% if search_result %}
-                                    <tr>
-                                <th>AUTHOR ID</th>
-                                <th>AUTHOR NAME</th>
-                                        <th>Delete All His/Her Books</th>
-                                    </tr>
-                                    {% for i in search_result %}
-                                        <tr>
-                                        <td>{{ i.0 }}</td>
-                                        <td><a href="{% url 'product_list:author' query=i.1 %}">{{ i.1 }}</a></td>
-                                        <td><a href="{% url 'showdata:delete_author' pk=i.0 %}">Delete</a></td>
-                                        </tr>
-                                    {% endfor %}
-                                {% endif %}
-                            </table>
-                            </div>
-                            <nav>
-                                <ul class="pagination">
-                                    {% if search_result.has_previous %}
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="{% url 'showdata:showdata_author' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
-                                                                 aria-label="Previous"><span aria-hidden="true">Previous Page</span></a>
-                                        </li>
-                                    {% endif %}
-                                    {% if search_result.has_next %}
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="{% url 'showdata:showdata_author' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
-                                                                 aria-label="Next"><span
-                                                aria-hidden="true">Next Page</span></a></li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+                        </section>
+                    </main>
                 </div>
             </div>
         </div>
-    </section>
-</main>
+    </div>
 </div>
-
-</div>
-{#footer#}
 {% include 'base/footer.html' %}
 
 <script src={% static "js/order_list/jquery.min.js" %}></script>

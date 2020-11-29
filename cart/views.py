@@ -42,9 +42,8 @@ def get_user_name_admin(user_id):
 
 def get_admin_id_with_minimum_order_managing():
     result = conn.cursor()
-    result.execute(
-        "SELECT E.ADMIN_ID FROM (SELECT A.ADMIN_ID , (SELECT COUNT(O.ADMIN_ID) FROM ORDER_LIST O WHERE O.ADMIN_ID = A.ADMIN_ID AND O.RECEIVED_DATE IS NULL) CNT FROM ADMIN A) E WHERE E.CNT = ( SELECT MIN(F.CNT) FROM (SELECT A.ADMIN_ID , (SELECT COUNT(O.ADMIN_ID) FROM ORDER_LIST O WHERE O.ADMIN_ID = A.ADMIN_ID AND O.RECEIVED_DATE IS NULL) CNT FROM ADMIN A) F)")
-    return result.fetchone()[0]
+    returnVal = result.callfunc("MINIMUM_ORDER_ADMIN", int)
+    return returnVal
 
 
 def save_cart(request):

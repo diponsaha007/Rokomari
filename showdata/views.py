@@ -11,82 +11,83 @@ conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 
 # Create your views here.
 def search_result(request):
-    query = request.GET.get('search')
-    print(query, request.method)
-    if query == None:
-        page_num = 1
-        query = ""
-    else:
-        querar = query.split("/?page=")
-        shape = np.asarray(querar).shape[0]
-
-        if shape == 1:
-            query = querar[0]
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        query = request.GET.get('search')
+        print(query, request.method)
+        if query == None:
             page_num = 1
+            query = ""
         else:
-            query = querar[0]
-            page_num = querar[1]
-    # print(request.GET)
-    # print(page_num)
-    # print(query)'''
+            querar = query.split("/?page=")
+            shape = np.asarray(querar).shape[0]
 
-    dict = {'logged_in': False, 'is_admin': False}
+            if shape == 1:
+                query = querar[0]
+                page_num = 1
+            else:
+                query = querar[0]
+                page_num = querar[1]
 
-    if request.session.has_key('is_admin'):
-        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
-        dict['is_admin'] = True
-    elif request.session.has_key('user_id'):
-        dict['logged_in'] = get_user_name(request.session['user_id'])
-    if request.method == "GET":
-        dict['search_result'] = get_book_info(query, "GET")
-        # print("GET er vitor")
-    elif request.method == "POST":
-        query = ""
-        price_from = request.POST.get("price_from")
-        price_to = request.POST.get("price_to")
-        rating_from = request.POST.get("rating_from")
-        rating_to = request.POST.get("rating_to")
-        sort = request.POST.get("sort")
-        book_name = request.POST.get("book_name")
-        author_name = request.POST.get("author_name")
-        if price_from == '':
-            price_from = 0
-        if price_to == '':
-            price_to = 50000
-        if rating_from == '':
-            rating_from = 0
-        if rating_to == '':
-            rating_to = 5
-        if sort == None:
-            sort = "TOTAL_SOLD DESC"
-        price_from = int(float(price_from))
-        price_to = int(float(price_to))
-        rating_from = int(float(rating_from))
-        rating_to = int(float(rating_to))
-        # print(price_from, price_to, rating_from, rating_to, sort)
-        dict['search_result'] = get_book_info(query, "POST", price_from, price_to, rating_from, rating_to, sort, book_name, author_name)
-        dict['query'] = query
-        return render(request, "showdata/showdata.html", dict)
-        # print("POST er vitor", price_from, price_to)
+        dict = {'logged_in': False, 'is_admin': False}
+
+        if request.session.has_key('is_admin'):
+            dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+            dict['is_admin'] = True
+        elif request.session.has_key('user_id'):
+            dict['logged_in'] = get_user_name(request.session['user_id'])
+        if request.method == "GET":
+            dict['search_result'] = get_book_info(query, "GET")
+        elif request.method == "POST":
+            query = ""
+            price_from = request.POST.get("price_from")
+            price_to = request.POST.get("price_to")
+            rating_from = request.POST.get("rating_from")
+            rating_to = request.POST.get("rating_to")
+            sort = request.POST.get("sort")
+            book_name = request.POST.get("book_name")
+            author_name = request.POST.get("author_name")
+            if price_from == '':
+                price_from = 0
+            if price_to == '':
+                price_to = 50000
+            if rating_from == '':
+                rating_from = 0
+            if rating_to == '':
+                rating_to = 5
+            if sort == None:
+                sort = "TOTAL_SOLD DESC"
+            price_from = int(float(price_from))
+            price_to = int(float(price_to))
+            rating_from = int(float(rating_from))
+            rating_to = int(float(rating_to))
+            # print(price_from, price_to, rating_from, rating_to, sort)
+            dict['search_result'] = get_book_info(query, "POST", price_from, price_to, rating_from, rating_to, sort,
+                                                  book_name, author_name)
+            dict['query'] = query
+            return render(request, "showdata/showdata.html", dict)
+            # print("POST er vitor", price_from, price_to)
+
+        # dict['search_result'] = get_book_info("query", "GET")
+        # page_num = 1
+        P = Paginator(dict['search_result'], 20)
+
+        try:
+            page = P.page(page_num)
+        except:
+            page = P.page(1)
+
+        dict2 = {'logged_in': dict['logged_in'], 'is_admin': dict['is_admin'], 'search_result': page, 'query': "query"}
+        # print(dict2)
+        return render(request, "showdata/showdata.html", dict2)
+    else:
+        return redirect(reverse('rokomariapp:index'))
 
 
-    #dict['search_result'] = get_book_info("query", "GET")
-    #page_num = 1
-    P = Paginator(dict['search_result'], 20)
-
-    try:
-        page = P.page(page_num)
-    except :
-        page = P.page(1)
-
-    dict2 = {'logged_in': dict['logged_in'], 'is_admin':dict['is_admin'], 'search_result': page, 'query': "query"}
-    # print(dict2)
-    return render(request, "showdata/showdata.html", dict2)
-
-
-def get_book_info(query, method, price_from=0, price_to=50000, rating_from=0, rating_to=5, sort="TOTAL_SOLD DESC", book_name="", author_name=""):
+def get_book_info(query, method, price_from=0, price_to=50000, rating_from=0, rating_to=5, sort="TOTAL_SOLD DESC",
+                  book_name="", author_name=""):
     if method == "UPDATE":
-        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT, B.BOOK_EDITION, B.PAGES, B.BOOK_GENRE, B.SUMMARY FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE B.BOOK_ID = "+str(query)
+        quercmd = "SELECT B.BOOK_ID,B.BOOK_NAME,A.AUTHOR_NAME,B.PRICE,B.RATINGS,C.PUBLISHER_NAME, B.DISCOUNT, B.BOOK_EDITION, B.PAGES, B.BOOK_GENRE, B.SUMMARY FROM BOOK B JOIN AUTHOR A USING(AUTHOR_ID) JOIN PUBLISHER C USING(PUBLISHER_ID) WHERE B.BOOK_ID = " + str(
+            query)
     elif is_banglish(query):
         # print(avro.parse(query))
         query = avro.parse(query)
@@ -99,8 +100,6 @@ def get_book_info(query, method, price_from=0, price_to=50000, rating_from=0, ra
             rating_from) + " AND B.RATINGS <= " + str(
             rating_to) + ") AND (B.BOOK_NAME LIKE '%" + book_name + "%') AND (A.AUTHOR_NAME LIKE '%" + author_name + "%') AND (C.PUBLISHER_NAME LIKE '%" + query + "%') AND (B.BOOK_GENRE LIKE '%" + query + "%')) ORDER BY B." + sort
 
-    # print(quercmd)
-    # print(query)
     db_cursor = conn.cursor()
     db_cursor.execute(quercmd)
 
@@ -155,108 +154,116 @@ def get_user_name(user_id):
     result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)
     return str(result.fetchone()[0])
 
+
 def get_user_name_admin(user_id):
     result = conn.cursor()
     result.execute("SELECT USER_NAME FROM ADMIN WHERE ADMIN_ID = :bv1", bv1=user_id)
     return str(result.fetchone()[0])
 
-def delete_book (request, pk):
-    dict = {'logged_in': False, 'is_admin': False}
 
-    if request.session.has_key('is_admin'):
-        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
-        dict['is_admin'] = True
-        quercmd = "DELETE FROM BOOK WHERE BOOK_ID = " + str(pk)
-        db_cursor = conn.cursor()
-        db_cursor.execute(quercmd)
-        conn.commit()
-        return redirect(reverse('showdata:showdata'))
+def delete_book(request, pk):
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        dict = {'logged_in': False, 'is_admin': False}
 
-
-def update_book (request, pk):
-    dict = {'logged_in': False, 'is_admin': False}
-
-    if request.session.has_key('is_admin'):
-        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
-        dict['is_admin'] = True
-
-
-    if request.method == "POST":
-        edition = request.POST.get("edition")
-        price = request.POST.get("price")
-        discount = request.POST.get("discount")
-        summary = request.POST.get("summary")
-        pages = request.POST.get("pages")
-        print(edition, price, discount, summary, pages)
-        quercmd = "UPDATE BOOK SET BOOK_EDITION = '"+edition+"', PRICE = "+str(price)+", DISCOUNT = "+str(discount)+", SUMMARY = '"+ summary +"', PAGES = "+str(pages)+" WHERE BOOK_ID = "+str(pk)
-        db_cursor = conn.cursor()
-        db_cursor.execute(quercmd)
-        conn.commit()
-        #print(edition, price, discount, summary, pages)
-        #return redirect(reverse('showdata:showdata'))
-        return redirect(reverse('product_details:product_details', kwargs={'pk': pk}))
-
+        if request.session.has_key('is_admin'):
+            dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+            dict['is_admin'] = True
+            quercmd = "DELETE FROM BOOK WHERE BOOK_ID = " + str(pk)
+            db_cursor = conn.cursor()
+            db_cursor.execute(quercmd)
+            conn.commit()
+            return redirect(reverse('showdata:showdata'))
     else:
-        dict['search_result'] = get_book_info(pk, "UPDATE")
-        return render(request, "showdata/update_book.html", dict)
+        return redirect(reverse('rokomariapp:index'))
+
+
+def update_book(request, pk):
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        dict = {'logged_in': False, 'is_admin': False}
+
+        if request.session.has_key('is_admin'):
+            dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+            dict['is_admin'] = True
+
+        if request.method == "POST":
+            edition = request.POST.get("edition")
+            price = request.POST.get("price")
+            discount = request.POST.get("discount")
+            summary = request.POST.get("summary")
+            pages = request.POST.get("pages")
+            print(edition, price, discount, summary, pages)
+            quercmd = "UPDATE BOOK SET BOOK_EDITION = '" + edition + "', PRICE = " + str(price) + ", DISCOUNT = " + str(
+                discount) + ", SUMMARY = '" + summary + "', PAGES = " + str(pages) + " WHERE BOOK_ID = " + str(pk)
+            db_cursor = conn.cursor()
+            db_cursor.execute(quercmd)
+            conn.commit()
+            # print(edition, price, discount, summary, pages)
+            # return redirect(reverse('showdata:showdata'))
+            return redirect(reverse('product_details:product_details', kwargs={'pk': pk}))
+
+        else:
+            dict['search_result'] = get_book_info(pk, "UPDATE")
+            return render(request, "showdata/update_book.html", dict)
+    else:
+        return redirect(reverse('rokomariapp:index'))
 
 
 def search_result_author(request):
-    query = request.GET.get('search')
-    print(query, request.method)
-    if query == None:
-        page_num = 1
-        query = ""
-    else:
-        querar = query.split("/?page=")
-        shape = np.asarray(querar).shape[0]
-
-        if shape == 1:
-            query = querar[0]
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        query = request.GET.get('search')
+        # print(query, request.method)
+        if query == None:
             page_num = 1
+            query = ""
         else:
-            query = querar[0]
-            page_num = querar[1]
-    # print(request.GET)
-    # print(page_num)
-    # print(query)'''
+            querar = query.split("/?page=")
+            shape = np.asarray(querar).shape[0]
 
-    dict = {'logged_in': False, 'is_admin': False}
+            if shape == 1:
+                query = querar[0]
+                page_num = 1
+            else:
+                query = querar[0]
+                page_num = querar[1]
 
-    if request.session.has_key('is_admin'):
-        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
-        dict['is_admin'] = True
-    elif request.session.has_key('user_id'):
-        dict['logged_in'] = get_user_name(request.session['user_id'])
-    if request.method == "GET":
-        dict['search_result'] = get_author_publisher_info(query, "GET", "AUTHOR")
-        # print("GET er vitor")
-    elif request.method == "POST":
-        query = ""
-        author_name_part = request.POST.get("author_name_part")
+        dict = {'logged_in': False, 'is_admin': False}
 
-        if author_name_part == None:
-            author_name_part = ""
-        query = author_name_part
-        # print(price_from, price_to, rating_from, rating_to, sort)
-        dict['search_result'] = get_author_publisher_info(query, "POST", "AUTHOR")
-        dict['query'] = query
-        return render(request, "showdata/showdata_author.html", dict)
-        # print("POST er vitor", price_from, price_to)
+        if request.session.has_key('is_admin'):
+            dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+            dict['is_admin'] = True
+        elif request.session.has_key('user_id'):
+            dict['logged_in'] = get_user_name(request.session['user_id'])
+        if request.method == "GET":
+            dict['search_result'] = get_author_publisher_info(query, "GET", "AUTHOR")
+            # print("GET er vitor")
+        elif request.method == "POST":
+            query = ""
+            author_name_part = request.POST.get("author_name_part")
 
+            if author_name_part == None:
+                author_name_part = ""
+            query = author_name_part
+            # print(price_from, price_to, rating_from, rating_to, sort)
+            dict['search_result'] = get_author_publisher_info(query, "POST", "AUTHOR")
+            dict['query'] = query
+            return render(request, "showdata/showdata_author.html", dict)
+            # print("POST er vitor", price_from, price_to)
 
-    #dict['search_result'] = get_book_info("query", "GET")
-    #page_num = 1
-    P = Paginator(dict['search_result'], 20)
+        # dict['search_result'] = get_book_info("query", "GET")
+        # page_num = 1
+        P = Paginator(dict['search_result'], 20)
 
-    try:
-        page = P.page(page_num)
-    except :
-        page = P.page(1)
+        try:
+            page = P.page(page_num)
+        except:
+            page = P.page(1)
 
-    dict2 = {'logged_in': dict['logged_in'], 'is_admin':dict['is_admin'], 'search_result': page, 'query': "query"}
-    # print(dict2)
-    return render(request, "showdata/showdata_author.html", dict2)
+        dict2 = {'logged_in': dict['logged_in'], 'is_admin': dict['is_admin'], 'search_result': page, 'query': "query"}
+        # print(dict2)
+        return render(request, "showdata/showdata_author.html", dict2)
+    else:
+        return redirect(reverse('rokomariapp:index'))
+
 
 def get_author_publisher_info(query, method, table):
     if is_banglish(query):
@@ -267,7 +274,7 @@ def get_author_publisher_info(query, method, table):
         if method == "GET":
             quercmd = "SELECT A.AUTHOR_ID,A.AUTHOR_NAME FROM  AUTHOR A ORDER BY A.AUTHOR_ID"
         elif method == "POST":
-            quercmd = "SELECT A.AUTHOR_ID,A.AUTHOR_NAME FROM  AUTHOR A WHERE A.AUTHOR_NAME LIKE '%"+query+"%' ORDER BY A.AUTHOR_NAME"
+            quercmd = "SELECT A.AUTHOR_ID,A.AUTHOR_NAME FROM  AUTHOR A WHERE A.AUTHOR_NAME LIKE '%" + query + "%' ORDER BY A.AUTHOR_NAME"
 
     elif table == "PUBLISHER":
         if method == "GET":
@@ -300,83 +307,85 @@ def get_author_publisher_info(query, method, table):
         li.append(l2)
     return li
 
-def delete_author (request, pk):
-    dict = {'logged_in': False, 'is_admin': False}
 
-    if request.session.has_key('is_admin'):
-        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
-        dict['is_admin'] = True
-        quercmd = "DELETE FROM AUTHOR WHERE AUTHOR_ID = " + str(pk)
-        db_cursor = conn.cursor()
-        db_cursor.execute(quercmd)
-        conn.commit()
-        return redirect(reverse('showdata:showdata_author'))
+def delete_author(request, pk):
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        dict = {'logged_in': False, 'is_admin': False}
+
+        if request.session.has_key('is_admin'):
+            dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+            dict['is_admin'] = True
+            quercmd = "DELETE FROM AUTHOR WHERE AUTHOR_ID = " + str(pk)
+            db_cursor = conn.cursor()
+            db_cursor.execute(quercmd)
+            conn.commit()
+            return redirect(reverse('showdata:showdata_author'))
+    else:
+        return redirect(reverse('rokomariapp:index'))
+
 
 def search_result_publisher(request):
-    query = request.GET.get('search')
-    print(query, request.method)
-    if query == None:
-        page_num = 1
-        query = ""
-    else:
-        querar = query.split("/?page=")
-        shape = np.asarray(querar).shape[0]
-
-        if shape == 1:
-            query = querar[0]
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        query = request.GET.get('search')
+        if query == None:
             page_num = 1
+            query = ""
         else:
-            query = querar[0]
-            page_num = querar[1]
-    # print(request.GET)
-    # print(page_num)
-    # print(query)'''
+            querar = query.split("/?page=")
+            shape = np.asarray(querar).shape[0]
 
-    dict = {'logged_in': False, 'is_admin': False}
+            if shape == 1:
+                query = querar[0]
+                page_num = 1
+            else:
+                query = querar[0]
+                page_num = querar[1]
 
-    if request.session.has_key('is_admin'):
-        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
-        dict['is_admin'] = True
-    elif request.session.has_key('user_id'):
-        dict['logged_in'] = get_user_name(request.session['user_id'])
-    if request.method == "GET":
-        dict['search_result'] = get_author_publisher_info(query, "GET", "PUBLISHER")
-        # print("GET er vitor")
-    elif request.method == "POST":
-        query = ""
-        publisher_name_part = request.POST.get("publisher_name_part")
+        dict = {'logged_in': False, 'is_admin': False}
 
-        if publisher_name_part == None:
-            publisher_name_part = ""
-        query = publisher_name_part
-        # print(price_from, price_to, rating_from, rating_to, sort)
-        dict['search_result'] = get_author_publisher_info(query, "POST", "PUBLISHER")
-        dict['query'] = query
-        return render(request, "showdata/showdata_publisher.html", dict)
-        # print("POST er vitor", price_from, price_to)
+        if request.session.has_key('is_admin'):
+            dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+            dict['is_admin'] = True
+        elif request.session.has_key('user_id'):
+            dict['logged_in'] = get_user_name(request.session['user_id'])
+        if request.method == "GET":
+            dict['search_result'] = get_author_publisher_info(query, "GET", "PUBLISHER")
+            # print("GET er vitor")
+        elif request.method == "POST":
+            query = ""
+            publisher_name_part = request.POST.get("publisher_name_part")
+
+            if publisher_name_part == None:
+                publisher_name_part = ""
+            query = publisher_name_part
+            # print(price_from, price_to, rating_from, rating_to, sort)
+            dict['search_result'] = get_author_publisher_info(query, "POST", "PUBLISHER")
+            dict['query'] = query
+            return render(request, "showdata/showdata_publisher.html", dict)
+        P = Paginator(dict['search_result'], 20)
+
+        try:
+            page = P.page(page_num)
+        except:
+            page = P.page(1)
+
+        dict2 = {'logged_in': dict['logged_in'], 'is_admin': dict['is_admin'], 'search_result': page, 'query': "query"}
+        # print(dict2)
+        return render(request, "showdata/showdata_publisher.html", dict2)
+    else:
+        return redirect(reverse('rokomariapp:index'))
 
 
-    #dict['search_result'] = get_book_info("query", "GET")
-    #page_num = 1
-    P = Paginator(dict['search_result'], 20)
-
-    try:
-        page = P.page(page_num)
-    except :
-        page = P.page(1)
-
-    dict2 = {'logged_in': dict['logged_in'], 'is_admin':dict['is_admin'], 'search_result': page, 'query': "query"}
-    # print(dict2)
-    return render(request, "showdata/showdata_publisher.html", dict2)
-
-def delete_publisher (request, pk):
-    dict = {'logged_in': False, 'is_admin': False}
-
-    if request.session.has_key('is_admin'):
-        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
-        dict['is_admin'] = True
-        quercmd = "DELETE FROM PUBLISHER WHERE PUBLISHER_ID = " + str(pk)
-        db_cursor = conn.cursor()
-        db_cursor.execute(quercmd)
-        conn.commit()
-        return redirect(reverse('showdata:showdata_publisher'))
+def delete_publisher(request, pk):
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        dict = {'logged_in': False, 'is_admin': False}
+        if request.session.has_key('is_admin'):
+            dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+            dict['is_admin'] = True
+            quercmd = "DELETE FROM PUBLISHER WHERE PUBLISHER_ID = " + str(pk)
+            db_cursor = conn.cursor()
+            db_cursor.execute(quercmd)
+            conn.commit()
+            return redirect(reverse('showdata:showdata_publisher'))
+    else:
+        return redirect(reverse('rokomariapp:index'))
