@@ -124,9 +124,20 @@
                                                                 <th>BOOK NAME</th>
                                                                 <th>AUTHOR NAME</th>
                                                                 <th>PRICE</th>
+                                                                <th>GENRE</th>
+                                                                <th>EDITION</th>
                                                                 <th>RATING</th>
+                                                                <th>NUMBER OF RATINGS</th>
                                                                 <th>PUBLISHER</th>
                                                                 <th>DISCOUNT</th>
+                                                                <th>COUNTRY</th>
+                                                                <th>LANGUAGE</th>
+
+                                                                <th>ISBN</th>
+                                                                <th>TOTAL PAGES</th>
+                                                                <th>TOTAL SOLD</th>
+                                                                <th>UPDATE</th>
+                                                                <th>DELETE</th>
                                                             </tr>
                                                             </thead>
                                                             {% for i in search_result %}
@@ -140,6 +151,17 @@
                                                                     <td>{{ i.4 }}</td>
                                                                     <td>{{ i.5 }}</td>
                                                                     <td>{{ i.6 }}</td>
+                                                                    <td>{{ i.7 }}</td>
+                                                                    <td>{{ i.8 }}</td>
+                                                                    <td>{{ i.9 }}</td>
+                                                                    <td>{{ i.10 }}</td>
+                                                                    <td>{{ i.11 }}</td>
+
+                                                                    <td>{{ i.13 }}</td>
+                                                                    <td>{{ i.14 }}</td>
+                                                                    <td>{{ i.15 }}</td>
+                                                                    <td><a href="{% url 'showdata:update_book' pk=i.0 %}">Update</a></td>
+                                                                    <td><a href="{% url 'showdata:delete_book' pk=i.0 %}">Delete</a></td>
                                                                 </tr>
                                                             {% endfor %}
                                                         {% endif %}
