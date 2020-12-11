@@ -12,11 +12,7 @@ conn = cx_Oracle.connect(user='ROKOMARIADMIN', password='ROKADMIN', dsn=dsn_tns)
 def order_list(request):
     dict = {'logged_in': False, 'is_admin': False}
 
-    if request.session.has_key('is_admin'):
-        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
-        dict['orders'] = get_order(request.session['user_id'])
-        dict['is_admin'] = True
-    elif request.session.has_key('user_id'):
+    if request.session.has_key('user_id'):
         dict['logged_in'] = get_user_name(request.session['user_id'])
         dict['orders'] = get_order(request.session['user_id'])
     return render(request, 'order_list/order_list.html', dict)
@@ -64,6 +60,8 @@ def get_order(user_id):
                 l4.append("book_image")
             l3.append(l4)
         l2.append(total_price)
+        result2.execute("SELECT  DISCOUNT FROM ORDER_LIST WHERE ORDER_ID = :v1", v1=order_id)
+        l2.append(int(result2.fetchone()[0]))
         l2.append(l3)
         li.append(l2)
 

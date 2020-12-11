@@ -48,7 +48,7 @@
                                                     <h2>Filter Results</h2>
                                                     <br>
                                                     <form method="POST"
-                                                          action="{% url 'showdata:showdata' %}?search={{ query }}">
+                                                          action="{% url 'showdata:deleted_books' %}?search={{ query }}">
                                                         {% csrf_token %}
                                                         <div class="filter-item">
                                                             <h3>Specify Row</h3>
@@ -113,7 +113,7 @@
                                             <div class="products">
                                                 <div class="table-responsive table mt-2" id="dataTable" role="grid"
                                                      aria-describedby="dataTable_info">
-                                                    <h1 style="text-align:center">BOOK DATABASE</h1>
+                                                    <h1 style="text-align:center">DELETED BOOKS DATABASE</h1>
                                                     <br>
                                                     <br>
                                                     <table class="table my-0" id="dataTable">
@@ -132,12 +132,10 @@
                                                                 <th>DISCOUNT</th>
                                                                 <th>COUNTRY</th>
                                                                 <th>LANGUAGE</th>
-
                                                                 <th>ISBN</th>
                                                                 <th>TOTAL PAGES</th>
                                                                 <th>TOTAL SOLD</th>
-                                                                <th>UPDATE</th>
-                                                                <th>DELETE</th>
+                                                                <th>RESTORE</th>
                                                             </tr>
                                                             </thead>
                                                             {% for i in search_result %}
@@ -154,15 +152,11 @@
                                                                     <td>{{ i.9 }}</td>
                                                                     <td>{{ i.10 }}</td>
                                                                     <td>{{ i.11 }}</td>
-
                                                                     <td>{{ i.13 }}</td>
                                                                     <td>{{ i.14 }}</td>
                                                                     <td>{{ i.15 }}</td>
                                                                     <td>
-                                                                        <a href="{% url 'showdata:update_book' pk=i.0 %}">Update</a>
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="{% url 'showdata:delete_book' pk=i.0 %}">Delete</a>
+                                                                        <a href="{% url 'showdata:restore_book' pk=i.0 %}">RESTORE</a>
                                                                     </td>
                                                                 </tr>
                                                             {% endfor %}
@@ -175,14 +169,14 @@
                                                     <ul class="pagination">
                                                         {% if search_result.has_previous %}
                                                             <li class="page-item"><a class="page-link"
-                                                                                     href="{% url 'showdata:showdata' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
+                                                                                     href="{% url 'showdata:deleted_books' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
                                                                                      aria-label="Previous"><span
                                                                     aria-hidden="true">Previous Page</span></a>
                                                             </li>
                                                         {% endif %}
                                                         {% if search_result.has_next %}
                                                             <li class="page-item"><a class="page-link"
-                                                                                     href="{% url 'showdata:showdata' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
+                                                                                     href="{% url 'showdata:deleted_books' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
                                                                                      aria-label="Next"><span
                                                                     aria-hidden="true">Next Page</span></a></li>
                                                         {% endif %}

@@ -11,17 +11,20 @@
         </a>
         <br>
         <div class="mylink">
-            <a class="dropdown-item" href="#">{{ logged_in }}</a>
+            <a class="dropdown-item" href="{% url 'my_account:admin_account' %}">{{ logged_in }}</a>
             <a class="dropdown-item" href="{% url 'showdata:showdata_author' %}">Author Database</a>
             <a class="dropdown-item" href="{% url 'showdata:showdata_publisher' %}">Publisher Database</a>
             <a class="dropdown-item" href="{% url 'showdata:showdata' %}">Book Database</a>
-            <a class="dropdown-item" href="#">Customer Database</a>
-            <a class="dropdown-item" href="#">Admin Database</a>
+            <a class="dropdown-item" href="{% url 'showdata:deleted_books' %}">Deleted Books</a>
+            <a class="dropdown-item" href="{% url 'showdata:customer_database' %}">Customer Database</a>
+            <a class="dropdown-item" href="{% url 'showdata:admin_database' %}">Admin Database</a>
+            <a class="dropdown-item" href="{% url 'showdata:order_database' %}">Manage Orders</a>
+            <a class="dropdown-item" href="{% url 'add_new_book:send_token' %}">Send Token</a>
             <a class="dropdown-item" href="{% url 'add_new_book:add_new' %}">Add Book</a>
-            <a class="dropdown-item" href="#">Manage Your Orders</a>
+            <a class="dropdown-item" href="{% url 'add_new_book:add_author' %}">Add Author</a>
+            <a class="dropdown-item" href="{% url 'add_new_book:add_publisher' %}">Add Publisher</a>
             <a class="dropdown-item" href="{% url 'login_registration:registration_admin' %}">Add Admin</a>
             <a class="dropdown-item" href="{% url 'login_registration:logout_admin' %}">Sign Out</a>
-
         </div>
 
         <hr class="sidebar-divider my-0">

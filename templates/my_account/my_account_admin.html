@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Buy Book Online | Rokomari.com</title>
+    <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
+    <link rel="stylesheet" href={% static "cart_assets/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href={% static "css/my_account/smoothproducts.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animate/animate.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/css-hamburgers/hamburgers.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href={% static "admin_dashboard_assets/assets/bootstrap/css/bootstrap.min.css" %}>
+
+</head>
+
+<body>
+<div id="wrapper">
+    {% include  'base/admin_nav.html' %}
+    <div class="d-flex flex-column" id="content-wrapper" style="color: #383838;background: #3b3b3b url(../../static/backgroundimg/body.png);">
+        <div id="content">
+            <div class="container">
+                <br>
+                <br>
+                <div class="row mb-3">
+                    <div class="col-lg-4">
+                        <div class="card mb-3">
+                            <div class="card-body text-center shadow">
+                                <img class="rounded-circle mb-3 mt-4" src="../../{{ profile_info.7 }}" width="160"
+                                     height="160">
+                                <h4>{{ profile_info.1 }}</h4>
+                                <form method="POST" action="{% url 'my_account:update_photo_admin' %}"
+                                      enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="btn btn-primary btn-sm">
+                                            Change Photo <input type="file" id="myFile" name="filename" hidden>
+                                        </label>
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save Photo</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col">
+
+                                <div class="card shadow mb-3" id="show_form_personal">
+                                    <div class="card-header py-3">
+                                        <h5 class="text-primary m-0 font-weight-bold">Personal Information</h5>
+                                    </div>
+                                    <div class="card-body">
+
+
+                                        <div class="form-group">
+                                            <label for="username"><strong>Username</strong></label>
+                                            <p>{{ profile_info.1 }}</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="first_name"><strong>First Name</strong></label>
+                                            <p>{{ profile_info.2 }}</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="last_name"><strong>Last Name</strong></label>
+                                            <p>{{ profile_info.3 }}</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email"><strong>Email Address</strong></label>
+                                            <p>{{ profile_info.4 }}</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email"><strong>Mobile Number</strong></label>
+                                            <p>{{ profile_info.6 }}</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button class="btn btn-primary " id="edit_personal">Edit</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card shadow mb-3" id="edit_form_personal" style="display:none">
+                                    <div class="card-header py-3">
+                                        <h5 class="text-primary m-0 font-weight-bold">Personal Information</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="POST" action="{% url 'my_account:update_personal_admin' %}">
+                                            {% csrf_token %}
+                                            <div class="col">
+                                                <div class="form-group"><label
+                                                        for="username"><strong>Username</strong></label><input
+                                                        class="form-control" type="text"
+                                                        value={{ profile_info.1 }} name="username"></div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group"><label for="first_name"><strong>First
+                                                    Name</strong></label><input class="form-control" type="text"
+                                                                                value={{ profile_info.2 }} name="first_name">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group"><label for="last_name"><strong>Last
+                                                    Name</strong></label><input class="form-control" type="text"
+                                                                                value={{ profile_info.3 }} name="last_name">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group"><label for="email"><strong>Email
+                                                    Address</strong></label><input class="form-control" type="email"
+                                                                                   value={{ profile_info.4 }} name="email">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group"><label for="mobile_number"><strong>Mobile
+                                                    Number</strong></label><input class="form-control" type="text"
+                                                                                  value={{ profile_info.6 }} name="mobile_number">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary" type="submit">Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'base/footer.html' %}
+
+<script src={% static "js/my_account/my_account.js" %}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src={% static "js/my_account/jquery.min.js" %}></script>
+<script src={% static "cart_assets/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "js/my_account/smoothproducts.min.js" %}></script>
+<script src={% static "js/my_account/theme.js" %}></script>
+</body>
+
+</html>

@@ -113,7 +113,7 @@
 "124"	"70/6 Moghbazar"		"Dhaka-1217"	"Bangladesh"	"01731694903 "
 "125"	"Dighalia"		"Khulna"	"Bangladesh"	"01784176662 "
 "126"			"Dhaka"	"Bangladesh"	"01799358591 "
-"127"	"Rashid"		"hall"	"Bangladesh"	"01641726287 "
+"127"	"Rashid hall"		"Dhaka"	"Bangladesh"	"01641726287 "
 "128"	"BaborRoad "		"Dhaka"	"Bangladesh"	"01774550000 "
 "129"	"Shyamoli"		"Dhaka"	"Bangladesh"	"01830994274 "
 "1"	"Post Office Para"	"Post Office Para"	"Naogaon"	"Bangladesh"	"01776198230"
@@ -128,3 +128,4 @@
 "13"	"Jhautola"	"Jhautola"	"Chittagong"	"Bangladesh"	"01559-388567"
 "14"	"Rose Valley Residential Area"	"Rose Valley Residential Area"	"Chittagong"	"Bangladesh"	"01521-527491"
 "15"	"Dotto Bari Road"	"Dotto Bari Road"	"Bogra"	"Bangladesh"	"01521-114325"
+"130"	"1342 Chancellor Drive, Winnipeg,Manitoba"	"1342 chancellor drive, winnipeg, manitoba"	"Winnipeg"	"Canada"	"4319980019"

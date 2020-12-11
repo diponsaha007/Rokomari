@@ -1,0 +1,20 @@
+CREATE TABLE DELETED_BOOK(
+		book_id INTEGER NOT NULL,
+		book_name VARCHAR2(512) NOT NULL,
+		book_genre VARCHAR2(512),
+		book_edition VARCHAR2(512),
+		author_name VARCHAR2(512) NOT NULL,
+		publisher_name VARCHAR2(512) NOT NULL,
+		price INTEGER NOT NULL,
+		discount INTEGER DEFAULT 0,
+		country VARCHAR2(128),
+		language VARCHAR2(128),
+		summary VARCHAR2(3000),
+		ISBN VARCHAR2(100) DEFAULT '0',
+		pages INTEGER ,
+		total_sold INTEGER DEFAULT 0,
+		ratings decimal(3,2) DEFAULT 0,
+		no_of_ratings INTEGER DEFAULT 0,
+		datetime date,
+		CONSTRAINT DELETED_BOOK_PK PRIMARY KEY (book_id)
+);

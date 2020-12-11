@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Buy Book Online | Rokomari.com</title>
+    <link rel="icon" type="image/png" href={% static "backgroundimg/icons/0.png" %}/>
+    <link rel="stylesheet" href={% static "product_assests/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href={% static "product_assests/assets/fonts/simple-line-icons.min.css" %}>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" type="text/css" href={% static "css/base/footer.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animate/animate.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/css-hamburgers/hamburgers.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/animsition/css/animsition.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/select2/select2.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "vendor/daterangepicker/daterangepicker.css" %}>
+    <link rel="stylesheet" href={% static "admin_dashboard_assets/assets/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/showdata/style.css" %}>
+</head>
+
+
+<body>
+
+<div id="wrapper">
+    {% include  'base/admin_nav.html' %}
+    <div class="d-flex flex-column" id="content-wrapper"
+         style="color: #383838;background: #3b3b3b url(../../static/backgroundimg/body.png);">
+        <div id="content">
+            <div class="container">
+                <br>
+                <br>
+                <br>
+                <div class="card shadow mb-3">
+                    <main class="page catalog-page">
+                        <section class="clean-block clean-catalog">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="d-none d-md-block">
+                                            <div class="filters">
+                                                <br><br><br>
+                                                <h2>Summary</h2>
+                                                <br>
+                                                <h5><span class="text">Order ID : </span><span class="price">{{ order_id }}</span>
+                                                </h5>
+                                                <h5><span class="text">Subtotal : </span><span class="price">{{ subtotal }} Tk</span>
+                                                </h5>
+                                                <h5><span class="text">Discount : </span><span class="price">{{ discount}} Tk</span>
+                                                </h5>
+                                                <h5><span class="text">Shipping : </span><span class="price">{{ shipping }} Tk</span>
+                                                </h5>
+                                                <h5><span class="text">Total : </span><span class="price">{{ total }} Tk</span>
+                                                </h5>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="products">
+                                            <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                                                 aria-describedby="dataTable_info">
+                                                <h1 style="text-align:center">ORDERED BOOKS</h1>
+                                                <table class="table my-0" id="dataTable">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Book ID</th>
+                                                        <th>Book Name</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price Per Book</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for i in order_details %}
+                                                        <tr>
+                                                            <td>{{ i.0 }}</td>
+                                                            <td>{{ i.1 }}</td>
+                                                            <td>{{ i.2 }}</td>
+                                                            <td>{{ i.3 }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'base/footer.html' %}
+
+<script src={% static "js/order_list/jquery.min.js" %}></script>
+<script src={% static "product_assests/assets/bootstrap/js/bootstrap.min.js" %}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src={% static "js/order_list/smoothproducts.min.js" %}></script>
+<script src={% static "js/order_list/theme.js" %}></script>
+
+</body>
+
+</html>

@@ -8,7 +8,9 @@ declare
 		t_book_genre VARCHAR2(512);
 		t_book_edition VARCHAR2(512);
 		t_author_id INTEGER;
-		t_publisher_id INTEGER ;
+		t_publisher_id INTEGER;
+		t_author_name VARCHAR2(512);
+		t_publisher_name VARCHAR2(512);
 		t_price INTEGER ;
 		t_discount INTEGER;
 		t_country VARCHAR2(128);
@@ -38,7 +40,11 @@ begin
 		t_ratings := :old.ratings;
 		t_no_of_ratings := :old.no_of_ratings;
 		t_datetime := SYSDATE;
-	  insert into deleted_book values(t_book_id, t_book_name, t_book_genre, t_book_edition, t_author_id, t_publisher_id,
+		
+		SELECT AUTHOR_NAME INTO t_author_name FROM AUTHOR WHERE AUTHOR_ID = t_author_id;
+		SELECT PUBLISHER_NAME INTO t_publisher_name FROM PUBLISHER WHERE PUBLISHER_ID = t_publisher_id;
+		
+	  insert into deleted_book values(t_book_id, t_book_name, t_book_genre, t_book_edition, t_author_name, t_publisher_name,
 		t_price, t_discount, t_country, t_language, t_summary, t_ISBN, t_pages, t_total_sold, t_ratings, t_no_of_ratings,
 		t_datetime);
 EXCEPTION

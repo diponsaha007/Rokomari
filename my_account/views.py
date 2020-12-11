@@ -22,6 +22,80 @@ def my_account(request):
     return render(request, "my_account/my_account.html", dict)
 
 
+def admin_account(request):
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        dict = {'logged_in': False, 'is_admin': False}
+        dict['logged_in'] = get_user_name_admin(request.session['user_id'])
+        dict['is_admin'] = True
+        dict['profile_info'] = get_admin_profile_info(request.session['user_id'])
+        return render(request, "my_account/my_account_admin.html", dict)
+    else:
+        return redirect(reverse('rokomariapp:index'))
+
+
+def get_admin_profile_info(id):
+    result = conn.cursor()
+    quercmd = "SELECT * FROM ADMIN WHERE ADMIN_ID = " + str(id)
+    result.execute(quercmd)
+    cnt = result.fetchone()
+    l2 = []
+    for j in cnt:
+        l2.append(j)
+    nam = 'static/images/admin/' + str(id) + '.jpg'
+    if os.path.isfile(nam):
+        l2.append(nam)
+    else:
+        l2.append("static/images/admin/default.jpg")
+    return l2
+
+
+def update_photo_admin(request):
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        if request.method == 'POST':
+            user_id = request.session['user_id']
+            check_and_delete_if_admin_image_exists(user_id)
+            folder = 'static/images/admin'
+            try:
+                myfile = request.FILES['filename']
+                extension = myfile.name
+                extension = extension.split('.')
+                extension = extension[1]
+                filename = str(user_id) + '.' + 'jpg'
+                fs = FileSystemStorage(location=folder)  # defaults to   MEDIA_ROOT
+                filename = fs.save(filename, myfile)
+                file_url = fs.url(filename)
+            except:
+                pass
+        return redirect(reverse('my_account:admin_account'))
+    else:
+        return redirect(reverse('rokomariapp:index'))
+
+
+def update_personal_admin(request):
+    if request.session.has_key('user_id') and request.session.has_key('is_admin'):
+        if request.method == 'POST':
+            user_id = request.session['user_id']
+            username = request.POST.get("username")
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            email = request.POST.get("email")
+            mobile_number = request.POST.get("mobile_number")
+            result = conn.cursor()
+            updatecmd = "UPDATE ADMIN SET USER_NAME = '" + username + "', FIRST_NAME = '" + first_name + "', LAST_NAME = '" + last_name + "', EMAIL = '" + email + "', PHONE = '" + mobile_number + "' WHERE ADMIN_ID = " + str(
+                user_id)
+            result.execute(updatecmd)
+            conn.commit()
+        return redirect(reverse('my_account:admin_account'))
+    else:
+        return redirect(reverse('rokomariapp:index'))
+
+
+def check_and_delete_if_admin_image_exists(id):
+    nam = 'static/images/admin/' + str(id) + '.jpg'
+    if os.path.isfile(nam):
+        os.remove(nam)
+
+
 def get_user_name(user_id):
     result = conn.cursor()
     result.execute("SELECT USER_NAME FROM CUSTOMER WHERE USER_ID = :bv1", bv1=user_id)

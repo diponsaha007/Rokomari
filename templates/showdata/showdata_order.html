@@ -48,13 +48,13 @@
                                                 <h2>Filter Results</h2>
                                                 <br>
                                                 <form method="POST"
-                                                      action="{% url 'showdata:showdata_author' %}?search={{ query }}">
+                                                      action="{% url 'showdata:order_database' %}?search={{ query }}">
                                                     {% csrf_token %}
                                                     <div class="filter-item">
                                                         <h3>Specify Row</h3>
                                                         <input class="form-control mx-auto mr-sm-2" type="search"
-                                                               name="author_name_part"
-                                                               placeholder="Part of Author's Name"
+                                                               name="order_id"
+                                                               placeholder="Order ID"
                                                                aria-label="Search" style="width: 200px;">
                                                     </div>
 
@@ -71,47 +71,59 @@
                                         <div class="products">
                                             <div class="table-responsive table mt-2" id="dataTable" role="grid"
                                                  aria-describedby="dataTable_info">
-                                                <h1 style="text-align:center">Author DATABASE</h1>
-                                                <br>
-                                                <br>
+                                                <h1 style="text-align:center">ORDER DATABASE</h1>
                                                 <table class="table my-0" id="dataTable">
-                                                    {% if search_result %}
-                                                        <thead>
-                                                        <tr>
-                                                            <th>AUTHOR ID</th>
-                                                            <th>AUTHOR NAME</th>
-                                                            <th>Delete All His/Her Books</th>
-                                                        </tr>
-                                                        </thead>
-                                                        {% for i in search_result %}
-                                                            <tr>
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Order ID</th>
+                                                        <th>Name</th>
+                                                        <th>Order Date</th>
+                                                        <th>Delivered Date</th>
+                                                        <th>Location</th>
+                                                        <th>Amount (Tk)</th>
+                                                        <th>Show Details</th>
+                                                        <th>Mark As Delivered</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for i in orders %}
+                                                        {% if i.6 is 1 %}
+                                                            <tr style="background-color: #1cc88a;color: white">
                                                                 <td>{{ i.0 }}</td>
                                                                 <td>{{ i.1 }}</td>
+                                                                <td>{{ i.2 }}</td>
+                                                                <td>{{ i.3 }}</td>
+                                                                <td>{{ i.4 }}</td>
+                                                                <td>{{ i.5 }}</td>
                                                                 <td>
-                                                                    <a href="{% url 'showdata:delete_author' pk=i.0 %}">Delete</a>
+                                                                    <a href="{% url 'showdata:show_order_details' pk=i.0 %}"
+                                                                       style="color:#ffffff ">Show Details</a></td>
+                                                                <td>Already Delivered</td>
+                                                            </tr>
+                                                        {% else %}
+                                                            <tr style="background-color: #4e73df;color: white">
+                                                                <td>{{ i.0 }}</td>
+                                                                <td>{{ i.1 }}</td>
+                                                                <td>{{ i.2 }}</td>
+                                                                <td>{{ i.3 }}</td>
+                                                                <td>{{ i.4 }}</td>
+                                                                <td>{{ i.5 }}</td>
+                                                                <td>
+                                                                    <a href="{% url 'showdata:show_order_details' pk=i.0 %}"
+                                                                       style="color:#edff00 ">Show Details</a></td>
+                                                                <td>
+                                                                    <a href="{% url 'showdata:mark_as_delivered' pk=i.0 %}"
+                                                                       style="color:#edff00 ">Mark As
+                                                                        Delivered</a>
                                                                 </td>
                                                             </tr>
-                                                        {% endfor %}
-                                                    {% endif %}
+                                                        {% endif %}
+
+                                                    {% endfor %}
+                                                    </tbody>
                                                 </table>
                                             </div>
-                                            <nav>
-                                                <ul class="pagination">
-                                                    {% if search_result.has_previous %}
-                                                        <li class="page-item"><a class="page-link"
-                                                                                 href="{% url 'showdata:showdata_author' %}?search={{ query }}/?page={{ search_result.previous_page_number }}"
-                                                                                 aria-label="Previous"><span
-                                                                aria-hidden="true">Previous Page</span></a>
-                                                        </li>
-                                                    {% endif %}
-                                                    {% if search_result.has_next %}
-                                                        <li class="page-item"><a class="page-link"
-                                                                                 href="{% url 'showdata:showdata_author' %}?search={{ query }}/?page={{ search_result.next_page_number }}"
-                                                                                 aria-label="Next"><span
-                                                                aria-hidden="true">Next Page</span></a></li>
-                                                    {% endif %}
-                                                </ul>
-                                            </nav>
+
                                         </div>
                                     </div>
                                 </div>

@@ -30,7 +30,8 @@ def admin_dashboard(request):
 def get_order_list(admin_id):
     result = conn.cursor()
     result.execute(
-        "SELECT O.ORDER_ID , (SELECT X.FIRST_NAME || ' '|| X.LAST_NAME FROM CUSTOMER X WHERE X.USER_ID = O.USER_ID) AS \"NAME\" , TO_CHAR(ORDER_DATE,'DD, Month, YYYY') , TO_CHAR(RECEIVED_DATE,'DD, Month, YYYY'),O.ORDER_LOCATION ,(SELECT SUM(X.QUANTITY * X.PRICE_PER_BOOK) FROM ORDER_DETAILS X WHERE X.ORDER_ID = O.ORDER_ID) FROM ORDER_LIST O WHERE O.ADMIN_ID = :bv ORDER BY ORDER_DATE DESC, RECEIVED_DATE DESC",bv=admin_id)
+        "SELECT O.ORDER_ID , (SELECT X.FIRST_NAME || ' '|| X.LAST_NAME FROM CUSTOMER X WHERE X.USER_ID = O.USER_ID) AS \"NAME\" , TO_CHAR(ORDER_DATE,'DD, Month, YYYY') , TO_CHAR(RECEIVED_DATE,'DD, Month, YYYY'),O.ORDER_LOCATION ,(SELECT SUM(X.QUANTITY * X.PRICE_PER_BOOK) FROM ORDER_DETAILS X WHERE X.ORDER_ID = O.ORDER_ID) FROM ORDER_LIST O WHERE O.ADMIN_ID = :bv ORDER BY RECEIVED_DATE DESC,ORDER_DATE DESC",
+        bv=admin_id)
     li = []
     koto = 0
     while (True):
@@ -48,8 +49,12 @@ def get_order_list(admin_id):
         else:
             tmp.append(1)
             koto += 1
+        result2 = conn.cursor()
+        result2.execute("SELECT  DISCOUNT FROM ORDER_LIST WHERE ORDER_ID = :v1", v1=tmp[0])
+        tmp[5] -= int(result2.fetchone()[0])
+        tmp[5] += 60
         li.append(tmp)
-    print(li)
+    # print(li)
     return li
 
 

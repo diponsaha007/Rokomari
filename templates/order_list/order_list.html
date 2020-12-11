@@ -41,11 +41,13 @@
                                 <h5>ORDER DATE: {{ order.1 }}</h5>
                                 <h5>RECEIVED DATE: {{ order.2 }}</h5>
                                 <h5>DELIVERY LOCATION: {{ order.3 }}</h5>
-                                <h5>TOTAL PRICE: {{ order.4 }}</h5>
+                                <h5>TOTAL BOOK PRICE: {{ order.4 }} TK</h5>
+                                <h5>SHIPPING: 60 TK</h5>
+                                <h5>DISCOUNT: {{ order.5 }} TK</h5>
                             </div>
                             <div class="products">
                                 <div class="row no-gutters">
-                                    {% for i in order.5 %}
+                                    {% for i in order.6 %}
                                         <div class="col-12 col-md-4 col-lg-3">
                                             <div class="clean-product-item">
                                                 <div class="image"><a
