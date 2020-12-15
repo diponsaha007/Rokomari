@@ -51,8 +51,11 @@ def get_order_list(admin_id):
             koto += 1
         result2 = conn.cursor()
         result2.execute("SELECT  DISCOUNT FROM ORDER_LIST WHERE ORDER_ID = :v1", v1=tmp[0])
-        tmp[5] -= int(result2.fetchone()[0])
-        tmp[5] += 60
+        try:
+            tmp[5] -= int(result2.fetchone()[0])
+            tmp[5] += 60
+        except:
+            pass
         li.append(tmp)
     # print(li)
     return li

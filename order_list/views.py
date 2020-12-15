@@ -61,7 +61,7 @@ def get_order(user_id):
             l3.append(l4)
         l2.append(total_price)
         result2.execute("SELECT  DISCOUNT FROM ORDER_LIST WHERE ORDER_ID = :v1", v1=order_id)
-        l2.append(int(result2.fetchone()[0]))
+        l2.append(result2.fetchone()[0])
         l2.append(l3)
         li.append(l2)
 
