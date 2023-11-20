@@ -1,8 +1,4 @@
 ﻿# Rokomari
-This is a clone of Rokomari.com for our Level 2- Term 2 Database project of CSE,BUET.
+Mimics the most popular Bangladeshi online bookstore with separate admin and buyer module. Nearly every feature from the original website was built.
 
-Project Partners : 
-1. Apurba Saha
-2. Rasman Mubtasim Swargo
-
-Project demonstration: https://drive.google.com/file/d/1kT5xrP3boF_4M2AfQrCY-J2ZA-fw0Bhf/view?usp=sharing
+Video demonstration: https://drive.google.com/file/d/1kT5xrP3boF_4M2AfQrCY-J2ZA-fw0Bhf/view?usp=sharing
